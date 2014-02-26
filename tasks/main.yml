@@ -1,0 +1,81 @@
+---
+# Main list of tasks to be executed.
+#
+#   Fail the play if it runs on an unsupported platform.
+- name: Fail on unsupported platform
+  tags: tomcat
+  fail: msg="Operating system not supported {{ ansible_os_family }}"
+  when: ansible_os_family not in ['Archlinux', 'Debian', 'RedHat', 'Suse']
+
+
+- name: Install Tomcat download directory (local)
+  tags: tomcat
+  local_action: file
+    state=directory
+    owner=root
+    group=root
+    dest={{ ansible_data_path }}
+
+- name: Install Tomcat upload directory
+  tags: tomcat
+  file:
+    state=directory
+    owner=root
+    group=root
+    dest={{ ansible_data_path }}
+
+
+- name: Download Tomcat
+  tags: tomcat
+  local_action: get_url
+    dest={{ ansible_data_path }}/{{ tomcat_redis_filename }}
+    url={{ tomcat_mirror }}/v{{ tomcat_version }}/bin/{{ tomcat_redis_filename }}
+    owner=root
+    group=root
+    mode=0644
+    sha256sum={{ tomcat_redis_sha256sum }}
+
+
+- name: Copy Tomcat redis package to the node
+  tags: tomcat
+  copy:
+    src={{ ansible_data_path }}/{{ tomcat_redis_filename }}
+    owner=root
+    group=root
+    mode=0644
+    dest={{ ansible_data_path }}/{{ tomcat_redis_filename }}
+
+
+- name: Create Tomcat group
+  tags: tomcat
+  group:
+    state=present
+    name={{ tomcat_group }}
+
+- name: Create Tomcat user
+  tags: tomcat
+  user:
+    state=present
+    comment="Tomcat service user"
+    home={{ tomcat_install_dir }}/{{ tomcat_user }}
+    group={{ tomcat_group }}
+    name={{ tomcat_user }}
+
+
+- name: Install Tomcat installation directory
+  tags: tomcat
+  file:
+    state=directory
+    owner={{ tomcat_user }}
+    group={{ tomcat_group }}
+    mode=0755
+    dest={{ tomcat_install_dir }}/{{ tomcat_version }}
+
+
+- name: Install Tomcat
+  tags: tomcat
+  sudo_user: "{{ tomcat_user }}"
+  command: tar --strip-components=1
+      -xzf {{ ansible_data_path }}/{{ tomcat_redis_filename }}
+      -C {{ tomcat_install_dir }}/{{ tomcat_version }}
+    creates={{ tomcat_install_dir }}/{{ tomcat_version }}/bin/catalina.sh

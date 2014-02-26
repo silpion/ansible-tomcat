@@ -1,0 +1,12 @@
+---
+# default variables
+#   these are accessable during the plays
+#   these may get overridden in site-, playbook- or host vars
+tomcat_mirror: 'http://ftp.halifax.rwth-aachen.de/apache/tomcat/tomcat-7'
+tomcat_version: '7.0.52'
+
+tomcat_redis_filename: "apache-tomcat-{{ tomcat_version }}.tar.gz"
+tomcat_redis_sha256sum: 'f5f3c2c8f9946bf24445d2da14b3c2b8dc848622ef07c3cda14f486435d27fb0'
+
+tomcat_user: 'tomcat'
+tomcat_group: 'tomcat'

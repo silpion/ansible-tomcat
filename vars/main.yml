@@ -1,0 +1,8 @@
+---
+# Static variables/constants.
+#   Version of our role.
+ansible_data_path: '/usr/local/src/ansible/data'
+
+tomcat_role_version: '0.1.0'
+
+tomcat_install_dir: '/opt/tomcat'
