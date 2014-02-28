@@ -48,16 +48,6 @@
     dest={{ ansible_data_path }}/{{ tomcat_redis_filename }}
 
 
-- name: Install Tomcat installation/home directory
-  tags: tomcat
-  file:
-    state=directory
-    owner={{ tomcat_user }}
-    group={{ tomcat_group }}
-    mode=0755
-    dest={{ tomcat_install_dir }}/{{ tomcat_version }}
-
-
 - name: Create Tomcat group
   tags: tomcat
   group:
@@ -69,10 +59,19 @@
   user:
     state=present
     comment="Tomcat service user"
-    home={{ tomcat_install_dir }}/{{ tomcat_user }}
+    home={{ tomcat_install_dir }}
     group={{ tomcat_group }}
     name={{ tomcat_user }}
 
+
+- name: Install Tomcat installation directory
+  tags: tomcat
+  file:
+    state=directory
+    owner={{ tomcat_user }}
+    group={{ tomcat_group }}
+    mode=0755
+    dest={{ tomcat_install_dir }}/{{ tomcat_version }}
 
 - name: Install Tomcat
   tags: tomcat
