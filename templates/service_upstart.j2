@@ -6,11 +6,11 @@ respawn
 respawn limit 10 5
 
 setuid {{ tomcat_user }}
+setgit {{ tomcat_group }}
 
 env JAVA_HOME={{ tomcat_java_home.stdout }}
-env CATALINE_HOME={{ tomcat_install_dir }}/{{ tomcat_version }}
+env CATALINA_HOME={{ tomcat_install_dir }}/{{ tomcat_version }}
 
 script
-  chdir $CATALINA_HOME
   exec $CATALINA_HOME/bin/catalina.sh run
 end script
