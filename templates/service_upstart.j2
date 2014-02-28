@@ -1,0 +1,16 @@
+description "Tomcat servlet container"
+
+start on runlevel [2345]
+stop on runlevel [!2345]
+respawn
+respawn limit 10 5
+
+setuid {{ tomcat_user }}
+
+env JAVA_HOME={{ tomcat_java_home.stdout }}
+env CATALINE_HOME={{ tomcat_install_dir }}/{{ tomcat_version }}
+
+script
+  chdir $CATALINA_HOME
+  exec $CATALINA_HOME/bin/catalina.sh run
+end script

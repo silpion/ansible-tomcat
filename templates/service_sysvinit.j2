@@ -1,0 +1,16 @@
+#!/bin/bash
+
+export JAVA_HOME={{ tomcat_java_home.stdout }}
+export PATH=${PATH}:${JAVA_HOME}/bin
+export CATALINA_HOME={{ tomcat_install_dir }}/{{ tomcat_version }}
+export CATALINA_BASE={{ tomcat_install_dir }}/{{ tomcat_version }}
+export TOMCAT_USER={{ tomcat_user }}
+
+case "$1" in
+  start)
+  ;;
+  stop)
+  ;;
+  restart)
+  ;;
+esac

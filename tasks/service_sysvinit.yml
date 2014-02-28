@@ -1,0 +1,12 @@
+---
+- name: Install Tomcat Service
+  tags: tomcat
+  template:
+    src=service_sysvinit.j2
+    dest=/etc/init.d/tomcat
+    owner=root
+    group=root
+    mode=0755
+
+- include: service_common.yml
+  tags: tomcat

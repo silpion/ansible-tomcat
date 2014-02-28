@@ -5,6 +5,4 @@
 #   "name" attribute uses systemd syntax here as this might get
 #   THE sysvinit replacement in nearly any commen Linux distribution.
 - name: service restart tomcat
-  service:
-    state=restarted
-    name=tomcat
+  service: state=restarted name=tomcat

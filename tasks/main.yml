@@ -2,6 +2,8 @@
 # Main list of tasks to be executed.
 #
 #   Fail the play if it runs on an unsupported platform.
+
+
 - name: Fail on unsupported platform
   tags: tomcat
   fail: msg="Operating system not supported {{ ansible_os_family }}"
@@ -46,6 +48,16 @@
     dest={{ ansible_data_path }}/{{ tomcat_redis_filename }}
 
 
+- name: Install Tomcat installation/home directory
+  tags: tomcat
+  file:
+    state=directory
+    owner={{ tomcat_user }}
+    group={{ tomcat_group }}
+    mode=0755
+    dest={{ tomcat_install_dir }}/{{ tomcat_version }}
+
+
 - name: Create Tomcat group
   tags: tomcat
   group:
@@ -62,16 +74,6 @@
     name={{ tomcat_user }}
 
 
-- name: Install Tomcat installation directory
-  tags: tomcat
-  file:
-    state=directory
-    owner={{ tomcat_user }}
-    group={{ tomcat_group }}
-    mode=0755
-    dest={{ tomcat_install_dir }}/{{ tomcat_version }}
-
-
 - name: Install Tomcat
   tags: tomcat
   sudo_user: "{{ tomcat_user }}"
@@ -79,3 +81,26 @@
       -xzf {{ ansible_data_path }}/{{ tomcat_redis_filename }}
       -C {{ tomcat_install_dir }}/{{ tomcat_version }}
     creates={{ tomcat_install_dir }}/{{ tomcat_version }}/bin/catalina.sh
+
+
+- name: Install java-jsvc
+  tags: tomcat
+  pacman:
+    state=present
+    name=java-jsvc
+    update_cache=no
+  when: ansible_distribution == 'Archlinux'
+
+
+# Install a tomcat service
+- include: service_systemd.yml
+  tags: tomcat
+  when: ansible_distribution == 'Archlinux'
+
+- include: service_upstart.yml
+  tags: tomcat
+  when: ansible_distribution == 'Ubuntu'
+
+- include: service_sysvinit.yml
+  tags: tomcat
+  when: ansible_distribution == 'Debian' or ansible_os_family == 'RedHat'

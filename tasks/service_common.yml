@@ -1,0 +1,4 @@
+---
+- name: Manage Tomcat Service
+  tags: tomcat
+  service: state=started enabled=true name=tomcat
