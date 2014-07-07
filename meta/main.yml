@@ -10,7 +10,7 @@ dependencies: []
 #   galaxy.
 galaxy_info:
   author: Mark Kusch
-  description: Skeleton role as basis when creating new roles
+  description: Manage tomcat installation
   company: http://silpion.de
   license: Apache 2
   min_ansible_version: 1.4
