@@ -1,0 +1,10 @@
+---
+- name: Install sysvinit Tomcat Service
+  tags: tomcat
+  notify: service restart tomcat
+  template:
+    src=service_sysvinit.j2
+    dest=/etc/init.d/tomcat
+    owner=0
+    group=0
+    mode=0755

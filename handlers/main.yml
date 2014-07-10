@@ -3,7 +3,7 @@
 #   Handlers may get notified at the end of the playbook ONCE
 #   by tasks, e.g. restart a service on configuration change.
 #   "name" attribute uses systemd syntax here as this might get
-#   THE sysvinit replacement in nearly any commen Linux distribution.
+#   THE sysvinit replacement in nearly any common Linux distribution.
 - name: service restart tomcat
   service:
     state=restarted

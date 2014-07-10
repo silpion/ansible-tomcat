@@ -1,0 +1,60 @@
+#!/bin/bash
+#
+# Startup/shutdown script for tomcat application server.
+#
+# chkconfig: 2345 56 10
+# description: Startup/shutdown script for the tomcat application server.
+#
+
+. /etc/init.d/functions
+
+export TOMCAT_USER={{ tomcat_user }}
+export JAVA_HOME={{ java_home }}
+export PATH=${PATH}:${JAVA_HOME}/bin
+export CATALINA_HOME={{ tomcat_base }}/apache-tomcat-{{ tomcat_version }}
+export CATALINA_BASE={{ tomcat_base }}/apache-tomcat-{{ tomcat_version }}
+
+
+: ${ret:=0}
+LOCK=/var/run/tomcat.lock
+PROC=tomcat
+
+
+start(){
+  echo -n $"Starting $PROC: "
+  daemon $CATALINA_HOME/bin/catalina.sh start
+  ret=$?
+  echo
+  [ $ret -eq 0 ] && touch $LOCK
+}
+
+stop(){
+  echo -n $"Stopping $PROC: "
+  killproc $PROC
+  ret=$?
+  echo
+  [ $ret -eq 0 ] && rm -f $LOCK
+}
+
+
+case "$1" in
+  start)
+    start
+  ;;
+  stop)
+    stop
+  ;;
+  restart)
+    stop
+    start
+  ;;
+  status)
+    status $PROC
+  ;;
+  *)
+    echo $"Usage: $prog {start|stop|restart|status}"
+    exit 3
+  ;;
+esac
+
+exit $ret

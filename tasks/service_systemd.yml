@@ -1,0 +1,19 @@
+---
+# Running services with systemd requires ELF binary.
+#   java-jsvc wrappes Java services.
+- name: Install java-jsvc
+  tags: tomcat
+  pacman:
+    state=present
+    name=java-jsvc
+    update_cache=no
+
+- name: Install systemd Tomcat Service
+  tags: tomcat
+  notify: service restart tomcat
+  template:
+    src=service_systemd.j2
+    dest=/etc/systemd/system/tomcat.service
+    owner=0
+    group=0
+    mode=0644

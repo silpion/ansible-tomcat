@@ -1,12 +1,20 @@
 ---
-# default variables
-#   these are accessable during the plays
-#   these may get overridden in site-, playbook- or host vars
-tomcat_mirror: 'http://ftp.halifax.rwth-aachen.de/apache/tomcat/tomcat-7'
+# Tomcat version number
 tomcat_version: '7.0.52'
 
-tomcat_redis_filename: "apache-tomcat-{{ tomcat_version }}.tar.gz"
+# Mirror where to dowload Tomcat redistributable package from
+tomcat_mirror: 'http://archive.apache.org/dist/tomcat'
+
+# SHA256 sum for the Tomcat redistributable package
 tomcat_redis_sha256sum: 'f5f3c2c8f9946bf24445d2da14b3c2b8dc848622ef07c3cda14f486435d27fb0'
 
+# tomcat service user
+#   user name
 tomcat_user: 'tomcat'
+#   group name
 tomcat_group: 'tomcat'
+#   user's home directory
+tomcat_home: '/srv/tomcat'
+
+# tomcat installation base directory
+tomcat_base: '/opt/tomcat'

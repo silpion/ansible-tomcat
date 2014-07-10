@@ -1,0 +1,10 @@
+---
+- name: Install upstart Tomcat Service
+  tags: tomcat
+  notify: service restart tomcat
+  template:
+    src=service_upstart.j2
+    dest=/etc/init/tomcat.conf
+    owner=0
+    group=0
+    mode=0644
