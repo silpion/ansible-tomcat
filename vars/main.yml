@@ -1,8 +1,11 @@
 ---
-# Static variables/constants.
-#   Version of our role.
-ansible_data_path: '/usr/local/src/ansible/data'
-
+# Version of our role.
 tomcat_role_version: '0.1.0'
 
-tomcat_install_dir: '/opt/tomcat'
+# path for ansible to store downloaded or templated data
+ansible_data_path: '/usr/local/src/ansible/data'
+
+# filename of Tomcat redistributable package
+tomcat_redis_filename: "apache-tomcat-{{ tomcat_version }}.tar.gz"
+
+tomcat_version_major: "{{ tomcat_version|truncate(1, True, '') }}"
