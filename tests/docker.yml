@@ -1,0 +1,19 @@
+---
+# This file configures the integration test suite with RSpec
+#   with Docker containers.
+#   Do NOT remove keys here. This might lead to unhandled
+#   exceptions.
+#   Only {{ ssh_port }} variable is evaluated. Other variables
+#   will not work.
+#
+#   If you don't change anything, everything SHOULD work :)
+env_name: ansibletomcattest
+
+ssh_user: root
+ssh_keys: tests/silpion-insecure-private-key
+ssh_host: localhost
+
+docker_img: silpion/ubuntu-upstart-sshkey
+docker_tag: 0.0.1
+docker_run: "--detach --name ansibletomcattest --hostname ansibletomcattest --net=bridge --publish {{ ssh_port }}:22"
+docker_cmd: "/sbin/init"
