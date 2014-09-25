@@ -1,9 +1,7 @@
 ---
-# Version of our role.
-tomcat_role_version: '0.1.1'
-
 # path for ansible to store downloaded or templated data
-ansible_data_path: '/usr/local/src/ansible/data'
+local_ansible_data_path: '/usr/local/src/ansible/data'
+remote_ansible_data_path: "{{ local_ansible_data_path }}"
 
 # filename of Tomcat redistributable package
 tomcat_redis_filename: "apache-tomcat-{{ tomcat_version }}.tar.gz"

@@ -9,27 +9,15 @@
       - ansible_os_family in ['Archlinux', 'Debian', 'RedHat', 'Suse']
 
 
-- name: Install Tomcat download directory (local)
-  tags:
-    - tomcat
-    - download
-  local_action: file
-    state=directory
-    owner=0
-    group=0
-    mode=2777
-    dest={{ ansible_data_path }}
+- include: local.yml
+  tags: tomcat
 
-- name: Download Tomcat (local)
-  tags:
-    - tomcat
-    - download
-  sudo: no
-  local_action: get_url
-    dest={{ ansible_data_path }}/{{ tomcat_redis_filename }}
-    url={{ tomcat_mirror }}/tomcat-{{ tomcat_version_major }}/v{{ tomcat_version }}/bin/{{ tomcat_redis_filename }}
-    mode=0644
-    sha256sum={{ tomcat_redis_sha256sum }}
+
+- name: Install remote ansible data path directory
+  tags: tomcat
+  file:
+    state=directory
+    dest={{ remote_ansible_data_path }}
 
 
 - name: Create Tomcat group
@@ -58,11 +46,24 @@
     owner={{ tomcat_user }}
     group={{ tomcat_group }}
 
+
+- name: Copy Tomcat distribution
+  tags: tomcat
+  copy:
+    src={{ local_ansible_data_path }}/{{ tomcat_redis_filename }}
+    dest={{ remote_ansible_data_path }}/{{ tomcat_redis_filename }}
+    owner=0
+    group=0
+    mode=0644
+
+
 - name: Install Tomcat
   tags: tomcat
   unarchive:
-    src={{ ansible_data_path }}/{{ tomcat_redis_filename }}
+    src={{ remote_ansible_data_path }}/{{ tomcat_redis_filename }}
     dest={{ tomcat_base }}
+    copy=false
+    creates={{ tomcat_base }}/apache-tomcat-{{ tomcat_version }}
 
 
 # Tomcat... Another software from the Java world which doesn't have any

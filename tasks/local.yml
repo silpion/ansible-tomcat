@@ -1,0 +1,22 @@
+---
+- name: Install local ansible data path directory (local)
+  tags:
+    - tomcat
+    - download
+  local_action: file
+    state=directory
+    owner=0
+    group=0
+    mode=2777
+    dest={{ local_ansible_data_path }}
+
+- name: Download Tomcat (local)
+  tags:
+    - tomcat
+    - download
+  sudo: no
+  local_action: get_url
+    dest={{ local_ansible_data_path }}/{{ tomcat_redis_filename }}
+    url={{ tomcat_mirror }}/tomcat-{{ tomcat_version_major }}/v{{ tomcat_version }}/bin/{{ tomcat_redis_filename }}
+    mode=0644
+    sha256sum={{ tomcat_redis_sha256sum }}
