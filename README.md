@@ -2,6 +2,17 @@
 
 Install the latest version of Tomcat.
 
+## Requirements
+
+This role requires local facts in */etc/ansible/facts.d/java.fact*
+to be available. The following variable must be available for the
+upstart service template to work:
+
+* ``java_home``
+
+Facts are used as
+
+* ``ansible_local.java.default.java_home``
 
 ## Role variables
 
@@ -13,30 +24,46 @@ Install the latest version of Tomcat.
 * ``tomcat_home``: Configure home directory for Tomcat service user (default: ``/srv/tomcat``)
 * ``tomcat_base``: Configure base/installation directory for Tomcat (default: ``/opt/tomcat``)
 
-
-# Requirements
-
-None.
-
-# Dependencies
+## Dependencies
 
 None.
 
-
-# Example playbook
+## Example playbook
 
     ---
     - hosts: tomcat_server
       roles:
-        - { role: tomcat }
+        - { role: ansible-tomcat }
 
-
-# License
+## License
 
 Apache Version 2.0
 
+## Integration testing
 
-# Author
+This role provides integration tests using the Ruby RSpec/serverspec framework
+with a few drawbacks at the time of writing this documentation.
+
+- Currently supports ansible_os_family == 'Debian' only.
+
+Running integration tests requires a number of dependencies being
+installed. As this role uses Ruby RSpec there is the need to have
+Ruby with rake and bundler available.
+
+    # install role specific dependencies with bundler
+    bundle install
+
+<!-- -->
+
+    # run the complete test suite with Docker
+    rake suite
+
+<!-- -->
+
+    # run the complete test suite with Vagrant
+    RAKE_ANSIBLE_USE_VAGRANT=1 rake suite
+
+# Author information
 
 Mark Kusch @mark.kusch silpion.de
 

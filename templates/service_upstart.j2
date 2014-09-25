@@ -8,7 +8,7 @@ respawn limit 10 5
 setuid {{ tomcat_user }}
 setgid {{ tomcat_group }}
 
-env JAVA_HOME={{ java_home }}
+env JAVA_HOME={{ ansible_local.java.general.java_home }}
 env CATALINA_HOME={{ tomcat_home }}/catalina
 env CATALINA_BASE={{ tomcat_home }}/catalina
 
