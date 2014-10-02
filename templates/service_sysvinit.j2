@@ -8,7 +8,7 @@
 
 . /etc/init.d/functions
 
-export TOMCAT_USER={{ tomcat_user }}
+export TOMCAT_USER={{ tomcat_user_name }}
 export JAVA_HOME={{ java_home }}
 export PATH=${PATH}:${JAVA_HOME}/bin
 export CATALINA_HOME={{ tomcat_base }}/apache-tomcat-{{ tomcat_version }}

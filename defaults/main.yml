@@ -10,11 +10,11 @@ tomcat_redis_sha256sum: 'f5f3c2c8f9946bf24445d2da14b3c2b8dc848622ef07c3cda14f486
 
 # tomcat service user
 #   user name
-tomcat_user: 'tomcat'
+tomcat_user_name: 'tomcat'
 #   group name
-tomcat_group: 'tomcat'
+tomcat_user_group: 'tomcat'
 #   user's home directory
-tomcat_home: '/srv/tomcat'
+tomcat_user_home: '/srv/tomcat'
 
 # tomcat installation base directory
 tomcat_base: '/opt/tomcat'
