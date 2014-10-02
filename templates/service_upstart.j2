@@ -9,13 +9,13 @@ setuid {{ tomcat_user_name }}
 setgid {{ tomcat_user_group }}
 
 env JAVA_HOME={{ ansible_local.java.general.java_home }}
-env CATALINA_HOME={{ tomcat_user_home }}/catalina
-env CATALINA_BASE={{ tomcat_user_home }}/catalina
+env CATALINA_HOME={{ tomcat_env_catalina_home }}
+env CATALINA_BASE={{ tomcat_env_catalina_base }}
 
 script
-  exec {{ tomcat_user_home }}/catalina/bin/catalina.sh run
+  exec {{ tomcat_env_catalina_home }}/bin/catalina.sh run
 end script
 
 post-stop script
-  rm -rf {{ tomcat_user_home }}/catalina/temp/*
+  rm -rf {{ tomcat_env_catalina_base }}/temp/*
 end script

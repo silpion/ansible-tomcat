@@ -22,7 +22,9 @@ Facts are used as
 * ``tomcat_user_name``: Configure user to run Tomcat as (default: ``tomcat``)
 * ``tomcat_user_group``: Configure group for Tomcat service user (default: ``tomcat``)
 * ``tomcat_user_home``: Configure home directory for Tomcat service user (default: ``/srv/tomcat``)
-* ``tomcat_base``: Configure base/installation directory for Tomcat (default: ``/opt/tomcat``)
+* ``tomcat_install_base``: Configure base/installation directory for Tomcat (default: ``/opt/tomcat``)
+* ``tomcat_env_catalina_home``: Configure environment variable that points to the tomcat installation directory (default: ``{{ tomcat_install_base }}/apache-tomcat-{{ tomcat_version }}``)
+* ``tomcat_env_catalina_base``: Configure environment variable that points to the tomcat instance directory (default: ``{{ tomcat_user_home }}/catalina``)
 
 ## Dependencies
 

@@ -41,7 +41,7 @@
   tags: tomcat
   file:
     state=directory
-    dest={{ tomcat_base }}
+    dest={{ tomcat_install_base }}
     mode=0755
     owner={{ tomcat_user_name }}
     group={{ tomcat_user_group }}
@@ -61,9 +61,9 @@
   tags: tomcat
   unarchive:
     src={{ remote_ansible_data_path }}/{{ tomcat_redis_filename }}
-    dest={{ tomcat_base }}
+    dest={{ tomcat_install_base }}
     copy=false
-    creates={{ tomcat_base }}/apache-tomcat-{{ tomcat_version }}
+    creates={{ tomcat_env_catalina_home }}
 
 
 # Tomcat... Another software from the Java world which doesn't have any
@@ -74,7 +74,7 @@
   tags: tomcat
   sudo: yes
   sudo_user: "{{ tomcat_user_name }}"
-  when: tomcat_user_home != tomcat_base
+  when: tomcat_env_catalina_base != tomcat_env_catalina_home
   with_items:
     - conf
     - logs
@@ -83,7 +83,7 @@
     - work
   file:
     state=directory
-    dest={{ tomcat_user_home }}/catalina/{{ item }}
+    dest={{ tomcat_env_catalina_base }}/{{ item }}
     mode=0755
     owner={{ tomcat_user_name }}
     group={{ tomcat_user_group }}
@@ -92,19 +92,19 @@
   tags: tomcat
   sudo: yes
   sudo_user: "{{ tomcat_user_name }}"
-  when: tomcat_user_home != tomcat_base
+  when: tomcat_env_catalina_base != tomcat_env_catalina_home
   with_items:
     - bin
     - lib
   file:
     state=link
     force=yes
-    src={{ tomcat_base }}/apache-tomcat-{{ tomcat_version }}/{{ item }}
-    dest={{ tomcat_user_home }}/catalina/{{ item }}
+    src={{ tomcat_env_catalina_home }}/{{ item }}
+    dest={{ tomcat_env_catalina_base }}/{{ item }}
 
 - name: Hack a usable catalina environment (conf)
   tags: tomcat
-  when: tomcat_user_home != tomcat_base
+  when: tomcat_env_catalina_base != tomcat_env_catalina_home
   with_items:
     - catalina.policy
     - catalina.properties
@@ -118,8 +118,8 @@
       --owner {{ tomcat_user_name }}
       --group {{ tomcat_user_group }}
       --mode 0644
-      {{ tomcat_base }}/apache-tomcat-{{ tomcat_version }}/conf/{{ item }}
-      {{ tomcat_user_home }}/catalina/conf/{{ item }}
+      {{ tomcat_env_catalina_home }}/conf/{{ item }}
+      {{ tomcat_env_catalina_base }}/conf/{{ item }}
 
 
 # Install a tomcat service

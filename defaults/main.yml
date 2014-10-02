@@ -16,5 +16,10 @@ tomcat_user_group: 'tomcat'
 #   user's home directory
 tomcat_user_home: '/srv/tomcat'
 
-# tomcat installation base directory
-tomcat_base: '/opt/tomcat'
+# tomcat installation directories
+#   base directory for tomcat installations
+tomcat_install_base: '/opt/tomcat'
+#   installation directory, denoted by environment variable CATALINA_HOME
+tomcat_env_catalina_home: '{{ tomcat_install_base }}/apache-tomcat-{{ tomcat_version }}'
+#   instance directory, denoted by environment variable CATALINA_BASE
+tomcat_env_catalina_base: '{{ tomcat_user_home }}/catalina'
