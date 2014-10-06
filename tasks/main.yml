@@ -67,46 +67,46 @@
 
 - name: Install catalina base directory and sub dirs
   tags: tomcat
+  with_items:
+    - conf
+    - logs
+    - webapps
   file:
     state=directory
     dest={{ tomcat_env_catalina_base }}/{{ item }}
     owner={{ tomcat_user_name }}
     group={{ tomcat_user_group }}
     mode=0755
-  with_items:
-    - conf
-    - logs
-    - webapps
 
 - name: Register default files to be installed
   tags: tomcat
+  when: tomcat_catalina_base_conf_files is not defined
+  register: tomcat_catalina_base_conf_files_default
   command: ls
     -1
     {{ tomcat_env_catalina_home }}/conf
-  register: tomcat_catalina_base_conf_files_default
-  when: tomcat_catalina_base_conf_files is not defined
 
 - name: Install default conf files
   tags: tomcat
+  when: tomcat_catalina_base_conf_files is not defined
+  with_items: tomcat_catalina_base_conf_files_default.stdout_lines
   command: install
     --owner {{ tomcat_user_name }}
     --group {{ tomcat_user_group }}
     --mode 0750
     {{ tomcat_env_catalina_home }}/conf/{{ item }}
     {{ tomcat_env_catalina_base }}/conf/{{ item }}
-  with_items: tomcat_catalina_base_conf_files_default.stdout_lines
-  when: tomcat_catalina_base_conf_files is not defined
 
 - name: Install configured conf files
   tags: tomcat
+  when: tomcat_catalina_base_conf_files is defined
+  with_items: tomcat_catalina_base_conf_files
   command: install
     --owner {{ tomcat_user_name }}
     --group {{ tomcat_user_group }}
     --mode 0750
     {{ tomcat_env_catalina_home }}/conf/{{ item }}
     {{ tomcat_env_catalina_base }}/conf/{{ item }}
-  with_items: tomcat_catalina_base_conf_files
-  when: tomcat_catalina_base_conf_files is defined
 
 
 # Install a tomcat service
