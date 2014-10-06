@@ -1,2 +1,25 @@
+### Files to be ignored by Git ###
+
+# Ansible
 Gemfile.lock
-.vagrant/
+
+# Vagrant
+/\.vagrant/
+
+# IntelliJ IDEA
+/*\.ipr
+/*\.iws
+/\.idea/
+**/*\.iml
+
+# Eclipse
+/\.classpath
+/\.project
+/\.settings/
+
+# Mac
+**/\.DS_Store
+
+# Custom
+/temp/
+/tmp/
