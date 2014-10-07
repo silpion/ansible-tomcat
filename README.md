@@ -25,6 +25,10 @@ Facts are used as
 * ``tomcat_install_base``: Configure base/installation directory for Tomcat (default: ``/opt/tomcat``)
 * ``tomcat_env_catalina_home``: Configure environment variable that points to the tomcat installation directory (default: ``{{ tomcat_install_base }}/apache-tomcat-{{ tomcat_version }}``)
 * ``tomcat_env_catalina_base``: Configure environment variable that points to the tomcat instance directory (default: ``{{ tomcat_user_home }}/catalina``)
+* ``tomcat_connector_port``: Configure connector port for Tomcat service (default: ``8080``)
+* ``tomcat_redirect_port``: Configure redirect port for Tomcat service (default: ``8443``)
+* ``tomcat_shutdown_port``: Configure shutdown port for Tomcat service (default: ``8005``)
+* ``tomcat_ajp_port``: Configure AJP port for Tomcat service (default: ``8009``)
 
 ## Dependencies
 
