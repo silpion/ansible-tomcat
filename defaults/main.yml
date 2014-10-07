@@ -21,12 +21,12 @@ tomcat_user_home: '/srv/tomcat'
 tomcat_install_base: '/opt/tomcat'
 #   installation directory, denoted by environment variable CATALINA_HOME
 tomcat_env_catalina_home: '{{ tomcat_install_base }}/apache-tomcat-{{ tomcat_version }}'
-#   instance directory, denoted by environment variable CATALINA_BASE
-tomcat_env_catalina_base: '{{ tomcat_user_home }}/catalina'
 
 # tomcat instance
 #   service name
 tomcat_service_name: 'tomcat'
+#   instance directory, denoted by environment variable CATALINA_BASE
+tomcat_env_catalina_base: '{{ tomcat_user_home }}/catalina'
 #   connector port
 tomcat_connector_port: '8080'
 #   redirect port
