@@ -25,7 +25,6 @@ Facts are used as
 * ``tomcat_install_base``: Configure base/installation directory for Tomcat (default: ``/opt/tomcat``)
 * ``tomcat_env_catalina_home``: Configure environment variable that points to the tomcat installation directory (default: ``{{ tomcat_install_base }}/apache-tomcat-{{ tomcat_version }}``)
 * ``tomcat_env_catalina_base``: Configure environment variable that points to the tomcat instance directory (default: ``{{ tomcat_user_home }}/catalina``)
-* ``tomcat_catalina_base_conf_files``: Configure the files to be copied from ``$CATALINA_HOME/conf`` to ``$CATALINA_BASE/conf`` (optional; if not defined, all files will be copied).
 
 ## Dependencies
 

@@ -78,29 +78,14 @@
     group={{ tomcat_user_group }}
     mode=0755
 
-- name: Register default files to be installed
+- name: Register conf files to be installed
   tags: tomcat
-  when: tomcat_catalina_base_conf_files is not defined
-  register: tomcat_catalina_base_conf_files_default
-  command: ls
-    -1
-    {{ tomcat_env_catalina_home }}/conf
+  register: tomcat_conf_files
+  command: ls -1 {{ tomcat_env_catalina_home }}/conf
 
-- name: Install default conf files
+- name: Install conf files
   tags: tomcat
-  when: tomcat_catalina_base_conf_files is not defined
-  with_items: tomcat_catalina_base_conf_files_default.stdout_lines
-  command: install
-    --owner {{ tomcat_user_name }}
-    --group {{ tomcat_user_group }}
-    --mode 0750
-    {{ tomcat_env_catalina_home }}/conf/{{ item }}
-    {{ tomcat_env_catalina_base }}/conf/{{ item }}
-
-- name: Install configured conf files
-  tags: tomcat
-  when: tomcat_catalina_base_conf_files is defined
-  with_items: tomcat_catalina_base_conf_files
+  with_items: tomcat_conf_files.stdout_lines
   command: install
     --owner {{ tomcat_user_name }}
     --group {{ tomcat_user_group }}
