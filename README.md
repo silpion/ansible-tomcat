@@ -31,6 +31,25 @@ Facts are used as
 * ``tomcat_shutdown_port``: Configure shutdown port for Tomcat service (default: ``8005``)
 * ``tomcat_ajp_port``: Configure AJP port for Tomcat service (default: ``8009``)
 
+### Role variables for multiple role invocations
+
+The role can be invoked multiple times in one playbook to support the maintenance
+of multiple Tomcat instances with one single installation - like documented in
+[Running The Apache Tomcat 7.0](http://tomcat.apache.org/tomcat-7.0-doc/RUNNING.txt),
+section *Advanced Configuration - Multiple Tomcat Instances*. To achieve this, the
+role must be invoked once for each desired instance and parameterised with a number
+of variables that **must** differ in each role invocation:
+
+* ``tomcat_user_name``
+* ``tomcat_user_group``
+* ``tomcat_user_home``
+* ``tomcat_env_catalina_base``
+* ``tomcat_service_name``
+* ``tomcat_connector_port``
+* ``tomcat_redirect_port``
+* ``tomcat_shutdown_port``
+* ``tomcat_ajp_port``
+
 ## Dependencies
 
 None.
@@ -41,6 +60,34 @@ None.
     - hosts: tomcat_server
       roles:
         - { role: ansible-tomcat }
+
+### Example playbook for multiple role invocations
+
+    ---
+    - hosts: tomcat_server
+      roles:
+        - { role: ansible-tomcat,
+              tomcat_user_name: "{{ tomcat_user_name_instance1 }}",
+              tomcat_user_group: "{{ tomcat_user_group_instance1 }}",
+              tomcat_user_home: "{{ tomcat_user_home_instance1 }}",
+              tomcat_env_catalina_base: "{{ tomcat_env_catalina_base_instance1 }}",
+              tomcat_service_name: "{{ tomcat_service_name_instance1 }}",
+              tomcat_connector_port: "{{ tomcat_connector_port_instance1 }}",
+              tomcat_redirect_port: "{{ tomcat_redirect_port_instance1 }}",
+              tomcat_shutdown_port: "{{ tomcat_shutdown_port_instance1 }}",
+              tomcat_ajp_port: "{{ tomcat_ajp_port_instance1 }}"
+          }
+        - { role: ansible-tomcat,
+              tomcat_user_name: "{{ tomcat_user_name_instance2 }}",
+              tomcat_user_group: "{{ tomcat_user_group_instance2 }}",
+              tomcat_user_home: "{{ tomcat_user_home_instance2 }}",
+              tomcat_env_catalina_base: "{{ tomcat_env_catalina_base_instance2 }}",
+              tomcat_service_name: "{{ tomcat_service_name_instance2 }}",
+              tomcat_connector_port: "{{ tomcat_connector_port_instance2 }}",
+              tomcat_redirect_port: "{{ tomcat_redirect_port_instance2 }}",
+              tomcat_shutdown_port: "{{ tomcat_shutdown_port_instance2 }}",
+              tomcat_ajp_port: "{{ tomcat_ajp_port_instance2 }}"
+          }
 
 ## License
 
