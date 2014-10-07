@@ -25,6 +25,8 @@ tomcat_env_catalina_home: '{{ tomcat_install_base }}/apache-tomcat-{{ tomcat_ver
 tomcat_env_catalina_base: '{{ tomcat_user_home }}/catalina'
 
 # tomcat instance
+#   service name
+tomcat_service_name: 'tomcat'
 #   connector port
 tomcat_connector_port: '8080'
 #   redirect port

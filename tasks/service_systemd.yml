@@ -10,10 +10,10 @@
 
 - name: Install systemd Tomcat Service
   tags: tomcat
-  notify: service restart tomcat
+  notify: service restart {{ tomcat_service_name }}
   template:
     src=service_systemd.j2
-    dest=/etc/systemd/system/tomcat.service
+    dest=/etc/systemd/system/{{ tomcat_service_name }}.service
     owner=0
     group=0
     mode=0644
