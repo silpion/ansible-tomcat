@@ -10,11 +10,28 @@ tomcat_redis_sha256sum: 'f5f3c2c8f9946bf24445d2da14b3c2b8dc848622ef07c3cda14f486
 
 # tomcat service user
 #   user name
-tomcat_user: 'tomcat'
+tomcat_user_name: 'tomcat'
 #   group name
-tomcat_group: 'tomcat'
+tomcat_user_group: 'tomcat'
 #   user's home directory
-tomcat_home: '/srv/tomcat'
+tomcat_user_home: '/srv/tomcat'
 
-# tomcat installation base directory
-tomcat_base: '/opt/tomcat'
+# tomcat installation directories
+#   base directory for tomcat installations
+tomcat_install_base: '/opt/tomcat'
+#   installation directory, denoted by environment variable CATALINA_HOME
+tomcat_env_catalina_home: '{{ tomcat_install_base }}/apache-tomcat-{{ tomcat_version }}'
+
+# tomcat instance
+#   service name
+tomcat_service_name: 'tomcat'
+#   instance directory, denoted by environment variable CATALINA_BASE
+tomcat_env_catalina_base: '{{ tomcat_user_home }}/catalina'
+#   connector port
+tomcat_connector_port: '8080'
+#   redirect port
+tomcat_redirect_port: '8443'
+#   shutdown port
+tomcat_shutdown_port: '8005'
+#   ajp port
+tomcat_ajp_port: '8009'

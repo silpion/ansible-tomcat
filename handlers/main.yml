@@ -4,7 +4,7 @@
 #   by tasks, e.g. restart a service on configuration change.
 #   "name" attribute uses systemd syntax here as this might get
 #   THE sysvinit replacement in nearly any common Linux distribution.
-- name: service restart tomcat
+- name: service restart {{ tomcat_service_name }}
   service:
     state=restarted
-    name=tomcat
+    name={{ tomcat_service_name }}

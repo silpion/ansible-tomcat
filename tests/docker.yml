@@ -14,6 +14,6 @@ ssh_keys: tests/silpion-insecure-private-key
 ssh_host: localhost
 
 docker_img: silpion/ubuntu-upstart-sshkey
-docker_tag: 0.0.1
+docker_tag: 1.0.0
 docker_run: "--detach --name ansibletomcattest --hostname ansibletomcattest --net=bridge --publish {{ ssh_port }}:22"
 docker_cmd: "/sbin/init"
