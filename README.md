@@ -25,7 +25,7 @@ Facts are used as
 * ``tomcat_install_base``: Configure base/installation directory for Tomcat (default: ``/opt/tomcat``)
 * ``tomcat_env_catalina_home``: Configure environment variable that points to the tomcat installation directory (default: ``{{ tomcat_install_base }}/apache-tomcat-{{ tomcat_version }}``)
 * ``tomcat_env_catalina_base``: Configure environment variable that points to the tomcat instance directory (default: ``{{ tomcat_user_home }}/catalina``)
-* ``tomcat_service_name``: Configure name for Tomcat service (default: ``tomcat``)
+* ``tomcat_service_name``: Configure name for Tomcat service (default: ``{{ tomcat_user_name }}``)
 * ``tomcat_connector_port``: Configure connector port for Tomcat service (default: ``8080``)
 * ``tomcat_redirect_port``: Configure redirect port for Tomcat service (default: ``8443``)
 * ``tomcat_shutdown_port``: Configure shutdown port for Tomcat service (default: ``8005``)
@@ -44,7 +44,7 @@ of variables that **must** differ in each role invocation:
 * ``tomcat_user_group``
 * ``tomcat_user_home`` (implicitly differs when default definition is not overwritten)
 * ``tomcat_env_catalina_base`` (implicitly differs when default definition is not overwritten)
-* ``tomcat_service_name``
+* ``tomcat_service_name`` (implicitly differs when default definition is not overwritten)
 * ``tomcat_connector_port``
 * ``tomcat_redirect_port``
 * ``tomcat_shutdown_port``
@@ -69,7 +69,6 @@ None.
         - { role: ansible-tomcat,
               tomcat_user_name: "{{ tomcat_user_name_instance1 }}",
               tomcat_user_group: "{{ tomcat_user_group_instance1 }}",
-              tomcat_service_name: "{{ tomcat_service_name_instance1 }}",
               tomcat_connector_port: "{{ tomcat_connector_port_instance1 }}",
               tomcat_redirect_port: "{{ tomcat_redirect_port_instance1 }}",
               tomcat_shutdown_port: "{{ tomcat_shutdown_port_instance1 }}",
@@ -78,7 +77,6 @@ None.
         - { role: ansible-tomcat,
               tomcat_user_name: "{{ tomcat_user_name_instance2 }}",
               tomcat_user_group: "{{ tomcat_user_group_instance2 }}",
-              tomcat_service_name: "{{ tomcat_service_name_instance2 }}",
               tomcat_connector_port: "{{ tomcat_connector_port_instance2 }}",
               tomcat_redirect_port: "{{ tomcat_redirect_port_instance2 }}",
               tomcat_shutdown_port: "{{ tomcat_shutdown_port_instance2 }}",
