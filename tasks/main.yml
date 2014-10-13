@@ -9,6 +9,21 @@
       - ansible_os_family in ['Archlinux', 'Debian', 'RedHat', 'Suse']
 
 
+- name: Load version vars
+  tags: tomcat
+  with_first_found:
+    - ../vars/versions/{{ tomcat_version }}.yml
+    - ../vars/versions/default.yml
+  include_vars: "{{ item }}"
+
+- name: Assert version vars
+  tags: tomcat
+  assert:
+    that:
+      - tomcat_redis_sha256sum != None
+      - tomcat_redis_sha256sum != ""
+
+
 - include: local.yml
   tags: tomcat
 
