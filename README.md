@@ -21,15 +21,31 @@ Facts are used as
 * ``tomcat_redis_sha256sum``: SHA256 sum for the downloaded Tomcat redistributable package (default: ``f5f3c2c8f9946bf24445d2da14b3c2b8dc848622ef07c3cda14f486435d27fb0``)
 * ``tomcat_user_name``: Configure user to run Tomcat as (default: ``tomcat``)
 * ``tomcat_user_group``: Configure group for Tomcat service user (default: ``tomcat``)
-* ``tomcat_user_home``: Configure home directory for Tomcat service user (default: ``/srv/tomcat``)
+* ``tomcat_user_home``: Configure home directory for Tomcat service user (default: ``/srv/{{ tomcat_user_name }}``)
 * ``tomcat_install_base``: Configure base/installation directory for Tomcat (default: ``/opt/tomcat``)
 * ``tomcat_env_catalina_home``: Configure environment variable that points to the tomcat installation directory (default: ``{{ tomcat_install_base }}/apache-tomcat-{{ tomcat_version }}``)
 * ``tomcat_env_catalina_base``: Configure environment variable that points to the tomcat instance directory (default: ``{{ tomcat_user_home }}/catalina``)
-* ``tomcat_service_name``: Configure name for Tomcat service (default: ``tomcat``)
-* ``tomcat_connector_port``: Configure connector port for Tomcat service (default: ``8080``)
-* ``tomcat_redirect_port``: Configure redirect port for Tomcat service (default: ``8443``)
-* ``tomcat_shutdown_port``: Configure shutdown port for Tomcat service (default: ``8005``)
-* ``tomcat_ajp_port``: Configure AJP port for Tomcat service (default: ``8009``)
+* ``tomcat_service_name``: Configure name for Tomcat service (default: ``{{ tomcat_user_name }}``)
+* ``tomcat_base_port``: Configure base port value for Tomcat service (default: ``0``)
+* ``tomcat_connector_port``: Configure connector port for Tomcat service (default: ``8080`` or ``{{ tomcat_base_port }}``)
+* ``tomcat_redirect_port``: Configure redirect port for Tomcat service (default: ``8443`` or ``{{ tomcat_base_port + 3 }}``)
+* ``tomcat_shutdown_port``: Configure shutdown port for Tomcat service (default: ``8005`` or ``{{ tomcat_base_port + 5 }}``)
+* ``tomcat_ajp_port``: Configure AJP port for Tomcat service (default: ``8009`` or ``{{ tomcat_base_port + 9 }}``)
+
+**Note** on port configurations: When the ``tomcat_base_port`` is configured with its default
+value ``0``, the default ports of the standard Tomcat installation won't be modified. Otherwise
+the ports will follow a scheme where each port number will have a predefined positive, one-digit
+distance to the configured ``tomcat_base_port``. Some examples:
+
+| ``tomcat_base_port``      | 0    | 8000 | 8080 |
+|---------------------------|------|------|------|
+| ``tomcat_connector_port`` | 8080 | 8000 | 8080 |
+| ``tomcat_redirect_port``  | 8443 | 8003 | 8083 |
+| ``tomcat_shutdown_port``  | 8005 | 8005 | 8085 |
+| ``tomcat_ajp_port``       | 8009 | 8009 | 8089 |
+
+**Warning/TODO**: When the ``tomcat_base_port`` is configured with its default
+value ``0``, deviating configurations on the other ports won't be respected.
 
 ### Role variables for multiple role invocations
 
@@ -42,13 +58,14 @@ of variables that **must** differ in each role invocation:
 
 * ``tomcat_user_name``
 * ``tomcat_user_group``
-* ``tomcat_user_home``
-* ``tomcat_env_catalina_base``
-* ``tomcat_service_name``
-* ``tomcat_connector_port``
-* ``tomcat_redirect_port``
-* ``tomcat_shutdown_port``
-* ``tomcat_ajp_port``
+* ``tomcat_user_home`` (implicitly differs when default definition is not overwritten)
+* ``tomcat_env_catalina_base`` (implicitly differs when default definition is not overwritten)
+* ``tomcat_service_name`` (implicitly differs when default definition is not overwritten)
+* ``tomcat_base_port``
+* ``tomcat_connector_port`` (implicitly differs when default definition is not overwritten and ``tomcat_base_port`` is set)
+* ``tomcat_redirect_port`` (implicitly differs when default definition is not overwritten and ``tomcat_base_port`` is set)
+* ``tomcat_shutdown_port`` (implicitly differs when default definition is not overwritten and ``tomcat_base_port`` is set)
+* ``tomcat_ajp_port`` (implicitly differs when default definition is not overwritten and ``tomcat_base_port`` is set)
 
 ## Dependencies
 
@@ -69,9 +86,7 @@ None.
         - { role: ansible-tomcat,
               tomcat_user_name: "{{ tomcat_user_name_instance1 }}",
               tomcat_user_group: "{{ tomcat_user_group_instance1 }}",
-              tomcat_user_home: "{{ tomcat_user_home_instance1 }}",
-              tomcat_env_catalina_base: "{{ tomcat_env_catalina_base_instance1 }}",
-              tomcat_service_name: "{{ tomcat_service_name_instance1 }}",
+              tomcat_base_port: "{{ tomcat_connector_port_instance1 }}",
               tomcat_connector_port: "{{ tomcat_connector_port_instance1 }}",
               tomcat_redirect_port: "{{ tomcat_redirect_port_instance1 }}",
               tomcat_shutdown_port: "{{ tomcat_shutdown_port_instance1 }}",
@@ -80,13 +95,7 @@ None.
         - { role: ansible-tomcat,
               tomcat_user_name: "{{ tomcat_user_name_instance2 }}",
               tomcat_user_group: "{{ tomcat_user_group_instance2 }}",
-              tomcat_user_home: "{{ tomcat_user_home_instance2 }}",
-              tomcat_env_catalina_base: "{{ tomcat_env_catalina_base_instance2 }}",
-              tomcat_service_name: "{{ tomcat_service_name_instance2 }}",
-              tomcat_connector_port: "{{ tomcat_connector_port_instance2 }}",
-              tomcat_redirect_port: "{{ tomcat_redirect_port_instance2 }}",
-              tomcat_shutdown_port: "{{ tomcat_shutdown_port_instance2 }}",
-              tomcat_ajp_port: "{{ tomcat_ajp_port_instance2 }}"
+              tomcat_base_port: "{{ tomcat_connector_port_instance2 }}"
           }
 
 ## License
