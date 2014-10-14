@@ -1,12 +1,9 @@
 ---
 # Tomcat version number
-tomcat_version: '7.0.52'
+tomcat_version: 7.0.56
 
 # Mirror where to dowload Tomcat redistributable package from
-tomcat_mirror: 'http://archive.apache.org/dist/tomcat'
-
-# SHA256 sum for the Tomcat redistributable package
-tomcat_redis_sha256sum: 'f5f3c2c8f9946bf24445d2da14b3c2b8dc848622ef07c3cda14f486435d27fb0'
+tomcat_mirror: http://archive.apache.org/dist/tomcat
 
 # tomcat service user
 #   user name
