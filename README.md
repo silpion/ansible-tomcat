@@ -30,7 +30,9 @@ Facts are used as
 * ``tomcat_connector_port``: Configure connector port for Tomcat service (default: ``8080`` or ``{{ tomcat_base_port }}``)
 * ``tomcat_redirect_port``: Configure redirect port for Tomcat service (default: ``8443`` or ``{{ tomcat_base_port + 3 }}``)
 * ``tomcat_shutdown_port``: Configure shutdown port for Tomcat service (default: ``8005`` or ``{{ tomcat_base_port + 5 }}``)
+* ``tomcat_debug_port``: Configure remote debug port for Tomcat service (default: ``8000`` or ``{{ tomcat_base_port + 7 }}``)
 * ``tomcat_ajp_port``: Configure AJP port for Tomcat service (default: ``8009`` or ``{{ tomcat_base_port + 9 }}``)
+* ``tomcat_enable_remote_debug``: Configure if remote debugging should be enabled (default: ``false``)
 
 **Note** on port configurations: When the ``tomcat_base_port`` is configured with its default
 value ``0``, the default ports of the standard Tomcat installation won't be modified. Otherwise
@@ -42,6 +44,7 @@ distance to the configured ``tomcat_base_port``. Some examples:
 | ``tomcat_connector_port`` | 8080 | 8000 | 8080 |
 | ``tomcat_redirect_port``  | 8443 | 8003 | 8083 |
 | ``tomcat_shutdown_port``  | 8005 | 8005 | 8085 |
+| ``tomcat_debug_port``     | 8000 | 8007 | 8087 |
 | ``tomcat_ajp_port``       | 8009 | 8009 | 8089 |
 
 **Warning/TODO**: When the ``tomcat_base_port`` is configured with its default
@@ -65,6 +68,7 @@ of variables that **must** differ in each role invocation:
 * ``tomcat_connector_port`` (implicitly differs when default definition is not overwritten and ``tomcat_base_port`` is set)
 * ``tomcat_redirect_port`` (implicitly differs when default definition is not overwritten and ``tomcat_base_port`` is set)
 * ``tomcat_shutdown_port`` (implicitly differs when default definition is not overwritten and ``tomcat_base_port`` is set)
+* ``tomcat_debug_port`` (implicitly differs when default definition is not overwritten and ``tomcat_base_port`` is set)
 * ``tomcat_ajp_port`` (implicitly differs when default definition is not overwritten and ``tomcat_base_port`` is set)
 
 ## Dependencies
@@ -90,7 +94,9 @@ None.
               tomcat_connector_port: "{{ tomcat_connector_port_instance1 }}",
               tomcat_redirect_port: "{{ tomcat_redirect_port_instance1 }}",
               tomcat_shutdown_port: "{{ tomcat_shutdown_port_instance1 }}",
+              tomcat_debug_port: "{{ tomcat_debug_port_instance1 }}",
               tomcat_ajp_port: "{{ tomcat_ajp_port_instance1 }}"
+              tomcat_enable_remote_debug: "{{ tomcat_enable_remote_debug_instance1 }}"
           }
         - { role: ansible-tomcat,
               tomcat_user_name: "{{ tomcat_user_name_instance2 }}",
