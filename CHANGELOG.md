@@ -1,3 +1,13 @@
+# 0.4.0
+
+Marc Rohlfs (6):
+      Predefined, overwritable version data.
+      Changed default version to latest published version.
+      Improved default variables for Tomcat service user, installation and instance. Now, 'tomcat_user_home' and 'tomcat_env_catalina_base' don't need to be defined per Tomcat instance, because the default definitions implicitly set different values.
+      Default variable 'tomcat_service_name' is now configured with the value of the variable 'tomcat_user_name', so that it doesn't need to be defined per Tomcat instance.
+      Allow optional configuration of a base value for all the port that have to be defined for a Tomcat instance.
+      Warning and qualified informaiton on port configurations.
+
 # 0.3.0
 
 Marc Rohlfs (12):

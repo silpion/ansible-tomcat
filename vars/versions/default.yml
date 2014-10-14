@@ -1,0 +1,4 @@
+---
+# This file is included, when no vars/versions/{{ version }}.yml exists for the
+# configured version. It doesn't define any variable so that the variables for
+# versions that are not predefined can be defined in the inventory.
