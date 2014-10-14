@@ -94,33 +94,18 @@
     {{ tomcat_env_catalina_base }}/conf/{{ item }}
 
 
-- name: Configure connector ports
+- name: Configure ports
   tags: tomcat
+  when: tomcat_base_port != 0
+  with_items:
+    - { regexp: 8080, replace: "{{ tomcat_connector_port }}" }
+    - { regexp: 8443, replace: "{{ tomcat_redirect_port }}" }
+    - { regexp: 8005, replace: "{{ tomcat_shutdown_port }}" }
+    - { regexp: 8009, replace: "{{ tomcat_ajp_port }}" }
   replace:
     dest={{ tomcat_env_catalina_base }}/conf/server.xml
-    regexp=8080
-    replace={{ tomcat_connector_port }}
-
-- name: Configure redirect ports
-  tags: tomcat
-  replace:
-    dest={{ tomcat_env_catalina_base }}/conf/server.xml
-    regexp=8443
-    replace={{ tomcat_redirect_port }}
-
-- name: Configure ajp ports
-  tags: tomcat
-  replace:
-    dest={{ tomcat_env_catalina_base }}/conf/server.xml
-    regexp=8009
-    replace={{ tomcat_ajp_port }}
-
-- name: Configure shutdown ports
-  tags: tomcat
-  replace:
-    dest={{ tomcat_env_catalina_base }}/conf/server.xml
-    regexp=8005
-    replace={{ tomcat_shutdown_port }}
+    regexp={{ item.regexp }}
+    replace={{ item.replace }}
 
 
 # Install a tomcat service

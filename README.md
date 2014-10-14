@@ -26,10 +26,23 @@ Facts are used as
 * ``tomcat_env_catalina_home``: Configure environment variable that points to the tomcat installation directory (default: ``{{ tomcat_install_base }}/apache-tomcat-{{ tomcat_version }}``)
 * ``tomcat_env_catalina_base``: Configure environment variable that points to the tomcat instance directory (default: ``{{ tomcat_user_home }}/catalina``)
 * ``tomcat_service_name``: Configure name for Tomcat service (default: ``{{ tomcat_user_name }}``)
-* ``tomcat_connector_port``: Configure connector port for Tomcat service (default: ``8080``)
-* ``tomcat_redirect_port``: Configure redirect port for Tomcat service (default: ``8443``)
-* ``tomcat_shutdown_port``: Configure shutdown port for Tomcat service (default: ``8005``)
-* ``tomcat_ajp_port``: Configure AJP port for Tomcat service (default: ``8009``)
+* ``tomcat_base_port``: Configure base port value for Tomcat service (default: ``0``)
+* ``tomcat_connector_port``: Configure connector port for Tomcat service (default: ``8080`` or ``{{ tomcat_base_port }}``)
+* ``tomcat_redirect_port``: Configure redirect port for Tomcat service (default: ``8443`` or ``{{ tomcat_base_port + 3 }}``)
+* ``tomcat_shutdown_port``: Configure shutdown port for Tomcat service (default: ``8005`` or ``{{ tomcat_base_port + 5 }}``)
+* ``tomcat_ajp_port``: Configure AJP port for Tomcat service (default: ``8009`` or ``{{ tomcat_base_port + 9 }}``)
+
+**Note** on port configurations: When the ``tomcat_base_port`` is configured with its default
+value ``0``, the default ports of the standard Tomcat installation won't be modified. Otherwise
+the ports will follow a scheme where each port number will have a predefined positive, one-digit
+distance to the configured ``tomcat_base_port``. Some examples:
+
+| ``tomcat_base_port``      | 0    | 8000 | 8080 |
+| --------------------------|------|------|------|
+| ``tomcat_connector_port`` | 8080 | 8000 | 8080 |
+| ``tomcat_redirect_port``  | 8443 | 8003 | 8083 |
+| ``tomcat_shutdown_port``  | 8005 | 8005 | 8085 |
+| ``tomcat_ajp_port``       | 8009 | 8009 | 8089 |
 
 ### Role variables for multiple role invocations
 
