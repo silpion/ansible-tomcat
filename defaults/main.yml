@@ -33,5 +33,10 @@ tomcat_connector_port: "{{ tomcat_base_port }}"
 tomcat_redirect_port: "{{ tomcat_base_port + 3 }}"
 #   shutdown port
 tomcat_shutdown_port: "{{ tomcat_base_port + 5 }}"
+#   remote debug port
+tomcat_debug_port: "{{ tomcat_base_port + 7 }}"
 #   ajp port
 tomcat_ajp_port: "{{ tomcat_base_port + 9 }}"
+
+# enable/disable remote debugging
+tomcat_enable_remote_debug: false

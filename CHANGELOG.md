@@ -1,3 +1,8 @@
+# 0.4.1
+
+Marc Rohlfs (1):
+      Enable and configure remote debugging.
+
 # 0.4.0
 
 Marc Rohlfs (6):
