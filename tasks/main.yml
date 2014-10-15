@@ -20,8 +20,7 @@
   tags: tomcat
   assert:
     that:
-      - tomcat_redis_sha256sum != None
-      - tomcat_redis_sha256sum != ""
+      - tomcat_redis_sha256sum not in (None, "")
 
 
 - include: local.yml
@@ -102,24 +101,24 @@
   tags: tomcat
   with_items: tomcat_conf_files.stdout_lines
   command: install
-    --owner {{ tomcat_user_name }}
-    --group {{ tomcat_user_group }}
-    --mode 0750
-    {{ tomcat_env_catalina_home }}/conf/{{ item }}
-    {{ tomcat_env_catalina_base }}/conf/{{ item }}
+      --owner {{ tomcat_user_name }}
+      --group {{ tomcat_user_group }}
+      --mode 0640
+      {{ tomcat_env_catalina_home }}/conf/{{ item }}
+      {{ tomcat_env_catalina_base }}/conf/{{ item }}
+    creates={{ tomcat_env_catalina_base }}/conf/{{ item }}
 
 
 - name: Configure ports
   tags: tomcat
-  when: tomcat_base_port != 0
   with_items:
-    - { regexp: 8080, replace: "{{ tomcat_connector_port }}" }
-    - { regexp: 8443, replace: "{{ tomcat_redirect_port }}" }
-    - { regexp: 8005, replace: "{{ tomcat_shutdown_port }}" }
-    - { regexp: 8009, replace: "{{ tomcat_ajp_port }}" }
+    - { search: 8080, replace: "{{ tomcat_connector_port|default(8080) }}" }
+    - { search: 8443, replace: "{{ tomcat_redirect_port|default(8443) }}" }
+    - { search: 8005, replace: "{{ tomcat_shutdown_port|default(8005) }}" }
+    - { search: 8009, replace: "{{ tomcat_ajp_port|default(8009) }}" }
   replace:
     dest={{ tomcat_env_catalina_base }}/conf/server.xml
-    regexp={{ item.regexp }}
+    regexp={{ item.search }}
     replace={{ item.replace }}
 
 
