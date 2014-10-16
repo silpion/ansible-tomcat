@@ -1,3 +1,10 @@
+# 0.4.2
+
+Mark Kusch (3):
+      Fixup vars and defaults
+      Persist tomcat configuration
+      Update documentation to current state of variable management
+
 # 0.4.1
 
 Marc Rohlfs (1):
