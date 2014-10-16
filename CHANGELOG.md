@@ -1,3 +1,8 @@
+# 0.4.3
+
+Marc Rohlfs (1):
+      Removed leftovers of removed 'tomcat_base_port' var.
+
 # 0.4.2
 
 Mark Kusch (3):
