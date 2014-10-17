@@ -11,9 +11,7 @@ setgid {{ tomcat_user_group }}
 env JAVA_HOME={{ ansible_local.java.general.java_home }}
 env CATALINA_HOME={{ tomcat_env_catalina_home }}
 env CATALINA_BASE={{ tomcat_env_catalina_base }}
-{% if tomcat_enable_remote_debug %}
-env CATALINA_OPTS="-agentlib:jdwp=transport=dt_socket,address={{ tomcat_debug_port|default(8000) }},server=y,suspend=n"
-{% endif %}
+env CATALINA_OPTS="{{ tomcat_env_catalina_opts|default('') }}"
 
 script
   exec {{ tomcat_env_catalina_home }}/bin/catalina.sh run
