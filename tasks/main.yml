@@ -95,7 +95,7 @@
 - name: Register conf files to be installed
   tags: tomcat
   register: tomcat_conf_files
-  command: ls -1 {{ tomcat_env_catalina_home }}/conf
+  command: ls -1 --ignore=server.xml {{ tomcat_env_catalina_home }}/conf
 
 - name: Install conf files
   tags: tomcat
@@ -109,17 +109,14 @@
     creates={{ tomcat_env_catalina_base }}/conf/{{ item }}
 
 
-- name: Configure ports
+- name: Install server configuration
   tags: tomcat
-  with_items:
-    - { search: 8080, replace: "{{ tomcat_connector_port|default(8080) }}" }
-    - { search: 8443, replace: "{{ tomcat_redirect_port|default(8443) }}" }
-    - { search: 8005, replace: "{{ tomcat_shutdown_port|default(8005) }}" }
-    - { search: 8009, replace: "{{ tomcat_ajp_port|default(8009) }}" }
-  replace:
+  template:
+    src={{ tomcat_server_xml_template }}
     dest={{ tomcat_env_catalina_base }}/conf/server.xml
-    regexp={{ item.search }}
-    replace={{ item.replace }}
+    owner={{ tomcat_user_name }}
+    group={{ tomcat_user_group }}
+    mode=0640
 
 
 # Install a tomcat service

@@ -1,3 +1,9 @@
+# 0.4.4
+
+Marc Rohlfs (2):
+      Configure variable 'tomcat_env_catalina_opts' (with empty default value). Arguments for remote debugging now have to be defined out side of the tomcat role. This provides full flexibility to define the transport options for remote debugging as well as all other possible options that may be passed to the JVM on startup.
+      Install server.xml using a template that can be overwritten in the playbooks.
+
 # 0.4.3
 
 Marc Rohlfs (1):
