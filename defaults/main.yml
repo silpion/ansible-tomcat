@@ -22,6 +22,3 @@ tomcat_install_base: /opt/tomcat
 tomcat_env_catalina_base: "{{ tomcat_user_home }}/catalina"
 #   service name
 tomcat_service_name: "{{ tomcat_user_name }}"
-
-# enable/disable remote debugging
-tomcat_enable_remote_debug: false

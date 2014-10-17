@@ -9,9 +9,7 @@ Environment=CATALINA_PID=/run/tomcat.pd
 Environment=TOMCAT_JAVA_HOME={{ java_home }}
 Environment=CATALINA_HOME={{ tomcat_env_catalina_home }}
 Environment=CATALINA_BASE={{ tomcat_env_catalina_base }}
-{% if tomcat_enable_remote_debug %}
-Environment=CATALINA_OPTS="-agentlib:jdwp=transport=dt_socket,address={{ tomcat_debug_port|default(8000) }},server=y,suspend=n"
-{% endif %}
+Environment=CATALINA_OPTS="{{ tomcat_env_catalina_opts|default('') }}"
 
 ExecStart=/usr/bin/jsvc \
   -Dcatalina.home=${CATALINA_HOME} \

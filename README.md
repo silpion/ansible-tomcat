@@ -34,8 +34,8 @@ of variables that **must** differ in each role invocation:
 * ``tomcat_user_group``: Configure group for Tomcat service user (string, default: ``tomcat``)
 * ``tomcat_user_home``: Configure home directory for Tomcat service user (string, default: ``/srv/{{ tomcat_user_name }}``)
 * ``tomcat_env_catalina_base``: Configure environment variable that points to the tomcat instance directory (string, default: ``{{ tomcat_user_home }}/catalina``)
+* ``tomcat_env_catalina_opts``: Configure environment variable specifying additional options for the Java command that starts Tomcat (string, default: None)
 * ``tomcat_service_name``: Configure name for Tomcat service (string, default: ``{{ tomcat_user_name }}``)
-* ``tomcat_enable_remote_debug``: Configure if remote debugging should be enabled (string, default: ``false``)
 
 Tomcat instances must get configured with different ports in your inventory/playbook.
 Defaults for these ports are not accessable as variables but are used with jinja |default()
@@ -44,7 +44,6 @@ function in tasks/main.yml.
 * ``tomcat_connector_port``: Configure connector port for Tomcat service (int, default: ``8080``)
 * ``tomcat_redirect_port``: Configure redirect port for Tomcat service (int, default: ``8443``)
 * ``tomcat_shutdown_port``: Configure shutdown port for Tomcat service (int, default: ``8005``)
-* ``tomcat_debug_port``: Configure remote debug port for Tomcat service (int, default: ``8000``)
 * ``tomcat_ajp_port``: Configure AJP port for Tomcat service (int, default: ``8009``)
 
 ## Dependencies
@@ -69,8 +68,7 @@ None.
         - tomcat_redirect_port_instance_1: 25443
         - tomcat_shutdown_port_instance_1: 25005
         - tomcat_ajp_port_instance_1: 25009
-        - tomcat_debug_port_instance_1: 65321
-        - tomcat_enable_remote_debug_instance_1: true
+        - tomcat_env_catalina_opts_instance_1: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=65321"
         - unrelated_other_variable: unrelated_value
         - tomcat_user_name_instance_2: bar
         - tomcat_user_group_instance_2: bar
@@ -78,8 +76,7 @@ None.
         - tomcat_redirect_port_instance_2: 22443
         - tomcat_shutdown_port_instance_2: 22005
         - tomcat_ajp_port_instance_2: 22009
-        - tomcat_debug_port_instance_2: 62321
-        - tomcat_enable_remote_debug_instance_2: false
+        - tomcat_env_catalina_opts_instance_2: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=62321"
       roles:
         - { role: ansible-tomcat,
               tomcat_user_name: "{{ tomcat_user_name_instance_1 }}",
@@ -88,8 +85,7 @@ None.
               tomcat_redirect_port: "{{ tomcat_redirect_port_instance_1 }}",
               tomcat_shutdown_port: "{{ tomcat_shutdown_port_instance_1 }}",
               tomcat_ajp_port: "{{ tomcat_ajp_port_instance_1 }}",
-              tomcat_debug_port: "{{ tomcat_debug_port_instance_1 }}",
-              tomcat_enable_remote_debug: "{{ tomcat_enable_remote_debug_instance_1 }}"
+              tomcat_env_catalina_opts: "{{ tomcat_env_catalina_opts_instance_1 }}"
           }
         - { role: ansible-tomcat,
               tomcat_user_name: "{{ tomcat_user_name_instance_2 }}",
@@ -98,8 +94,7 @@ None.
               tomcat_redirect_port: "{{ tomcat_redirect_port_instance_2 }}",
               tomcat_shutdown_port: "{{ tomcat_shutdown_port_instance_2 }}",
               tomcat_ajp_port: "{{ tomcat_ajp_port_instance_2 }}",
-              tomcat_debug_port: "{{ tomcat_debug_port_instance_2 }}",
-              tomcat_enable_remote_debug: "{{ tomcat_enable_remote_debug_instance_2 }}"
+              tomcat_env_catalina_opts: "{{ tomcat_env_catalina_opts_instance_2 }}"
           }
         - { role: ansible-tomcat } # use default values here
 
