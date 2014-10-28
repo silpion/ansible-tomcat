@@ -23,6 +23,9 @@ PROC=tomcat
 
 start(){
   echo -n $"Starting $PROC: "
+{% if tomcat_service_umask is defined %}
+  umask {{ tomcat_service_umask }}
+{% endif %}
   daemon $CATALINA_HOME/bin/catalina.sh start
   ret=$?
   echo

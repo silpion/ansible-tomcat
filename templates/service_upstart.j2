@@ -14,6 +14,9 @@ env CATALINA_BASE={{ tomcat_env_catalina_base }}
 env CATALINA_OPTS="{{ tomcat_env_catalina_opts|default('') }}"
 
 script
+{% if tomcat_service_umask is defined %}
+  umask {{ tomcat_service_umask }}
+{% endif %}
   exec {{ tomcat_env_catalina_home }}/bin/catalina.sh run
 end script
 

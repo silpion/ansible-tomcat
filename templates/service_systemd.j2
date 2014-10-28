@@ -10,6 +10,9 @@ Environment=TOMCAT_JAVA_HOME={{ java_home }}
 Environment=CATALINA_HOME={{ tomcat_env_catalina_home }}
 Environment=CATALINA_BASE={{ tomcat_env_catalina_base }}
 Environment=CATALINA_OPTS="{{ tomcat_env_catalina_opts|default('') }}"
+{% if tomcat_service_umask is defined %}
+UMask={{ tomcat_service_umask }}
+{% endif %}
 
 ExecStart=/usr/bin/jsvc \
   -Dcatalina.home=${CATALINA_HOME} \
