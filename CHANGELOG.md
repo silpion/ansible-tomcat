@@ -1,3 +1,8 @@
+# 0.4.5
+
+Marc Rohlfs (1):
+      Optionally set umask for Tomcat service.
+
 # 0.4.4
 
 Marc Rohlfs (2):
