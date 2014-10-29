@@ -36,6 +36,7 @@ of variables that **must** differ in each role invocation:
 * ``tomcat_env_catalina_base``: Configure environment variable that points to the tomcat instance directory (string, default: ``{{ tomcat_user_home }}/catalina``)
 * ``tomcat_env_catalina_opts``: Configure environment variable specifying additional options for the Java command that starts Tomcat (string, default: None)
 * ``tomcat_service_name``: Configure name for Tomcat service (string, default: ``{{ tomcat_user_name }}``)
+* ``tomcat_service_umask``: Configure umask (just the 4 digit value) for Tomcat service (string, default: None)
 * ``tomcat_server_xml_template``: Configure path to template for Tomcat configuration file _server.xml_ (string, default: ``server.xml.j2``)
 
 Tomcat instances must get configured with different ports in your inventory/playbook.
@@ -70,6 +71,7 @@ None.
         - tomcat_shutdown_port_instance_1: 25005
         - tomcat_ajp_port_instance_1: 25009
         - tomcat_env_catalina_opts_instance_1: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=65321"
+        - tomcat_service_umask_instance_1: "0002"
         - tomcat_server_xml_template_instance_1: "{{ playbook_dir }}/templates/server.xml.j2"
         - unrelated_other_variable: unrelated_value
         - tomcat_user_name_instance_2: bar
@@ -89,6 +91,7 @@ None.
               tomcat_shutdown_port: "{{ tomcat_shutdown_port_instance_1 }}",
               tomcat_ajp_port: "{{ tomcat_ajp_port_instance_1 }}",
               tomcat_env_catalina_opts: "{{ tomcat_env_catalina_opts_instance_1 }}",
+              tomcat_service_umask: "{{ tomcat_service_umask_instance_1 }}",
               tomcat_server_xml_template: "{{ tomcat_server_xml_template_instance_1 }}"
           }
         - { role: ansible-tomcat,
