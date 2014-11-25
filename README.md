@@ -12,7 +12,7 @@ upstart service template to work:
 
 Facts are used as
 
-* ``ansible_local.java.default.java_home``
+* ``ansible_local.java.general.java_home``
 
 ## Role variables
 
