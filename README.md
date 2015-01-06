@@ -16,7 +16,7 @@ Facts are used as
 
 ## Role variables
 
-* ``tomcat_version``: Configure Tomcat version (string, default: ``7.0.56``)
+* ``tomcat_version``: Configure Tomcat version (string, default: ``7.0.57``)
 * ``tomcat_mirror``: Configure Tomcat mirror site (string, default: ``http://archive.apache.org/dist/tomcat``)
 * ``tomcat_redis_sha256sum``: SHA256 sum for the downloaded Tomcat redistributable package (string, default: ``c0ca44be20bccebbb043ccd7ab5ea4d94060fdde6bb84812f3da363955dae5bb``)
 * ``tomcat_install_base``: Configure base/installation directory for Tomcat (string, default: ``/opt/tomcat``)
