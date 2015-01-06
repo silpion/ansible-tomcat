@@ -1,0 +1,15 @@
+---
+language: python
+python: "2.7"
+before_install:
+  - sudo apt-get update --assume-yes -qq
+  - sudo apt-get install --assume-yes -qq python-apt python-pycurl
+  - sudo install -d -o root -g root -m 755 /etc/ansible/facts.d
+  - sudo "echo '[general]' > /etc/ansible/facts.d/java.fact"
+  - sudo "echo 'java_home = somewhere' >> /etc/ansible/facts.d/java.fact"
+install:
+  - sudo pip install ansible
+script:
+  - ansible --version
+  - ansible-playbook --inventory-file tests/hosts --syntax-check tests/playbook.yml
+  - ansible-playbook --inventory-file tests/hosts --connection=local -vvvv tests/playbook.yml

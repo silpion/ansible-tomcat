@@ -1,3 +1,13 @@
+# 0.5.0
+
+Mark Kusch (6):
+      Fix documentation for java local facts (github/issues#1)
+      Update tomcat to version 7.0.57
+      Use ansible local facts for java_home in any system service management template
+      Update integration testing to work with Serverspec 2.N
+      Allow github to perform integration testing
+      Abstract supported platforms in vars
+
 # 0.4.5
 
 Marc Rohlfs (1):

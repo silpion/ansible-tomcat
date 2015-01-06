@@ -6,7 +6,7 @@
   tags: tomcat
   assert:
     that:
-      - ansible_os_family in ['Archlinux', 'Debian', 'RedHat', 'Suse']
+      - ansible_os_family in tomcat_supported_platforms
 
 
 - name: Load version vars
