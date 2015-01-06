@@ -6,7 +6,7 @@ After=network.target
 Type=forking
 PIDFile=/run/tomcat.pid
 Environment=CATALINA_PID=/run/tomcat.pd
-Environment=TOMCAT_JAVA_HOME={{ java_home }}
+Environment=TOMCAT_JAVA_HOME={{ ansible_local.java.general.java_home }}
 Environment=CATALINA_HOME={{ tomcat_env_catalina_home }}
 Environment=CATALINA_BASE={{ tomcat_env_catalina_base }}
 Environment=CATALINA_OPTS="{{ tomcat_env_catalina_opts|default('') }}"
