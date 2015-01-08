@@ -1,3 +1,8 @@
+# 0.5.2
+
+Sebastian Davids (1):
+      FIX - hard coded service name
+
 # 0.5.1
 
 Mark Kusch (1):
