@@ -151,4 +151,4 @@
   service:
     state=started
     enabled=true
-    name=tomcat
+    name={{ tomcat_service_name }}
