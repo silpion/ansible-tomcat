@@ -38,6 +38,10 @@ of variables that **must** differ in each role invocation:
 * ``tomcat_service_name``: Configure name for Tomcat service (string, default: ``{{ tomcat_user_name }}``)
 * ``tomcat_service_umask``: Configure umask (just the 4 digit value) for Tomcat service (string, default: None)
 * ``tomcat_server_xml_template``: Configure path to template for Tomcat configuration file _server.xml_ (string, default: ``server.xml.j2``)
+* ``tomcat_server_systemd_template``: Configure path to template for Tomcat SystemD config _tomcat.service_ (string, default: ``service_systemd.j2``)
+* ``tomcat_server_sysvinit_template``: Configure path to template for Tomcat sysvinit config _tomcat_ (string, default: ``service_sysvinit.j2``)
+* ``tomcat_server_upstart_template``: Configure path to template for Tomcat Upstart config _tomcat.conf_ (string, default: ``service_upstart.j2``)
+
 
 Tomcat instances must get configured with different ports in your inventory/playbook.
 Defaults for these ports are not accessable as variables but are used with jinja |default()
