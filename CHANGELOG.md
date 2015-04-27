@@ -1,3 +1,13 @@
+# 0.6.0
+
+Mark Kusch (2):
+
+* Fix usage for sysv init script
+
+Travis Truman (1):
+
+* Ability to customize Upstart, SystemD and SysVInit service configuration by providing alternate templates
+
 # 0.5.2
 
 Sebastian Davids (1):
