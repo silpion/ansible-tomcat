@@ -74,6 +74,7 @@
     - conf
     - logs
     - webapps
+    - temp
   file:
     state=directory
     dest={{ tomcat_env_catalina_base }}/{{ item }}
