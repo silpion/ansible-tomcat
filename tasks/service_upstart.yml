@@ -3,7 +3,7 @@
   tags: tomcat
   notify: service restart {{ tomcat_service_name }}
   template:
-    src=service_upstart.j2
+    src={{ tomcat_server_upstart_template }}
     dest=/etc/init/{{ tomcat_service_name }}.conf
     owner=0
     group=0

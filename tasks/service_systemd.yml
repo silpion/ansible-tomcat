@@ -12,7 +12,7 @@
   tags: tomcat
   notify: service restart {{ tomcat_service_name }}
   template:
-    src=service_systemd.j2
+    src={{ tomcat_server_systemd_template }}
     dest=/etc/systemd/system/{{ tomcat_service_name }}.service
     owner=0
     group=0
