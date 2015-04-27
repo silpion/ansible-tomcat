@@ -141,6 +141,13 @@ Ruby with rake and bundler available.
 # Author information
 
 Mark Kusch @mark.kusch silpion.de
+Marc Rohlfs @marc.rohlfs silpion.de
+
+### Contributors
+
+* Lars Maehlmann @lars.maehlmann silpion.de
+* Sebastian Davids @sebastian.davids silpion.de
+* [trumant](https://github.com/trumant)
 
 
 <!-- vim: set ts=4 sw=4 et nofen: -->
