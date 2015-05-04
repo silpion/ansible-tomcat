@@ -5,6 +5,8 @@ tomcat_version: 7.0.57
 # Mirror where to dowload Tomcat redistributable package from
 tomcat_mirror: http://archive.apache.org/dist/tomcat
 
+tomcat_download_url: "{{ tomcat_mirror }}/tomcat-{{ tomcat_version_major }}/v{{ tomcat_version }}/bin/{{ tomcat_redis_filename }}"
+
 # tomcat service user
 #   user name
 tomcat_user_name: tomcat
