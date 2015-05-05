@@ -1,3 +1,14 @@
+# 0.7.0
+
+Travis Truman (1):
+
+* Allow customization of installer download url for local artifact repositories, etc
+
+Mark Kusch (2):
+
+* Add documentation for tomcat_download_url variable
+* Add contribution information to documentation
+
 # 0.6.0
 
 Mark Kusch (2):
