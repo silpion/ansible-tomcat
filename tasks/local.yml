@@ -17,6 +17,6 @@
   sudo: no
   local_action: get_url
     dest={{ local_ansible_data_path }}/{{ tomcat_redis_filename }}
-    url={{ tomcat_mirror }}/tomcat-{{ tomcat_version_major }}/v{{ tomcat_version }}/bin/{{ tomcat_redis_filename }}
+    url={{ tomcat_download_url }}
     mode=0644
     sha256sum={{ tomcat_redis_sha256sum }}

@@ -33,6 +33,7 @@ of variables that **must** differ in each role invocation:
 * ``tomcat_user_name``: Configure user to run Tomcat as (string, default: ``tomcat``)
 * ``tomcat_user_group``: Configure group for Tomcat service user (string, default: ``tomcat``)
 * ``tomcat_user_home``: Configure home directory for Tomcat service user (string, default: ``/srv/{{ tomcat_user_name }}``)
+* ``tomcat_download_url``: Where to download Tomcat from (string, default: ``{{ tomcat_mirror }}/tomcat-{{ tomcat_version_major }}/v{{ tomcat_version }}/bin/{{ tomcat_redis_filename }}``)
 * ``tomcat_env_catalina_base``: Configure environment variable that points to the tomcat instance directory (string, default: ``{{ tomcat_user_home }}/catalina``)
 * ``tomcat_env_catalina_opts``: Configure environment variable specifying additional options for the Java command that starts Tomcat (string, default: None)
 * ``tomcat_service_name``: Configure name for Tomcat service (string, default: ``{{ tomcat_user_name }}``)
@@ -109,6 +110,15 @@ None.
               tomcat_server_xml_template: "{{ tomcat_server_xml_template_opts_instance_2 }}"
           }
         - { role: ansible-tomcat } # use default values here
+
+## Contributing
+
+If you want to contribute to this repository please be aware that this
+project uses a [gitflow](http://nvie.com/posts/a-successful-git-branching-model/)
+workflow with the next release branch called ``next``.
+
+Please fork this repository and create a local branch split off of the ``next``
+branch and create pull requests back to the origin ``next`` branch.
 
 ## License
 
