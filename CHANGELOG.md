@@ -1,3 +1,9 @@
+# 0.7.1
+
+Mark Kusch (1):
+
+* Fix variable substitution when installing service for SysV
+
 # 0.7.0
 
 Travis Truman (1):
