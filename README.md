@@ -110,6 +110,15 @@ None.
           }
         - { role: ansible-tomcat } # use default values here
 
+## Contributing
+
+If you want to contribute to this repository please be aware that this
+project uses a [gitflow](http://nvie.com/posts/a-successful-git-branching-model/)
+workflow with the next release branch called ``next``.
+
+Please fork this repository and create a local branch split off of the ``next``
+branch and create pull requests back to the origin ``next`` branch.
+
 ## License
 
 Apache Version 2.0
