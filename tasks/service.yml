@@ -1,6 +1,6 @@
 ---
 # TODO [kusch] Proper detection of init system Wed 20 May 2015 06:23:51 PM CEST
-- name: Configure role for systemd
+- name: Configure init system for Archlinux
   tags: tomcat
   when: ansible_os_family == 'Archlinux'
   include_vars: service/systemd.yml
