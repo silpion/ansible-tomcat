@@ -7,6 +7,7 @@
   assert:
     that:
       - ansible_os_family in tomcat_supported_platforms
+      - ansible_distribution in tomcat_supported_distributions
 
 
 - name: Load version vars
@@ -21,6 +22,7 @@
   assert:
     that:
       - tomcat_redis_sha256sum not in (None, "")
+
 
 
 - name: Include util get/put instructions
@@ -112,19 +114,19 @@
     mode=0640
 
 
-# Install a tomcat service
-- include: service_systemd.yml
+- name: Configure service management
   tags: tomcat
-  when: ansible_distribution == 'Archlinux'
+  include: service.yml
 
-- include: service_upstart.yml
+- name: Install tomcat service
   tags: tomcat
-  when: ansible_distribution == 'Ubuntu'
-
-- include: service_sysvinit.yml
-  tags: tomcat
-  when: ansible_distribution == 'Debian' or ansible_os_family == 'RedHat'
-
+  become: yes
+  template:
+    src={{ tomcat_service_template|default(tomcat_service_src) }}
+    dest={{ tomcat_service_file_dest }}
+    owner=0
+    group=0
+    mode={{ tomcat_service_file_mode }}
 
 - name: Ensure tomcat service
   tags: tomcat

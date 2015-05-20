@@ -3,7 +3,11 @@ tomcat_supported_platforms:
   - Archlinux
   - Debian
   - RedHat
-  - Suse
+
+tomcat_supported_distributions:
+  - Archlinux
+  - Ubuntu
+  - CentOS
 
 # filename of Tomcat redistributable package
 tomcat_redis_filename: apache-tomcat-{{ tomcat_version }}.tar.gz

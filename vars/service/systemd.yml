@@ -1,0 +1,4 @@
+---
+tomcat_service_src: service_systemd.j2
+tomcat_service_file_dest: /etc/systemd/system/tomcat.service
+tomcat_service_file_mode: 644
