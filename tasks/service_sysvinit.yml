@@ -1,6 +1,7 @@
 ---
 - name: Install sysvinit Tomcat Service
   tags: tomcat
+  become: yes
   notify: service restart {{ tomcat_service_name }}
   template:
     src={{ tomcat_server_sysvinit_template }}
