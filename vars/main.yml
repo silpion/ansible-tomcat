@@ -5,14 +5,11 @@ tomcat_supported_platforms:
   - RedHat
   - Suse
 
-# path for ansible to store downloaded or templated data
-local_ansible_data_path: '/usr/local/src/ansible/data'
-remote_ansible_data_path: "{{ local_ansible_data_path }}"
-
 # filename of Tomcat redistributable package
-tomcat_redis_filename: "apache-tomcat-{{ tomcat_version }}.tar.gz"
+tomcat_redis_filename: apache-tomcat-{{ tomcat_version }}.tar.gz
 
 tomcat_version_major: "{{ tomcat_version|truncate(1, True, '') }}"
 
 # installation directory, denoted by environment variable CATALINA_HOME
+tomcat_env_catalina_pid: /var/run/{{ tomcat_service_name }}.pid
 tomcat_env_catalina_home: "{{ tomcat_install_base }}/apache-tomcat-{{ tomcat_version }}"
