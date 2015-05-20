@@ -118,15 +118,53 @@
   tags: tomcat
   include: service.yml
 
+
+- name: Install Ansible facts.d directory
+  tags: tomcat
+  become: yes
+  file:
+    state=directory
+    dest=/etc/ansible/facts.d
+    owner=0
+    group=0
+    mode=0755
+
+- name: Install local tomcat facts
+  tags: tomcat
+  become: yes
+  register: tomcat_registered_install_local_tomcat_facts
+  template:
+    src=facts.j2
+    dest=/etc/ansible/facts.d/tomcat.fact
+    owner=0
+    group=0
+    mode=0644
+
+- name: Re-read local facts
+  tags: tomcat
+  when: tomcat_registered_install_local_tomcat_facts.changed
+  setup:
+    filter=ansible_local
+
+
 - name: Install tomcat service
   tags: tomcat
   become: yes
+  register: registered_tomcat_install_tomcat_service
   template:
     src={{ tomcat_service_template|default(tomcat_service_src) }}
     dest={{ tomcat_service_file_dest }}
     owner=0
     group=0
     mode={{ tomcat_service_file_mode }}
+
+- name: Reload systemd
+  tags: tomcat
+  when: registered_tomcat_install_tomcat_service.changed and ansible_local.tomcat.init.system == 'systemd'
+  become: yes
+  failed_when: false
+  changed_when: false
+  command: systemctl daemon-reload
 
 - name: Ensure tomcat service
   tags: tomcat

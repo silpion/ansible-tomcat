@@ -1,0 +1,23 @@
+{% if util_template_use_cow %}
+#  --------------------
+# ( Managed by Ansible )
+#  --------------------
+#   o            .    .     .
+#    o      .  . .     `  ,
+#     o    .; .  : .' :  :  : .
+#      o   i..`: i` i.i.,i  i .
+#       o   `,--.|i |i|ii|ii|i:
+#            UooU\.'@@@@@@`.||'
+#            \__/(@@@@@@@@@@)'
+#                 (@@@@@@@@)
+#                 `YY~~~~YY'
+#                  ||    ||
+{% else %}
+# {{ ansible_managed }}
+{% endif %}
+
+[general]
+version = {{ tomcat_version }}
+
+[init]
+system = {{ tomcat_init_system }}
