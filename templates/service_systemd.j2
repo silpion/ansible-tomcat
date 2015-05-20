@@ -3,9 +3,7 @@ Description=Tomcat servlet container
 After=network.target
 
 [Service]
-Type=forking
-PIDFile=/run/tomcat.pid
-Environment=CATALINA_PID=/run/tomcat.pd
+Restart=on-failure
 Environment=TOMCAT_JAVA_HOME={{ ansible_local.java.general.java_home }}
 Environment=CATALINA_HOME={{ tomcat_env_catalina_home }}
 Environment=CATALINA_BASE={{ tomcat_env_catalina_base }}
@@ -14,21 +12,26 @@ Environment=CATALINA_OPTS="{{ tomcat_env_catalina_opts|default('') }}"
 UMask={{ tomcat_service_umask }}
 {% endif %}
 
-ExecStart=/usr/bin/jsvc \
-  -Dcatalina.home=${CATALINA_HOME} \
-  -Dcatalina.base=${CATALINA_BASE} \
+ExecStart={{ ansible_local.java.general.java_home }}/bin/java \
+  -Djava.util.logging.config.file={{ tomcat_env_catalina_base }}/conf/logging.properties \
+  -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager \
+  -Djava.endorsed.dirs={{ tomcat_env_catalina_home }}/endorsed \
+  -Dcatalina.home={{ tomcat_env_catalina_home }} \
+  -Dcatalina.base={{ tomcat_env_catalina_base }} \
   -Djava.io.tmpdir={{ tomcat_env_catalina_base }}/temp \
-  -java-home ${TOMCAT_JAVA_HOME} \
-  -pidfile /run/tomcat.pid \
-  -errfile SYSLOG \
-  -outfile SYSLOG \
-  $CATALINA_OPTS \
-  org.apache.catalina.startup.Bootstrap
+  -classpath "{{ tomcat_env_catalina_home }}/bin/bootstrap.jar:{{ tomcat_env_catalina_home }}/bin/tomcat-juli.jar" \
+  org.apache.catalina.startup.Bootstrap start
 
-ExecStop=/usr/bin/jsvc \
-  -pidfile /run/tomcat.pid \
-  -stop \
-  org.apache.catalina.startup.Bootstrap
+ExecStop={{ ansible_local.java.general.java_home }}/bin/java \
+  -Djava.util.logging.config.file={{ tomcat_env_catalina_base }}/conf/logging.properties \
+  -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager \
+  -Djava.endorsed.dirs={{ tomcat_env_catalina_home }}/endorsed \
+  -Dcatalina.home={{ tomcat_env_catalina_home }} \
+  -Dcatalina.base={{ tomcat_env_catalina_base }} \
+  -Djava.io.tmpdir={{ tomcat_env_catalina_base }}/temp \
+  -classpath "{{ tomcat_env_catalina_home }}/bin/bootstrap.jar:{{ tomcat_env_catalina_home }}/bin/tomcat-juli.jar" \
+  org.apache.catalina.startup.Bootstrap stop
+
 
 [Install]
 WantedBy=multi-user.target
