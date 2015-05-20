@@ -152,7 +152,7 @@
   become: yes
   register: registered_tomcat_install_tomcat_service
   template:
-    src={{ tomcat_service_template|default(tomcat_service_src) }}
+    src={{ tomcat_service_template|default(tomcat_service_template_default) }}
     dest={{ tomcat_service_file_dest }}
     owner=0
     group=0

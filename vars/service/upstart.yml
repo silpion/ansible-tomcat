@@ -1,6 +1,6 @@
 ---
 tomcat_init_system: upstart
 
-tomcat_service_src: service_upstart.j2
+tomcat_service_template_default: service_upstart.j2
 tomcat_service_file_dest: /etc/init/{{ tomcat_service_name }}.conf
 tomcat_service_file_mode: 644
