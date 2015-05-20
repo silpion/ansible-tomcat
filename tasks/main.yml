@@ -84,6 +84,7 @@
 - name: Register conf files to be installed
   tags: tomcat
   register: tomcat_conf_files
+  changed_when: false
   command: ls -1 --ignore=server.xml {{ tomcat_env_catalina_home }}/conf
 
 - name: Install conf files
