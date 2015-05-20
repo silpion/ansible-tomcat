@@ -23,16 +23,9 @@
       - tomcat_redis_sha256sum not in (None, "")
 
 
-- include: local.yml
+- name: Include util get/put instructions
   tags: tomcat
-
-
-- name: Install remote ansible data path directory
-  tags: tomcat
-  sudo: yes
-  file:
-    state=directory
-    dest={{ remote_ansible_data_path }}
+  include: util.yml
 
 
 - name: Create Tomcat group
@@ -54,17 +47,6 @@
     comment="Tomcat service user"
 
 
-- name: Copy Tomcat distribution
-  tags: tomcat
-  sudo: yes
-  copy:
-    src={{ local_ansible_data_path }}/{{ tomcat_redis_filename }}
-    dest={{ remote_ansible_data_path }}/{{ tomcat_redis_filename }}
-    owner=0
-    group=0
-    mode=0644
-
-
 - name: Install catalina home directory
   tags: tomcat
   sudo: yes
@@ -79,7 +61,7 @@
   tags: tomcat
   sudo: yes
   command: tar
-      -xzf {{ remote_ansible_data_path }}/{{ tomcat_redis_filename }}
+      -xzf {{ util_persistent_data_path_remote }}/{{ tomcat_redis_filename }}
       -C {{ tomcat_env_catalina_home }}
       --strip-components 1
     creates={{ tomcat_env_catalina_home }}/lib
