@@ -116,18 +116,8 @@
 
 - name: Configure service management
   tags: tomcat
-  include: service.yml
+  include_vars: "service/{{ ansible_local['util']['init']['system'] }}.yml"
 
-
-- name: Install Ansible facts.d directory
-  tags: tomcat
-  become: yes
-  file:
-    state=directory
-    dest=/etc/ansible/facts.d
-    owner=0
-    group=0
-    mode=0755
 
 - name: Install local tomcat facts
   tags: tomcat
@@ -160,7 +150,7 @@
 
 - name: Reload systemd
   tags: tomcat
-  when: registered_tomcat_install_tomcat_service.changed and ansible_local.tomcat.init.system == 'systemd'
+  when: registered_tomcat_install_tomcat_service.changed and ansible_local.util.init.system == 'systemd'
   become: yes
   failed_when: false
   changed_when: false
