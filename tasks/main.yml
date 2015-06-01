@@ -23,28 +23,21 @@
       - tomcat_redis_sha256sum not in (None, "")
 
 
-- include: local.yml
+- name: Include util get/put instructions
   tags: tomcat
-
-
-- name: Install remote ansible data path directory
-  tags: tomcat
-  sudo: yes
-  file:
-    state=directory
-    dest={{ remote_ansible_data_path }}
+  include: util.yml
 
 
 - name: Create Tomcat group
   tags: tomcat
-  sudo: yes
+  become: yes
   group:
     state=present
     name={{ tomcat_user_group }}
 
 - name: Create Tomcat user
   tags: tomcat
-  sudo: yes
+  become: yes
   user:
     state=present
     name={{ tomcat_user_name }}
@@ -54,20 +47,9 @@
     comment="Tomcat service user"
 
 
-- name: Copy Tomcat distribution
-  tags: tomcat
-  sudo: yes
-  copy:
-    src={{ local_ansible_data_path }}/{{ tomcat_redis_filename }}
-    dest={{ remote_ansible_data_path }}/{{ tomcat_redis_filename }}
-    owner=0
-    group=0
-    mode=0644
-
-
 - name: Install catalina home directory
   tags: tomcat
-  sudo: yes
+  become: yes
   file:
     state=directory
     dest={{ tomcat_env_catalina_home }}
@@ -77,9 +59,9 @@
 
 - name: Extract Tomcat installation files to catalina home
   tags: tomcat
-  sudo: yes
+  become: yes
   command: tar
-      -xzf {{ remote_ansible_data_path }}/{{ tomcat_redis_filename }}
+      -xzf {{ util_persistent_data_path_remote }}/{{ tomcat_redis_filename }}
       -C {{ tomcat_env_catalina_home }}
       --strip-components 1
     creates={{ tomcat_env_catalina_home }}/lib
@@ -87,11 +69,12 @@
 
 - name: Install catalina base directory and sub dirs
   tags: tomcat
-  sudo: yes
+  become: yes
   with_items:
     - conf
     - logs
     - webapps
+    - temp
   file:
     state=directory
     dest={{ tomcat_env_catalina_base }}/{{ item }}
@@ -102,11 +85,12 @@
 - name: Register conf files to be installed
   tags: tomcat
   register: tomcat_conf_files
+  changed_when: false
   command: ls -1 --ignore=server.xml {{ tomcat_env_catalina_home }}/conf
 
 - name: Install conf files
   tags: tomcat
-  sudo: yes
+  become: yes
   with_items: tomcat_conf_files.stdout_lines
   command: install
       --owner {{ tomcat_user_name }}
@@ -119,7 +103,7 @@
 
 - name: Install server configuration
   tags: tomcat
-  sudo: yes
+  become: yes
   template:
     src={{ tomcat_server_xml_template }}
     dest={{ tomcat_env_catalina_base }}/conf/server.xml
@@ -131,23 +115,20 @@
 # Install a tomcat service
 - include: service_systemd.yml
   tags: tomcat
-  sudo: yes
   when: ansible_distribution == 'Archlinux'
 
 - include: service_upstart.yml
   tags: tomcat
-  sudo: yes
   when: ansible_distribution == 'Ubuntu'
 
 - include: service_sysvinit.yml
   tags: tomcat
-  sudo: yes
   when: ansible_distribution == 'Debian' or ansible_os_family == 'RedHat'
 
 
 - name: Ensure tomcat service
   tags: tomcat
-  sudo: yes
+  become: yes
   service:
     state=started
     enabled=true

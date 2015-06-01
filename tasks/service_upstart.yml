@@ -1,6 +1,7 @@
 ---
 - name: Install upstart Tomcat Service
   tags: tomcat
+  become: yes
   notify: service restart {{ tomcat_service_name }}
   template:
     src={{ tomcat_server_upstart_template }}

@@ -18,7 +18,9 @@
 <Server port="{{ tomcat_shutdown_port|default(8005) }}" shutdown="SHUTDOWN">
 
   <Listener className="org.apache.catalina.core.AprLifecycleListener" SSLEngine="on" />
+{% if tomcat_version_major < 8 %}
   <Listener className="org.apache.catalina.core.JasperListener" />
+{% endif %}
   <Listener className="org.apache.catalina.core.JreMemoryLeakPreventionListener" />
   <Listener className="org.apache.catalina.mbeans.GlobalResourcesLifecycleListener" />
   <Listener className="org.apache.catalina.core.ThreadLocalLeakPreventionListener" />

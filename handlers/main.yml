@@ -4,7 +4,16 @@
 #   by tasks, e.g. restart a service on configuration change.
 #   "name" attribute uses systemd syntax here as this might get
 #   THE sysvinit replacement in nearly any common Linux distribution.
+
+# This handler allows to restart any configured instance installed
+#   via {# tomcat_service_name #} variable.
+#   To notify this task ALWAYS use
+#     notify: service restart {# tomcat_service_name #}
+#   and do not substitute variables yourself, e.g.
+#     notify: service restart tomcat-instance-foo
+#   Ansible will not find the substituted handler name.
 - name: service restart {{ tomcat_service_name }}
+  become: yes
   service:
     state=restarted
     name={{ tomcat_service_name }}

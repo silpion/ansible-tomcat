@@ -2,7 +2,8 @@
 # Setup dependencies here:
 #   Dependencies are pulled into the play and executed in order
 #   of appearance.
-dependencies: []
+dependencies:
+  - { role: silpion.util }
 
 
 # https://galaxy.ansibleworks.com
@@ -13,8 +14,8 @@ galaxy_info:
   description: Manage tomcat installation
   company: http://silpion.de
   license: Apache 2
-  min_ansible_version: 1.4
- 
+  min_ansible_version: 1.9
+
   #
   # Below are all platforms currently available. Just uncomment
   # the ones that apply to your role. If you don't see your
