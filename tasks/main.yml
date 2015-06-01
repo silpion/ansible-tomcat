@@ -7,6 +7,7 @@
   assert:
     that:
       - ansible_os_family in tomcat_supported_platforms
+      - ansible_distribution in tomcat_supported_distributions
 
 
 - name: Load version vars
@@ -21,6 +22,7 @@
   assert:
     that:
       - tomcat_redis_sha256sum not in (None, "")
+
 
 
 - name: Include util get/put instructions
@@ -112,19 +114,47 @@
     mode=0640
 
 
-# Install a tomcat service
-- include: service_systemd.yml
+- name: Configure service management
   tags: tomcat
-  when: ansible_distribution == 'Archlinux'
+  include_vars: "service/{{ ansible_local['util']['init']['system'] }}.yml"
 
-- include: service_upstart.yml
+
+- name: Install local tomcat facts
   tags: tomcat
-  when: ansible_distribution == 'Ubuntu'
+  become: yes
+  register: tomcat_registered_install_local_tomcat_facts
+  template:
+    src=facts.j2
+    dest=/etc/ansible/facts.d/tomcat.fact
+    owner=0
+    group=0
+    mode=0644
 
-- include: service_sysvinit.yml
+- name: Re-read local facts
   tags: tomcat
-  when: ansible_distribution == 'Debian' or ansible_os_family == 'RedHat'
+  when: tomcat_registered_install_local_tomcat_facts.changed
+  setup:
+    filter=ansible_local
 
+
+- name: Install tomcat service
+  tags: tomcat
+  become: yes
+  register: registered_tomcat_install_tomcat_service
+  template:
+    src={{ tomcat_service_template|default(tomcat_service_template_default) }}
+    dest={{ tomcat_service_file_dest }}
+    owner=0
+    group=0
+    mode={{ tomcat_service_file_mode }}
+
+- name: Reload systemd
+  tags: tomcat
+  when: registered_tomcat_install_tomcat_service.changed and ansible_local.util.init.system == 'systemd'
+  become: yes
+  failed_when: false
+  changed_when: false
+  command: systemctl daemon-reload
 
 - name: Ensure tomcat service
   tags: tomcat
