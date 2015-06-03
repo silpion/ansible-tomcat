@@ -145,7 +145,7 @@
   with_items: tomcat_instances
   register: tomcat_registered_install_tomcat_service
   template:
-    src={{ tomcat_service_template|default(tomcat_default_service_template) }}
+    src={{ item.service_template|default(tomcat_default_service_template) }}
     dest={{ tomcat_service_dir }}/{{ item.service_file|default(tomcat_default_service_file) }}
     owner=0
     group=0

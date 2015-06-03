@@ -72,6 +72,7 @@ instance. The following variables are legit to configure per instance.
 * ``group``: Group for the user to run Tomcat instance as (string, default: ``{{ tomcat_default_user_group }}``)
 * ``user``: User to run Tomcat instance as (string, default: ``{{ tomcat_default_user_name }}``)
 * ``home``: Home directory for the user to run Tomcat instance as (string, default: ``{{ tomcat_default_user_home }}``)
+* ``service_template``: Configure service template to use for a specific instance (string, default: ``{{ tomcat_default_service_template }}`` (see ``vars/service/*.yml``))
 * ``server_xml_template``: server.xml template to use for configuring Tomcat instance (string, default: ``{{ tomcat_default_server_xml_template }}``)
 * ``port_ajp``: Instance AJP port (int, default: ``{{ tomcat_default_port_ajp }}``)
 * ``port_connector``: Instance connector port (int, default: ``{{ tomcat_default_port_connector }}``)
@@ -352,13 +353,13 @@ override all the configuration but focus on instance configuration.
       vars:
         tomcat_version: 8.0.5
         tomcat_install_base: /srv
-        tomcat_default_systemd_template: myveryownupstarttemplate.j2
         tomcat_service_allow_restart: false
         tomcat_instances:
           - name: nodefaults
             user: xyz
             group: zyx
             home: /var/home/xyz
+            service_template: myveryownsystemdtemplate.j2
             server_xml_template: myveryownserverxmltemplate.j2
             port_ajp: 12345
             port_connector: 12346
