@@ -129,7 +129,7 @@
   become: yes
   when: ansible_local.util.init.system == 'systemd'
   with_items: tomcat_instances
-  register: tomcat_registered_install_tomcat_environments
+  register: tomcat_registered_install_instance_environment_files
   template:
     src=service_systemd_envfile.j2
     dest={{ item.home|default(tomcat_default_user_home) }}/catalina/{{ item.name }}/.systemd.conf
@@ -187,7 +187,7 @@
   register: tomcat_registered_instances_requiring_restart
   with_items:
     - "{{ tomcat_registered_install_instance_configurations.results }}"
-    - "{{ tomcat_registered_install_tomcat_environments.results }}"
+    - "{{ tomcat_registered_install_instance_environment_files.results }}"
     - "{{ tomcat_registered_install_tomcat_service.results }}"
   set_fact:
     tomcat_fact_requires_restart_item={% if item.item is defined and item.changed %}{{ item.item.service_name|default(tomcat_default_service_name) }}{% else %}'None'{% endif %}
