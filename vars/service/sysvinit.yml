@@ -1,4 +1,6 @@
 ---
-tomcat_service_template_default: service_sysvinit.j2
-tomcat_service_file_dest: /etc/init.d/{{ tomcat_service_name }}
+tomcat_default_service_template: service_sysvinit.j2
+tomcat_default_service_file: tomcat
+tomcat_default_service_name: tomcat
+tomcat_service_dir: /etc/init.d
 tomcat_service_file_mode: 755
