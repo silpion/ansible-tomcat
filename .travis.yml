@@ -10,7 +10,7 @@ before_install:
 install:
   - sudo pip install ansible
 script:
-  - ansible-galaxy install --force --role-file .requirements.travis.yml
+  - ansible-galaxy install --force --role-file tests/requirements.yml
   - ansible --version
   - ansible-playbook --inventory-file tests/hosts --syntax-check tests/playbook.yml
   - ansible-playbook --inventory-file tests/hosts --connection=local -vvvv tests/playbook.yml
