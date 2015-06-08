@@ -118,7 +118,9 @@ addressed as per systemctl restart *service_name*, service_file is
 the file written by template: module to /etc/systemd/system/*service_file*.
 
 
-## Example playbook
+## Example playbook(s)
+
+### Default
 
 This playbook will install ONE tomcat instance with default configuration
 as suggested upstream.
@@ -140,6 +142,7 @@ The following services will get installed based on init system:
       roles:
         - { role: ansible-tomcat }
 
+### Two instances, one user, Systemd, share slice
 
 This playbook installs two Tomcat instances targeted on a Systemd
 enabled node running as the same user 'tomcat'.
@@ -151,6 +154,10 @@ Both instances share system-tomcat.slice.
 
 * ``systemctl ... tomcat@foo.service``
 * ``systemctl ... tomcat@bar.service``
+
+#### Mandatory variables for service management
+
+* ``item.service_name``
 
 <!-- -->
 
@@ -173,13 +180,20 @@ Both instances share system-tomcat.slice.
       roles:
         - { role: ansible-tomcat }
 
+### Two instances, one user, upstart
 
 The same playbook targeted on an Ubuntu server with Upstart.
 
 * ``service tomcat-foo ...``
 * ``service tomcat-bar ...``
 
-<!-- -->
+#### Mandatory variables for service management
+
+* ``item.service_name``
+* ``item.service_file``
+
+**NOTE**: ``item.service_name`` and ``item.service_file`` names must match
+except for the service_file extension (.conf).
 
     ---
     - hosts: tomcat_server
@@ -203,13 +217,22 @@ The same playbook targeted on an Ubuntu server with Upstart.
         - { role: ansible-tomcat }
 
 
+### Two instances, different users, SysV
+
 Running two Tomcat instances with different users targeted on a SysV
 enabled system, e.g. RHEL6.
 
 * ``service tomcat-foo ...``
 * ``service tomcat-bar ...``
 
-<!-- -->
+#### Mandatory variables for service management
+
+* ``item.service_name``
+* ``item.service_file``
+* ``item.user``
+* ``item.home``
+
+**NOTE**: ``item.service_name`` and ``item.service_file`` names must match.
 
     ---
     - hosts: tomcat_server
@@ -238,11 +261,19 @@ enabled system, e.g. RHEL6.
       roles:
         - { role: ansible-tomcat }
 
+### Two instances, different users, Systemd, share slice
 
 The same playbook targeted on a Systemd enabled node.
 
 * ``systemctl ... tomcatfoo@tomcat.service``
 * ``systemctl ... tomcatbar@tomcat.service``
+
+#### Mandatory variables for service management
+
+* ``item.service_name``
+* ``item.service_file``
+* ``item.user``
+* ``item.home``
 
 <!-- -->
 
@@ -273,11 +304,19 @@ The same playbook targeted on a Systemd enabled node.
       roles:
         - { role: ansible-tomcat }
 
+### Two instances, different users, Systemd, not sharing a slice
 
 The same playbook without sharing Systemd system slice.
 
 * ``systemctl ... tomcatfoo.service``
 * ``systemctl ... tomcatbar.service``
+
+#### Mandatory variables for service management
+
+* ``item.service_name``
+* ``item.service_file``
+* ``item.user``
+* ``item.home``
 
 <!-- -->
 
@@ -308,6 +347,7 @@ The same playbook without sharing Systemd system slice.
       roles:
         - { role: ansible-tomcat }
 
+### Whatever you want setup
 
 Defaults? I don't like defaults on my Ubuntu server. I'll override
 all the defaults!
