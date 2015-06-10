@@ -4,31 +4,41 @@ tomcat_version: 7.0.62
 
 # Mirror where to dowload Tomcat redistributable package from
 tomcat_mirror: http://archive.apache.org/dist/tomcat
-
+# Allow to override where to download Tomcat from
 tomcat_download_url: "{{ tomcat_mirror }}/tomcat-{{ tomcat_version_major }}/v{{ tomcat_version }}/bin/{{ tomcat_redis_filename }}"
 
-# tomcat service user
-#   user name
-tomcat_user_name: tomcat
-#   group name
-tomcat_user_group: tomcat
-#   user's home directory
-tomcat_user_home: "/srv/{{ tomcat_user_name }}"
-
-# tomcat installation directories
-#   base directory for tomcat installations
+# Tomcat installation directories
+#   base directory for Tomcat installations
 tomcat_install_base: /opt/tomcat
 
-# tomcat instance
-#   instance directory, denoted by environment variable CATALINA_BASE
-tomcat_env_catalina_base: "{{ tomcat_user_home }}/catalina"
-#   service name
-tomcat_service_name: "{{ tomcat_user_name }}"
-#   template for configuration file server.xml
-tomcat_server_xml_template: server.xml.j2
 
-# Manage service installation
-# {# tomcat_service_template #}
+# Default tomcat user when not configured per instance
+#   per instance name: item.user
+tomcat_default_user_name: tomcat
+#   per instance name: item.group
+tomcat_default_user_group: tomcat
+#   per instance name: item.home
+tomcat_default_user_home: /srv/{{ tomcat_default_user_name }}
+
+
+# Tomcat configuration
+#   Default template for configuration file server.xml
+tomcat_default_server_xml_template: server.xml.j2
+#   Default shutdown port (per instance name: item.port_shutdown)
+tomcat_default_port_shutdown: 8005
+#   Default connector port (per instance name: item.port_connector)
+tomcat_default_port_connector: 8080
+#   Default redirect port (per instance name: item.port_redirect)
+tomcat_default_port_redirect: 8443
+#   Default AJP port (per instance name: item.port_ajp)
+tomcat_default_port_ajp: 8009
+#   Default CATALINA_OPTS (per instance name: item.catalina_opts)
+tomcat_default_catalina_opts: ''
+
+
+# tomcat instance(s)
+tomcat_instances:
+  - name: tomcat
 
 
 #   template for upstart
@@ -37,3 +47,7 @@ tomcat_server_upstart_template: service_upstart.j2
 tomcat_server_sysvinit_template: service_sysvinit.j2
 #   template for systemd
 tomcat_server_systemd_template: service_systemd.j2
+
+
+# Whether to allow or deny restarting Tomcat instances automatically
+tomcat_service_allow_restart: true

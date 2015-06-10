@@ -5,21 +5,21 @@ stop on runlevel [!2345]
 respawn
 respawn limit 10 5
 
-setuid {{ tomcat_user_name }}
-setgid {{ tomcat_user_group }}
+setuid {{ item.user|default(tomcat_default_user_name) }}
+setgid {{ item.group|default(tomcat_default_user_group) }}
 
 env JAVA_HOME={{ ansible_local.java.general.java_home }}
 env CATALINA_HOME={{ tomcat_env_catalina_home }}
-env CATALINA_BASE={{ tomcat_env_catalina_base }}
-env CATALINA_OPTS="{{ tomcat_env_catalina_opts|default('') }}"
+env CATALINA_BASE={{ item.home|default(tomcat_default_user_home) }}/catalina/{{ item.name }}
+env CATALINA_OPTS="{{ item.catalina_opts|default(tomcat_default_catalina_opts) }}"
 
 script
-{% if tomcat_service_umask is defined %}
-  umask {{ tomcat_service_umask }}
+{% if item.umask is defined %}
+  umask {{ item.umask }}
 {% endif %}
   exec {{ tomcat_env_catalina_home }}/bin/catalina.sh run
 end script
 
 post-stop script
-  rm -rf {{ tomcat_env_catalina_base }}/temp/*
+  rm -rf {{ item.home|default(tomcat_default_user_home) }}/catalina/{{ item.name }}/temp/*
 end script
