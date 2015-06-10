@@ -11,7 +11,7 @@ setgid {{ item.group|default(tomcat_default_user_group) }}
 env JAVA_HOME={{ ansible_local.java.general.java_home }}
 env CATALINA_HOME={{ tomcat_env_catalina_home }}
 env CATALINA_BASE={{ item.home|default(tomcat_default_user_home) }}/catalina/{{ item.name }}
-env CATALINA_OPTS="{{ item.catalina_opts|default('') }}"
+env CATALINA_OPTS="{{ item.catalina_opts|default(tomcat_default_catalina_opts) }}"
 
 script
 {% if item.umask is defined %}

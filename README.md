@@ -59,6 +59,7 @@ Be sure to install required roles with
 * ``tomcat_default_port_connector``: Default connector port when not configured per instance (int, default: ``8080``)
 * ``tomcat_default_port_redirect``: Default redirect port when not configured per instance (int, default: ``8443``)
 * ``tomcat_default_port_shutdown``: Default shutdown port when not configured per instance (int, default: ``8005``)
+* ``tomcat_default_catalina_opts``: Default configuration for environment variable "CATALINA_OPTS" when not configured per instance (string, default: ``''``)
 * ``tomcat_server_systemd_template``: Default template to use when configuring Tomcat for Systemd (string, default: ``service_systemd.j2`` (see ``vars/service/systemd.yml``))
 * ``tomcat_server_sysvinit_template``: Default template to use when configuring Tomcat for SysV (string, default: ``service_sysvinit.j2`` (see ``vars/service/sysvinit.yml``))
 * ``tomcat_server_upstart_template``: Default template to use when configuring Tomcat for upstart (string, default: ``service_upstart.j2`` (see ``vars/service/upstart.yml``))
@@ -78,7 +79,7 @@ instance. The following variables are legit to configure per instance.
 * ``port_connector``: Instance connector port (int, default: ``{{ tomcat_default_port_connector }}``)
 * ``port_redirect``: Instance redirect port (int, default: ``{{ tomcat_default_port_redirect }}``)
 * ``port_shutdown``: Instance shutdown port (int, default: ``{{ tomcat_default_port_shutdown }}``)
-* ``catalina_opts``: Instance CATALINA_OPTS environment variable configuration (string, default: ``''``)
+* ``catalina_opts``: Instance CATALINA\_OPTS environment variable configuration (string, default: ``{{ tomcat_default_catalina_opts }}``)
 * ``service_file``: Init system configuration file per instance, e.g. tomcat.conf for Upstart (string, default: ``{{ tomcat_default_service_file }}`` (see ``vars/service/*.yml``))
 * ``service_name``: Init system service name per instance, e.g. tomcat@foo.service for Systemd (string, default: ``{{ tomcat_default_service_name }}`` (see ``vars/service/*.yml``))
 * ``umask``: Allow to configure umask for Tomcat instance (oct, default: ``|default('')``)
@@ -369,6 +370,7 @@ all the defaults!
         tomcat_default_port_connector: 12346
         tomcat_default_port_redirect: 12347
         tomcat_default_port_shutdown: 12348
+        tomcat_default_catalina_opts: '-Dwhatever'
         tomcat_default_upstart_template: myveryownupstarttemplate.j2
         tomcat_service_allow_restart: false
         tomcat_instances:

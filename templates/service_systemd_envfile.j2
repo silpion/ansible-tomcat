@@ -1,2 +1,2 @@
 CATALINA_BASE={{ item.home|default(tomcat_default_user_home) }}/catalina/{{ item.name }}
-CATALINA_OPTS={{ item.catalina_opts|default('') }}
+CATALINA_OPTS={{ item.catalina_opts|default(tomcat_default_catalina_opts) }}

@@ -32,6 +32,8 @@ tomcat_default_port_connector: 8080
 tomcat_default_port_redirect: 8443
 #   Default AJP port (per instance name: item.port_ajp)
 tomcat_default_port_ajp: 8009
+#   Default CATALINA_OPTS (per instance name: item.catalina_opts)
+tomcat_default_catalina_opts: ''
 
 
 # tomcat instance(s)
