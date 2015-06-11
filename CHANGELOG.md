@@ -1,3 +1,42 @@
+# 0.8.0
+
+Marc Rohlfs (1):
+
+* Add missing port forwarding for Vagrant VM
+
+Mark Kusch (32):
+
+* Configure dependency on util role
+* Document dependency on util role
+* Ensure service management with handlers
+* Use util role for downloading and uploading assets
+* Allow SysV init to stop the tomcat service (thx to kakawait)
+* Do not generate changed events when registering configuration files
+* s/sudo/become/g
+* Add sha sum for tomcat 8.0.21
+* Add versioned vars for tomcat 8.0.22
+* Add support for tomcat 7.0.62
+* Default to tomcat version 7.0.62
+* Re-create infrastructure for init/service configuration
+* Final service management abstraction
+* Proper variable naming
+* Proper detection for init system with CentOS
+* Fix systemd template
+* Be more precise with supported platforms/distributions
+* Update description for Archlinux init system vars
+* init system var is now managed with util role
+* Ensure java role is including when developing the role
+* Allow travis to install test dependencies
+* Fix Systemd name in documentation
+* Change the way instances are managed
+* Update documentation for new instance management
+* Stay consistent with variable naming for registered vars
+* Re-integrate configurable service template per instance
+* Fix non-templated systemd services
+* More documentation for different tomcat installation styles
+* Move test requirements to tests/ directory
+* Provide global default variable to configure CATALINA\_OPTS
+
 # 0.7.1
 
 Mark Kusch (1):

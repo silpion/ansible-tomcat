@@ -1,0 +1,6 @@
+---
+tomcat_default_service_template: service_systemd.j2
+tomcat_default_service_file: "tomcat@.service"
+tomcat_default_service_name: "tomcat@tomcat"
+tomcat_service_dir: /etc/systemd/system
+tomcat_service_file_mode: 644

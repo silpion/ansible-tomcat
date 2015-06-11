@@ -15,10 +15,12 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<Server port="{{ tomcat_shutdown_port|default(8005) }}" shutdown="SHUTDOWN">
+<Server port="{{ item.port_shutdown|default(tomcat_default_port_shutdown) }}" shutdown="SHUTDOWN">
 
   <Listener className="org.apache.catalina.core.AprLifecycleListener" SSLEngine="on" />
+{% if tomcat_version_major < 8 %}
   <Listener className="org.apache.catalina.core.JasperListener" />
+{% endif %}
   <Listener className="org.apache.catalina.core.JreMemoryLeakPreventionListener" />
   <Listener className="org.apache.catalina.mbeans.GlobalResourcesLifecycleListener" />
   <Listener className="org.apache.catalina.core.ThreadLocalLeakPreventionListener" />
@@ -33,17 +35,17 @@
 
   <Service name="Catalina">
 
-    <Connector port="{{ tomcat_connector_port|default(8080) }}" protocol="HTTP/1.1"
+    <Connector port="{{ item.port_connector|default(tomcat_default_port_connector) }}" protocol="HTTP/1.1"
                connectionTimeout="20000"
-               redirectPort="{{ tomcat_redirect_port|default(8443) }}" />
+               redirectPort="{{ item.port_redirect|default(tomcat_default_port_redirect) }}" />
 
     <!--
-    <Connector port="{{ tomcat_redirect_port|default(8443) }}" protocol="org.apache.coyote.http11.Http11Protocol"
+    <Connector port="{{ item.port_redirect|default(tomcat_default_port_redirect) }}" protocol="org.apache.coyote.http11.Http11Protocol"
                maxThreads="150" SSLEnabled="true" scheme="https" secure="true"
                clientAuth="false" sslProtocol="TLS" />
     -->
 
-    <Connector port="{{ tomcat_ajp_port|default(8009) }}" protocol="AJP/1.3" redirectPort="{{ tomcat_redirect_port|default(8443) }}" />
+    <Connector port="{{ item.port_ajp|default(tomcat_default_port_ajp) }}" protocol="AJP/1.3" redirectPort="{{ item.port_redirect|default(tomcat_default_port_redirect) }}" />
 
     <Engine name="Catalina" defaultHost="localhost">
 

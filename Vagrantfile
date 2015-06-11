@@ -11,6 +11,7 @@ Vagrant.configure(VAGRANT_API_VERSION) do |config|
 
     d.vm.hostname = 'ansibletomcattest'
     d.vm.synced_folder '.', '/vagrant', id: 'vagrant-root', disabled: true
+    d.vm.network 'forwarded_port', :host => 8080, :guest => 8080
 
     d.vm.provision :ansible do |ansible|
       ansible.playbook = 'tests/playbook.yml'

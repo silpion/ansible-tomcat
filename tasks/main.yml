@@ -7,6 +7,7 @@
   assert:
     that:
       - ansible_os_family in tomcat_supported_platforms
+      - ansible_distribution in tomcat_supported_distributions
 
 
 - name: Load version vars
@@ -23,51 +24,36 @@
       - tomcat_redis_sha256sum not in (None, "")
 
 
-- include: local.yml
+
+- name: Include util get/put instructions
   tags: tomcat
+  include: util.yml
 
 
-- name: Install remote ansible data path directory
+- name: Create Tomcat group(s)
   tags: tomcat
-  sudo: yes
-  file:
-    state=directory
-    dest={{ remote_ansible_data_path }}
-
-
-- name: Create Tomcat group
-  tags: tomcat
-  sudo: yes
+  become: yes
+  with_items: tomcat_instances
   group:
     state=present
-    name={{ tomcat_user_group }}
+    name={{ item.group|default(tomcat_default_user_group) }}
 
-- name: Create Tomcat user
+- name: Create Tomcat user(s)
   tags: tomcat
-  sudo: yes
+  become: yes
+  with_items: tomcat_instances
   user:
     state=present
-    name={{ tomcat_user_name }}
-    home={{ tomcat_user_home }}
-    group={{ tomcat_user_group }}
+    name={{ item.user|default(tomcat_default_user_name) }}
+    home={{ item.home|default(tomcat_default_user_home) }}
+    group={{ item.group|default(tomcat_default_user_group) }}
     createhome=yes
     comment="Tomcat service user"
 
 
-- name: Copy Tomcat distribution
-  tags: tomcat
-  sudo: yes
-  copy:
-    src={{ local_ansible_data_path }}/{{ tomcat_redis_filename }}
-    dest={{ remote_ansible_data_path }}/{{ tomcat_redis_filename }}
-    owner=0
-    group=0
-    mode=0644
-
-
 - name: Install catalina home directory
   tags: tomcat
-  sudo: yes
+  become: yes
   file:
     state=directory
     dest={{ tomcat_env_catalina_home }}
@@ -77,78 +63,163 @@
 
 - name: Extract Tomcat installation files to catalina home
   tags: tomcat
-  sudo: yes
+  become: yes
   command: tar
-      -xzf {{ remote_ansible_data_path }}/{{ tomcat_redis_filename }}
+      -xzf {{ util_persistent_data_path_remote }}/{{ tomcat_redis_filename }}
       -C {{ tomcat_env_catalina_home }}
       --strip-components 1
     creates={{ tomcat_env_catalina_home }}/lib
 
 
-- name: Install catalina base directory and sub dirs
+- name: Install instance directories
   tags: tomcat
-  sudo: yes
-  with_items:
-    - conf
-    - logs
-    - webapps
+  become: yes
+  with_nested:
+    - tomcat_instances
+    - tomcat_instance_dirs
   file:
     state=directory
-    dest={{ tomcat_env_catalina_base }}/{{ item }}
-    owner={{ tomcat_user_name }}
-    group={{ tomcat_user_group }}
+    dest={{ item.0.home|default(tomcat_default_user_home) }}/catalina/{{ item.0.name }}/{{ item.1 }}
+    owner={{ item.0.user|default(tomcat_default_user_name) }}
+    group={{ item.0.group|default(tomcat_default_user_group) }}
     mode=0755
 
-- name: Register conf files to be installed
+- name: Register conf files
   tags: tomcat
-  register: tomcat_conf_files
+  register: tomcat_registered_conf_files
+  changed_when: false
   command: ls -1 --ignore=server.xml {{ tomcat_env_catalina_home }}/conf
 
 - name: Install conf files
   tags: tomcat
-  sudo: yes
-  with_items: tomcat_conf_files.stdout_lines
+  become: yes
+  with_nested:
+    - tomcat_instances
+    - tomcat_registered_conf_files.stdout_lines
   command: install
-      --owner {{ tomcat_user_name }}
-      --group {{ tomcat_user_group }}
+      --owner {{ item.0.user|default(tomcat_default_user_name) }}
+      --group {{ item.0.group|default(tomcat_default_user_group) }}
       --mode 0640
-      {{ tomcat_env_catalina_home }}/conf/{{ item }}
-      {{ tomcat_env_catalina_base }}/conf/{{ item }}
-    creates={{ tomcat_env_catalina_base }}/conf/{{ item }}
+      {{ tomcat_env_catalina_home }}/conf/{{ item.1 }}
+      {{ item.0.home|default(tomcat_default_user_home) }}/catalina/{{ item.0.name }}/conf/{{ item.1 }}
+    creates={{ item.0.user|default(tomcat_default_user_home) }}/catalina/{{ item.0.name }}/conf/{{ item.1 }}
 
 
-- name: Install server configuration
+- name: Install instance configurations
   tags: tomcat
-  sudo: yes
+  become: yes
+  with_items: tomcat_instances
+  register: tomcat_registered_install_instance_configurations
   template:
-    src={{ tomcat_server_xml_template }}
-    dest={{ tomcat_env_catalina_base }}/conf/server.xml
-    owner={{ tomcat_user_name }}
-    group={{ tomcat_user_group }}
+    src={{ item.server_xml_template|default(tomcat_default_server_xml_template) }}
+    dest={{ item.home|default(tomcat_default_user_home) }}/catalina/{{ item.name }}/conf/server.xml
+    owner={{ item.user|default(tomcat_default_user_name) }}
+    group={{ item.group|default(tomcat_default_user_group) }}
     mode=0640
 
 
-# Install a tomcat service
-- include: service_systemd.yml
+# Manage system services
+- name: Configure service management
   tags: tomcat
-  sudo: yes
-  when: ansible_distribution == 'Archlinux'
+  include_vars: "service/{{ ansible_local['util']['init']['system'] }}.yml"
 
-- include: service_upstart.yml
+#   systemd requires to use separate environment files per instance
+- name: Install instance environment files
   tags: tomcat
-  sudo: yes
-  when: ansible_distribution == 'Ubuntu'
+  become: yes
+  when: ansible_local.util.init.system == 'systemd'
+  with_items: tomcat_instances
+  register: tomcat_registered_install_instance_environment_files
+  template:
+    src=service_systemd_envfile.j2
+    dest={{ item.home|default(tomcat_default_user_home) }}/catalina/{{ item.name }}/.systemd.conf
+    owner={{ item.user|default(tomcat_default_user_name) }}
+    group={{ item.group|default(tomcat_default_user_group) }}
+    mode=0644
 
-- include: service_sysvinit.yml
+#   install a service file for tomcat
+#     systemd by default uses a templated service (one unit, many instances)
+- name: Install tomcat services
   tags: tomcat
-  sudo: yes
-  when: ansible_distribution == 'Debian' or ansible_os_family == 'RedHat'
+  become: yes
+  with_items: tomcat_instances
+  register: tomcat_registered_install_tomcat_service
+  template:
+    src={{ item.service_template|default(tomcat_default_service_template) }}
+    dest={{ tomcat_service_dir }}/{{ item.service_file|default(tomcat_default_service_file) }}
+    owner=0
+    group=0
+    mode={{ tomcat_service_file_mode }}
 
-
-- name: Ensure tomcat service
+#   reload systemd if service file(s) have changed
+#     suppress warnings from systemd
+- name: Reload systemd
   tags: tomcat
-  sudo: yes
+  when: tomcat_registered_install_tomcat_service.changed and ansible_local.util.init.system == 'systemd'
+  become: yes
+  failed_when: false
+  changed_when: false
+  command: systemctl daemon-reload
+
+- name: Ensure tomcat service(s)
+  tags: tomcat
+  become: yes
+  with_items: tomcat_instances
   service:
     state=started
     enabled=true
-    name={{ tomcat_service_name }}
+    name={{ item.service_name|default(tomcat_default_service_name) }}
+
+
+#   Beware: Magic here
+#     First of: register all instances which might have a changed event in various tasks
+#       - instance configuration might have changed (server.xml)
+#       - environment files for systemd might have changed
+#       - service files might have changed
+#     Result here is a dictionary containing the result of set_fact in a loop.
+#       Each fact is stored at
+#       - tomcat_registered_instances_requiring_restart.results.INDEX.ansible_facts.tomcat_fact_requires_restart_item
+#       Values are one of
+#       - tomcat service name in question (item.service_name) with sensible default
+#       - None
+- name: Register instances requiring restart
+  tags: tomcat
+  register: tomcat_registered_instances_requiring_restart
+  with_items:
+    - "{{ tomcat_registered_install_instance_configurations.results }}"
+    - "{{ tomcat_registered_install_instance_environment_files.results }}"
+    - "{{ tomcat_registered_install_tomcat_service.results }}"
+  set_fact:
+    tomcat_fact_requires_restart_item={% if item.item is defined and item.changed %}{{ item.item.service_name|default(tomcat_default_service_name) }}{% else %}'None'{% endif %}
+
+#     This one maps all services in question from previous task into an iterable list
+#       while stripping services named 'None'
+- name: Configure instances requiring restart
+  tags: tomcat
+  set_fact:
+    tomcat_facts_requires_restart="{{ tomcat_registered_instances_requiring_restart.results|map(attribute='ansible_facts.tomcat_fact_requires_restart_item')|list|unique|difference(['None']) }}"
+
+#     We can now safely notify the service restart handler which in turn just loops
+#       over all items in the resulting list 'tomcat_facts_requires_restart'.
+- name: Trigger service handler
+  tags: tomcat
+  notify: service restart tomcat
+  command: /bin/true
+
+
+- name: Install local tomcat facts
+  tags: tomcat
+  become: yes
+  register: tomcat_registered_install_local_tomcat_facts
+  template:
+    src=facts.j2
+    dest=/etc/ansible/facts.d/tomcat.fact
+    owner=0
+    group=0
+    mode=0644
+
+- name: Re-read local facts
+  tags: tomcat
+  when: tomcat_registered_install_local_tomcat_facts.changed
+  setup:
+    filter=ansible_local

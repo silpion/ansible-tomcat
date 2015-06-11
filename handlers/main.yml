@@ -1,10 +1,8 @@
 ---
-# Setup handlers here:
-#   Handlers may get notified at the end of the playbook ONCE
-#   by tasks, e.g. restart a service on configuration change.
-#   "name" attribute uses systemd syntax here as this might get
-#   THE sysvinit replacement in nearly any common Linux distribution.
-- name: service restart {{ tomcat_service_name }}
+- name: service restart tomcat
+  become: yes
+  when: tomcat_service_allow_restart
+  with_items: tomcat_facts_requires_restart
   service:
     state=restarted
-    name={{ tomcat_service_name }}
+    name={{ item }}
