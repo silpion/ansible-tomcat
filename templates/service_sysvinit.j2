@@ -12,8 +12,8 @@ export TOMCAT_USER={{ item.user|default(tomcat_default_user_name) }}
 export JAVA_HOME={{ ansible_local.java.general.java_home }}
 export PATH=${PATH}:${JAVA_HOME}/bin
 export CATALINA_HOME={{ tomcat_env_catalina_home }}
-export CATALINA_BASE={{ item.home|default(tomcat_default_user_home) }}/catalina/{{ item.name }}
-export CATALINA_PID={{ item.home|default(tomcat_default_user_home) }}/catalina/{{ item.name }}/{{ item.name }}.pid
+export CATALINA_BASE={{ item.path|default(tomcat_default_instance_path) }}/catalina/{{ item.name }}
+export CATALINA_PID={{ item.path|default(tomcat_default_instance_path) }}/catalina/{{ item.name }}/{{ item.name }}.pid
 export CATALINA_OPTS="{{ item.catalina_opts|default(tomcat_default_catalina_opts) }}"
 
 
@@ -35,7 +35,7 @@ start(){
 
 stop(){
   echo -n $"Stopping $PROC: "
-  killproc -p {{ item.home|default(tomcat_default_user_home) }}/catalina/{{ item.name }}/{{ item.name }}.pid $PROC
+  killproc -p {{ item.path|default(tomcat_default_instance_path) }}/catalina/{{ item.name }}/{{ item.name }}.pid $PROC
   ret=$?
   echo
   [ $ret -eq 0 ] && rm -f $LOCK
@@ -54,7 +54,7 @@ case "$1" in
     start
   ;;
   status)
-    status -p {{ item.home|default(tomcat_default_user_home) }}/catalina/{{ item.name }}/{{ item.name }}.pid $PROC
+    status -p {{ item.path|default(tomcat_default_instance_path) }}/catalina/{{ item.name }}/{{ item.name }}.pid $PROC
   ;;
   *)
     echo $"Usage: $PROC {start|stop|restart|status}"

@@ -79,7 +79,7 @@
     - tomcat_instance_dirs
   file:
     state=directory
-    dest={{ item.0.home|default(tomcat_default_user_home) }}/catalina/{{ item.0.name }}/{{ item.1 }}
+    dest={{ item.0.path|default(tomcat_default_instance_path) }}/catalina/{{ item.0.name }}/{{ item.1 }}
     owner={{ item.0.user|default(tomcat_default_user_name) }}
     group={{ item.0.group|default(tomcat_default_user_group) }}
     mode=0755
@@ -101,8 +101,8 @@
       --group {{ item.0.group|default(tomcat_default_user_group) }}
       --mode 0640
       {{ tomcat_env_catalina_home }}/conf/{{ item.1 }}
-      {{ item.0.home|default(tomcat_default_user_home) }}/catalina/{{ item.0.name }}/conf/{{ item.1 }}
-    creates={{ item.0.user|default(tomcat_default_user_home) }}/catalina/{{ item.0.name }}/conf/{{ item.1 }}
+      {{ item.0.path|default(tomcat_default_instance_path) }}/catalina/{{ item.0.name }}/conf/{{ item.1 }}
+    creates={{ item.0.path|default(tomcat_default_instance_path) }}/catalina/{{ item.0.name }}/conf/{{ item.1 }}
 
 
 - name: Install instance configurations
@@ -112,7 +112,7 @@
   register: tomcat_registered_install_instance_configurations
   template:
     src={{ item.server_xml_template|default(tomcat_default_server_xml_template) }}
-    dest={{ item.home|default(tomcat_default_user_home) }}/catalina/{{ item.name }}/conf/server.xml
+    dest={{ item.path|default(tomcat_default_instance_path) }}/catalina/{{ item.name }}/conf/server.xml
     owner={{ item.user|default(tomcat_default_user_name) }}
     group={{ item.group|default(tomcat_default_user_group) }}
     mode=0640
@@ -132,7 +132,7 @@
   register: tomcat_registered_install_instance_environment_files
   template:
     src=service_systemd_envfile.j2
-    dest={{ item.home|default(tomcat_default_user_home) }}/catalina/{{ item.name }}/.systemd.conf
+    dest={{ item.path|default(tomcat_default_instance_path) }}/catalina/{{ item.name }}/.systemd.conf
     owner={{ item.user|default(tomcat_default_user_name) }}
     group={{ item.group|default(tomcat_default_user_group) }}
     mode=0644
