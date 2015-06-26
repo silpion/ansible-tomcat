@@ -1,3 +1,9 @@
+# 0.9.0
+
+Deepan (1):
+
+* Introduced a new variable to configure instance path to be different from the user home + fixed temp dir path issue within service\_systemd.j2
+
 # 0.8.0
 
 Marc Rohlfs (1):
