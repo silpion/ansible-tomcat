@@ -120,6 +120,15 @@ per Systemd managed Tomcat instance. service_name here is the name
 addressed as per systemctl restart *service_name*, service_file is
 the file written by template: module to /etc/systemd/system/*service_file*.
 
+When configuring multiple tomcat instances for Systemd please ensure
+to configure Ansible instance name (``- name: INSTANCE_NAME``) and
+``item.service`` instance name (``INSTANCE_NAME@slice_name.service``)
+likewise.
+
+    - name: FOOBAR
+      service_name: FOOBAR@whatever
+      service_file: whatever@.service
+
 
 ## Example playbook(s)
 
