@@ -486,6 +486,7 @@ Ruby with rake and bundler available.
 * Sebastian Davids @sebastian.davids silpion.de
 * [trumant](https://github.com/trumant)
 * [kakawait](https://github.com/kakawait)
+* [deepan](https://github.com/deepan)
 
 
 <!-- vim: set ts=4 sw=4 et nofen: -->
