@@ -34,7 +34,8 @@ tomcat_default_port_redirect: 8443
 tomcat_default_port_ajp: 8009
 #   Default CATALINA_OPTS (per instance name: item.catalina_opts)
 tomcat_default_catalina_opts: ''
-
+#   Default per instance path
+tomcat_default_instance_path: /srv/{{ tomcat_default_user_name }}
 
 # tomcat instance(s)
 tomcat_instances:

@@ -60,6 +60,7 @@ Be sure to install required roles with
 * ``tomcat_default_port_redirect``: Default redirect port when not configured per instance (int, default: ``8443``)
 * ``tomcat_default_port_shutdown``: Default shutdown port when not configured per instance (int, default: ``8005``)
 * ``tomcat_default_catalina_opts``: Default configuration for environment variable "CATALINA_OPTS" when not configured per instance (string, default: ``''``)
+* ``tomcat_default_instance_path``: Default configuration for base path per instance (string, default: ``/srv/{{ tomcat_default_user_name }}``)
 * ``tomcat_server_systemd_template``: Default template to use when configuring Tomcat for Systemd (string, default: ``service_systemd.j2`` (see ``vars/service/systemd.yml``))
 * ``tomcat_server_sysvinit_template``: Default template to use when configuring Tomcat for SysV (string, default: ``service_sysvinit.j2`` (see ``vars/service/sysvinit.yml``))
 * ``tomcat_server_upstart_template``: Default template to use when configuring Tomcat for upstart (string, default: ``service_upstart.j2`` (see ``vars/service/upstart.yml``))
@@ -73,6 +74,7 @@ instance. The following variables are legit to configure per instance.
 * ``group``: Group for the user to run Tomcat instance as (string, default: ``{{ tomcat_default_user_group }}``)
 * ``user``: User to run Tomcat instance as (string, default: ``{{ tomcat_default_user_name }}``)
 * ``home``: Home directory for the user to run Tomcat instance as (string, default: ``{{ tomcat_default_user_home }}``)
+* ``path``: Directory of the tomcat instance as (string, default: ``{{ tomcat_default_instance_path }}``)
 * ``service_template``: Configure service template to use for a specific instance (string, default: ``{{ tomcat_default_service_template }}`` (see ``vars/service/*.yml``))
 * ``server_xml_template``: server.xml template to use for configuring Tomcat instance (string, default: ``{{ tomcat_default_server_xml_template }}``)
 * ``port_ajp``: Instance AJP port (int, default: ``{{ tomcat_default_port_ajp }}``)
@@ -231,7 +233,7 @@ enabled system, e.g. RHEL6.
 * ``item.service_name``
 * ``item.service_file``
 * ``item.user``
-* ``item.home``
+* ``item.path``
 
 **NOTE**: ``item.service_name`` and ``item.service_file`` names must match.
 
@@ -242,7 +244,8 @@ enabled system, e.g. RHEL6.
           - name: foo
             user: tomcatfoo
             group: tomcatfoo
-            home: /srv/tomcatfoo
+            path: /srv/tomcatfoo
+            home: /home/tomcatfoo
             service_name: tomcat-foo
             service_file: tomcat-foo
             port_ajp: 18009
@@ -252,7 +255,8 @@ enabled system, e.g. RHEL6.
           - name: bar
             user: tomcatbar
             group: tomcatbar
-            home: /srv/tomcatbar
+            path: /srv/tomcatbar
+            home: /home/tomcatbar
             service_name: tomcat-bar
             service_file: tomcat-bar
             port_ajp: 28009
@@ -274,7 +278,7 @@ The same playbook targeted on a Systemd enabled node.
 * ``item.service_name``
 * ``item.service_file``
 * ``item.user``
-* ``item.home``
+* ``item.path``
 
 <!-- -->
 
@@ -285,7 +289,8 @@ The same playbook targeted on a Systemd enabled node.
           - name: foo
             user: tomcatfoo
             group: tomcatfoo
-            home: /srv/tomcatfoo
+            path: /srv/tomcatfoo
+            home: /home/tomcatfoo
             service_name: foo@tomcat
             service_file: foo@.service
             port_ajp: 18009
@@ -295,7 +300,8 @@ The same playbook targeted on a Systemd enabled node.
           - name: bar
             user: tomcatbar
             group: tomcatbar
-            home: /srv/tomcatbar
+            path: /srv/tomcatbar
+            home: /home/tomcatbar
             service_name: bar@tomcat
             service_file: bar@.service
             port_ajp: 28009
@@ -317,7 +323,7 @@ The same playbook without sharing Systemd system slice.
 * ``item.service_name``
 * ``item.service_file``
 * ``item.user``
-* ``item.home``
+* ``item.path``
 
 <!-- -->
 
@@ -328,7 +334,8 @@ The same playbook without sharing Systemd system slice.
           - name: foo
             user: tomcatfoo
             group: tomcatfoo
-            home: /srv/tomcatfoo
+            path: /srv/tomcatfoo
+            home: /home/tomcatfoo
             service_name: tomcatfoo
             service_file: tomcatfoo.service
             port_ajp: 18009
@@ -338,7 +345,8 @@ The same playbook without sharing Systemd system slice.
           - name: bar
             user: tomcatbar
             group: tomcatbar
-            home: /srv/tomcatbar
+            path: /srv/tomcatbar
+            home: /home/tomcatbar
             service_name: tomcatbar
             service_file: tomcatbar.service
             port_ajp: 28009
@@ -365,6 +373,7 @@ all the defaults!
         tomcat_default_user_name: xyz
         tomcat_default_user_group: zyx
         tomcat_default_user_home: /var/home/xyz
+        tomcat_default_instance_path: /srv/xyz
         tomcat_default_server_xml_template: myveryownserverxmltemplate.j2
         tomcat_default_port_ajp: 12345
         tomcat_default_port_connector: 12346
@@ -401,6 +410,7 @@ override all the configuration but focus on instance configuration.
             user: xyz
             group: zyx
             home: /var/home/xyz
+            path: /srv/xyz
             service_template: myveryownsystemdtemplate.j2
             server_xml_template: myveryownserverxmltemplate.j2
             port_ajp: 12345
