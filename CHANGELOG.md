@@ -1,3 +1,9 @@
+# 1.0.0
+
+Mark Kusch (1):
+
+* [Fix] Allow to globaly configure service templates
+
 # 0.9.0
 
 Deepan (1):
