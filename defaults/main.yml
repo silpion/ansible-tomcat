@@ -42,6 +42,9 @@ tomcat_instances:
   - name: tomcat
 
 
+#   template for ansible tomcat facts
+tomcat_facts_template: facts.j2
+
 #   template for upstart
 tomcat_server_upstart_template: service_upstart.j2
 #   template for sysvinit

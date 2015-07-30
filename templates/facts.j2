@@ -18,3 +18,8 @@
 
 [general]
 version = {{ tomcat_version }}
+
+{% for instance in tomcat_instances %}
+[instances/{{ instance.name }}]
+catalina_base = {{ instance.path|default(tomcat_default_instance_path) }}/catalina/{{ instance.name }}
+{% endfor %}
