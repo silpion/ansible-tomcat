@@ -212,7 +212,7 @@
   become: yes
   register: tomcat_registered_install_local_tomcat_facts
   template:
-    src=facts.j2
+    src={{ tomcat_facts_template }}
     dest=/etc/ansible/facts.d/tomcat.fact
     owner=0
     group=0
