@@ -62,6 +62,7 @@ Be sure to install required roles with
 * ``tomcat_server_sysvinit_template``: Default template to use when configuring Tomcat for SysV (string, default: ``service_sysvinit.j2`` (see ``vars/service/sysvinit.yml``))
 * ``tomcat_server_upstart_template``: Default template to use when configuring Tomcat for upstart (string, default: ``service_upstart.j2`` (see ``vars/service/upstart.yml``))
 * ``tomcat_service_allow_restart``: Whether to allow or deny restarting Tomcat instances automatically (boolean, default: ``true``)
+* ``tomcat_facts_template``: Default template to use when configuring Tomcat facts.d (string, default: ``facts.j2``)
 
 ### tomcat_instances
 
