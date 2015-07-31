@@ -4,7 +4,11 @@ require 'rspec/core/rake_task'
 
 desc "Bring up Vagrant VM"
 task :up do
-  sh %{vagrant up --no-provision}
+  if ENV['ANSIBLE_TOMCAT_VAGRANT_PROVIDER']
+    sh 'vagrant', 'up', '--no-provision', '--provider', ENV['ANSIBLE_TOMCAT_VAGRANT_PROVIDER']
+  else
+    sh %{vagrant up --no-provision}
+  end
 end
 
 
@@ -16,8 +20,10 @@ end
 
 desc "Cleanup Vagrant VM environment"
 task :clean do
-  sh %{vagrant halt}
-  sh %{vagrant destroy --force}
+  if not ENV['RAKE_ANSIBLE_VAGRANT_DONT_CLEANUP'] == '1'
+    sh %{vagrant halt}
+    sh %{vagrant destroy --force}
+  end
 end
 
 

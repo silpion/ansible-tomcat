@@ -1,3 +1,18 @@
+# 1.1.0
+
+Mark Kusch (4):
+
+* Fix user to run tomcat as with SysV default service template
+* [ansible-generator] Do not store .retry files when testing this role
+* Allow to add environment files for vagrant based development
+* Add vagrant environments for CentOS 6 and 7
+
+kakawait (3):
+
+* add missing catalina\_base directories: bin, lib and work
+* Update README.md to add new option: tomcat\_facts\_template
+* use JSON format for facts.j2 template and expose some instances configurations inside facts
+
 # 1.0.0
 
 Mark Kusch (1):
