@@ -27,7 +27,7 @@ start(){
 {% if item.umask is defined %}
   umask {{ item.umask }}
 {% endif %}
-  daemon $CATALINA_HOME/bin/catalina.sh start
+  daemon --user $TOMCAT_USER $CATALINA_HOME/bin/catalina.sh start
   ret=$?
   echo
   [ $ret -eq 0 ] && touch $LOCK
