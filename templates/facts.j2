@@ -1,25 +1,27 @@
-{% if util_template_use_cow %}
-#  --------------------
-# ( Managed by Ansible )
-#  --------------------
-#   o            .    .     .
-#    o      .  . .     `  ,
-#     o    .; .  : .' :  :  : .
-#      o   i..`: i` i.i.,i  i .
-#       o   `,--.|i |i|ii|ii|i:
-#            UooU\.'@@@@@@`.||'
-#            \__/(@@@@@@@@@@)'
-#                 (@@@@@@@@)
-#                 `YY~~~~YY'
-#                  ||    ||
-{% else %}
-# {{ ansible_managed }}
-{% endif %}
-
-[general]
-version = {{ tomcat_version }}
-
+{
+    "general": {
+        "version": "{{ tomcat_version }}",
+        "catalina_home": "{{ tomcat_env_catalina_home }}",
+        "allow_restart": {{ tomcat_service_allow_restart|lower }}
+    },  
+    "instances": {
 {% for instance in tomcat_instances %}
-[instances/{{ instance.name }}]
-catalina_base = {{ instance.path|default(tomcat_default_instance_path) }}/catalina/{{ instance.name }}
+        "{{ instance.name }}": {
+            "catalina_base": "{{ instance.path|default(tomcat_default_instance_path) }}/catalina/{{ instance.name }}",
+            "port": {
+                "shutdown": {{ instance.port_shutdown|default(tomcat_default_port_shutdown) }},
+                "connector": {{ instance.port_connector|default(tomcat_default_port_connector) }},
+                "redirect": {{ instance.port_redirect|default(tomcat_default_port_redirect) }},
+                "ajp": {{ instance.port_ajp|default(tomcat_default_port_ajp) }}
+            },
+            "user": "{{ instance.user|default(tomcat_default_user_name) }}",
+            "group": "{{ instance.group|default(tomcat_default_user_group) }}",
+            "service": {
+                "name": "{{ instance.service_name|default(tomcat_default_service_name) }}",
+                "file": "{{ tomcat_service_dir }}/{{ instance.service_file|default(tomcat_default_service_file) }}"
+            }
+        }{% if not loop.last %},{% endif %}
+
 {% endfor %}
+    }
+}
