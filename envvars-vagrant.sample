@@ -1,0 +1,3 @@
+export RAKE_ANSIBLE_USE_VAGRANT=1
+export ANSIBLE_TOMCAT_VAGRANT_BOXNAME=ubuntu/trusty64 # name of the vagrant box to use for testing
+export ANSIBLE_TOMCAT_VAGRANT_PROVIDER=virtualbox     # name of the vagrant provider to use for testing
