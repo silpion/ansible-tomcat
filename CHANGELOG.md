@@ -1,3 +1,9 @@
+# 1.1.1
+
+Mark Kusch (1):
+
+* Ensure PID file with default SysV service
+
 # 1.1.0
 
 Mark Kusch (4):
