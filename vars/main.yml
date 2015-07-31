@@ -21,6 +21,9 @@ tomcat_instance_dirs:
   - logs
   - webapps
   - temp
+  - bin
+  - lib
+  - work
 
 # installation directory, denoted by environment variable CATALINA_HOME
 tomcat_env_catalina_home: "{{ tomcat_install_base }}/apache-tomcat-{{ tomcat_version }}"
