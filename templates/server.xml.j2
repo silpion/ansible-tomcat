@@ -37,7 +37,11 @@
 
     <Connector port="{{ item.port_connector|default(tomcat_default_port_connector) }}" protocol="HTTP/1.1"
                connectionTimeout="20000"
-               redirectPort="{{ item.port_redirect|default(tomcat_default_port_redirect) }}" />
+               redirectPort="{{ item.port_redirect|default(tomcat_default_port_redirect) }}"
+{% if item.uri_encoding|default(tomcat_default_uri_encoding) != tomcat_builtin_default_uri_encoding %}
+               URIEncoding="{{ item.uri_encoding|default(tomcat_default_uri_encoding) }}"
+{% endif %}
+    />
 
     <!--
     <Connector port="{{ item.port_redirect|default(tomcat_default_port_redirect) }}" protocol="org.apache.coyote.http11.Http11Protocol"
