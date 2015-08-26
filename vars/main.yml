@@ -8,6 +8,7 @@ tomcat_supported_distributions:
   - Archlinux
   - Ubuntu
   - CentOS
+  - RedHat
 
 # filename of Tomcat redistributable package
 tomcat_redis_filename: apache-tomcat-{{ tomcat_version }}.tar.gz
