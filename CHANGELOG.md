@@ -1,3 +1,13 @@
+# 1.2.0
+
+Mark Kusch (5):
+
+* Allow to configure tomcat URI encoding
+* Use override mechanic for URI encoding
+* Add support for RHEL as a distribution
+* Adapt documentation to override mechanic for URI encoding
+* Add role version to facts
+
 # 1.1.1
 
 Mark Kusch (1):

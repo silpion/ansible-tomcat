@@ -8,6 +8,7 @@ tomcat_supported_distributions:
   - Archlinux
   - Ubuntu
   - CentOS
+  - RedHat
 
 # filename of Tomcat redistributable package
 tomcat_redis_filename: apache-tomcat-{{ tomcat_version }}.tar.gz
@@ -27,3 +28,6 @@ tomcat_instance_dirs:
 
 # installation directory, denoted by environment variable CATALINA_HOME
 tomcat_env_catalina_home: "{{ tomcat_install_base }}/apache-tomcat-{{ tomcat_version }}"
+
+# gather role version for facts
+tomcat_role_version: "{{ lookup('file', role_path + '/VERSION') }}"

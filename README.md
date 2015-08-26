@@ -56,13 +56,14 @@ Be sure to install required roles with
 * ``tomcat_default_port_connector``: Default connector port when not configured per instance (int, default: ``8080``)
 * ``tomcat_default_port_redirect``: Default redirect port when not configured per instance (int, default: ``8443``)
 * ``tomcat_default_port_shutdown``: Default shutdown port when not configured per instance (int, default: ``8005``)
-* ``tomcat_default_catalina_opts``: Default configuration for environment variable "CATALINA_OPTS" when not configured per instance (string, default: ``''``)
+* ``tomcat_default_catalina_opts``: Default configuration for environment variable "CATALINA\_OPTS" when not configured per instance (string, default: ``''``)
 * ``tomcat_default_instance_path``: Default configuration for base path per instance (string, default: ``/srv/{{ tomcat_default_user_name }}``)
 * ``tomcat_server_systemd_template``: Default template to use when configuring Tomcat for Systemd (string, default: ``service_systemd.j2`` (see ``vars/service/systemd.yml``))
 * ``tomcat_server_sysvinit_template``: Default template to use when configuring Tomcat for SysV (string, default: ``service_sysvinit.j2`` (see ``vars/service/sysvinit.yml``))
 * ``tomcat_server_upstart_template``: Default template to use when configuring Tomcat for upstart (string, default: ``service_upstart.j2`` (see ``vars/service/upstart.yml``))
 * ``tomcat_service_allow_restart``: Whether to allow or deny restarting Tomcat instances automatically (boolean, default: ``true``)
 * ``tomcat_facts_template``: Default template to use when configuring Tomcat facts.d (string, default: ``facts.j2``)
+* ``tomcat_default_override_uri_encoding``: Default URI encoding for Tomcat (string, default: ``""``)
 
 ### tomcat_instances
 
@@ -388,6 +389,7 @@ all the defaults!
         tomcat_default_port_shutdown: 12348
         tomcat_default_catalina_opts: '-Dwhatever'
         tomcat_default_upstart_template: myveryownupstarttemplate.j2
+        tomcat_default_override_uri_encoding: UTF-8
         tomcat_service_allow_restart: false
         tomcat_instances:
           - name: nodefaults
@@ -428,6 +430,7 @@ override all the configuration but focus on instance configuration.
             service_file: motcat.service
             catalina_opts: '-Dwhatever'
             umask: 0002
+            override_uri_encoding: UTF-8
       roles:
         - { role: ansible-tomcat }
 
