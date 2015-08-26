@@ -37,7 +37,7 @@ tomcat_default_catalina_opts: ''
 #   Default per instance path
 tomcat_default_instance_path: /srv/{{ tomcat_default_user_name }}
 #   Default per instance URI encoding
-tomcat_default_uri_encoding: "{{ tomcat_builtin_default_uri_encoding }}"
+tomcat_default_override_uri_encoding: ""
 
 # tomcat instance(s)
 tomcat_instances:
