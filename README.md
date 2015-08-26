@@ -63,7 +63,7 @@ Be sure to install required roles with
 * ``tomcat_server_upstart_template``: Default template to use when configuring Tomcat for upstart (string, default: ``service_upstart.j2`` (see ``vars/service/upstart.yml``))
 * ``tomcat_service_allow_restart``: Whether to allow or deny restarting Tomcat instances automatically (boolean, default: ``true``)
 * ``tomcat_facts_template``: Default template to use when configuring Tomcat facts.d (string, default: ``facts.j2``)
-* ``tomcat_default_uri_encoding``: Default URI encoding for Tomcat (string, default: ``{{ tomcat_builtin_default_uri_encoding }}`` (``ISO-8859-1``))
+* ``tomcat_default_override_uri_encoding``: Default URI encoding for Tomcat (string, default: ``""``)
 
 ### tomcat_instances
 
@@ -389,7 +389,7 @@ all the defaults!
         tomcat_default_port_shutdown: 12348
         tomcat_default_catalina_opts: '-Dwhatever'
         tomcat_default_upstart_template: myveryownupstarttemplate.j2
-        tomcat_default_uri_encoding: UTF-8
+        tomcat_default_override_uri_encoding: UTF-8
         tomcat_service_allow_restart: false
         tomcat_instances:
           - name: nodefaults
@@ -430,7 +430,7 @@ override all the configuration but focus on instance configuration.
             service_file: motcat.service
             catalina_opts: '-Dwhatever'
             umask: 0002
-            uri_encoding: UTF-8
+            override_uri_encoding: UTF-8
       roles:
         - { role: ansible-tomcat }
 
