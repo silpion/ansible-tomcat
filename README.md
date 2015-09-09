@@ -55,6 +55,7 @@ Be sure to install required roles with
 * ``tomcat_default_user_group``: Default group for the user account to run Tomcat as when not configured per instance (string, default: ``tomcat``)
 * ``tomcat_default_user_name``: Default user account to run Tomcat as when not configured per instance (string, default: ``tomcat``)
 * ``tomcat_default_user_home``: Default home directory for the user account to run Tomcat as when not configured per instance (string, default: ``/srv/{{ tomcat_default_user_name }}``)
+* ``tomcat_default_user_system``: Default system status for the user account to run Tomcat as when not configured per instance (boolean, default: ``false``)
 * ``tomcat_instances``: Configure Catalina instances (list, default: ``{ - name: tomcat }``)
 * ``tomcat_default_server_xml_template``: Default server.xml template to use for configuring Tomcat instances (string, default: ``server.xml.j2``)
 * ``tomcat_default_web_xml_template``: Default web.xml template to use for configuring Tomcat instances (string, default: ``web.xml.j2``)
@@ -400,7 +401,7 @@ all the defaults!
         tomcat_default_user_name: xyz
         tomcat_default_user_group: zyx
         tomcat_default_user_home: /var/home/xyz
-        tomcat_default_user_system: yes
+        tomcat_default_user_system: true
         tomcat_default_instance_path: /srv/xyz
         tomcat_default_server_xml_template: myveryownserverxmltemplate.j2
         tomcat_default_port_ajp: 12345
@@ -439,7 +440,7 @@ override all the configuration but focus on instance configuration.
             user: xyz
             group: zyx
             home: /var/home/xyz
-            system: yes
+            system: true
             path: /srv/xyz
             service_template: myveryownsystemdtemplate.j2
             server_xml_template: myveryownserverxmltemplate.j2
