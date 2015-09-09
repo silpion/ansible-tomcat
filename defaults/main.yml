@@ -19,6 +19,8 @@ tomcat_default_user_name: tomcat
 tomcat_default_user_group: tomcat
 #   per instance name: item.home
 tomcat_default_user_home: /srv/{{ tomcat_default_user_name }}
+#   per instance name: item.system
+tomcat_default_user_system: no
 
 
 # Tomcat configuration

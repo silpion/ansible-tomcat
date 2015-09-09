@@ -75,6 +75,7 @@
     name: "{{ item.user|default(tomcat_default_user_name) }}"
     home: "{{ item.home|default(tomcat_default_user_home) }}"
     group: "{{ item.group|default(tomcat_default_user_group) }}"
+    system: "{{ item.system|default(tomcat_default_user_system) }}"
     createhome: true
     comment: "Tomcat service user"
 

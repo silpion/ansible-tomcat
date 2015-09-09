@@ -400,6 +400,7 @@ all the defaults!
         tomcat_default_user_name: xyz
         tomcat_default_user_group: zyx
         tomcat_default_user_home: /var/home/xyz
+        tomcat_default_user_system: yes
         tomcat_default_instance_path: /srv/xyz
         tomcat_default_server_xml_template: myveryownserverxmltemplate.j2
         tomcat_default_port_ajp: 12345
@@ -438,6 +439,7 @@ override all the configuration but focus on instance configuration.
             user: xyz
             group: zyx
             home: /var/home/xyz
+            system: yes
             path: /srv/xyz
             service_template: myveryownsystemdtemplate.j2
             server_xml_template: myveryownserverxmltemplate.j2
