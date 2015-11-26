@@ -18,13 +18,22 @@ Vagrant.configure(VAGRANT_API_VERSION) do |config|
 
     d.vm.provision :ansible do |ansible|
       ansible.playbook = 'tests/playbook.yml'
-      ansible.tags = ENV['ANSIBLE_TAGS']
-      ansible.skip_tags = ENV['ANSIBLE_SKIP_TAGS']
-      ansible.verbose = ENV['ANSIBLE_VERBOSE']
+      ansible.tags = ENV['ANSIBLE_TOMCAT_VAGRANT_ANSIBLE_TAGS']
+      ansible.skip_tags = ENV['ANSIBLE_TOMCAT_VAGRANT_ANSIBLE_SKIP_TAGS']
+      ansible.verbose = ENV['ANSIBLE_TOMCAT_VAGRANT_ANSIBLE_VERBOSE']
+      if ENV['ANSIBLE_TOMCAT_VAGRANT_ANSIBLE_CHECKMODE'] == '1'
+        ansible.raw_arguments = '--check'
+      end
       ansible.groups = {
         'vagrant' => ['ansibletomcattest']
       }
       ansible.limit = 'vagrant'
+      ansible.raw_arguments = [
+        '--diff'
+      ]
+      if ENV['ANSIBLE_TOMCAT_VAGRANT_ANSIBLE_CHECKMODE'] == '1'
+        ansible.raw_arguments << '--check'
+      end
 
       ::File.directory?('.vagrant/provisioners/ansible/inventory/') do
         ansible.inventory_path = '.vagrant/provisioners/ansible/inventory/'
