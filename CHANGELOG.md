@@ -1,3 +1,15 @@
+# 1.3.0
+
+Mark Kusch (9):
+
+* Conform to current style guide
+* Re-run generator
+* Adapt generated updates for vagrant to centos test environments
+* Allow to manage a tomcat instances web.xml
+* Add new 7.0.x versions and update default to current latest 7.0.65 (thx to PhysicsUnplugged)
+* Add variables for tomcat 8.0.29
+* Update default tomcat installation to tomcat 8 (8.0.29)
+
 # 1.2.0
 
 Mark Kusch (5):

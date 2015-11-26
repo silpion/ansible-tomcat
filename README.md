@@ -4,6 +4,11 @@ Install Tomcat with configurable Catalina instances.
 
 ## Compatibility
 
+### 1.3.0
+
+Starting with this role version default Tomcat major version has been
+updated to Tomcat 8 (8.0.29).
+
 ### 0.8.0
 
 Starting with this role version managing instances has been changed
