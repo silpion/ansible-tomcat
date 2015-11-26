@@ -43,7 +43,7 @@ Be sure to install required roles with
 
 ## Role variables
 
-* ``tomcat_version``: Configure Tomcat version (string, default: ``7.0.65``)
+* ``tomcat_version``: Configure Tomcat version (string, default: ``8.0.29``)
 * ``tomcat_mirror``: Configure Tomcat mirror site (string, default: ``http://archive.apache.org/dist/tomcat``)
 * ``tomcat_download_url``: Configure complete URL to download Tomcat from (string, default: ``{{ tomcat_mirror }}/tomcat-{{ tomcat_version_major }}/v{{ tomcat_version }}/bin/{{ tomcat_redis_filename }}``)
 * ``tomcat_install_base``: Configure base/installation directory for Tomcat (string, default: ``/opt/tomcat``)
