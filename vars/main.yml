@@ -10,8 +10,6 @@ tomcat_supported_distributions:
   - CentOS
   - RedHat
 
-tomcat_role_version: "{{ lookup('file', role_path + '/VERSION') }}"
-
 # filename of Tomcat redistributable package
 tomcat_redis_filename: apache-tomcat-{{ tomcat_version }}.tar.gz
 
