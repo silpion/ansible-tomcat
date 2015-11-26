@@ -24,6 +24,8 @@ tomcat_default_user_home: /srv/{{ tomcat_default_user_name }}
 # Tomcat configuration
 #   Default template for configuration file server.xml
 tomcat_default_server_xml_template: server.xml.j2
+#   Default template for configuration file web.xml
+tomcat_default_web_xml_template: web.xml.j2
 #   Default shutdown port (per instance name: item.port_shutdown)
 tomcat_default_port_shutdown: 8005
 #   Default connector port (per instance name: item.port_connector)

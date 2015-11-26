@@ -16,7 +16,7 @@ end
 desc "Provision Docker container"
 task :provision => [:up] do
   d.ansible_hosts_add
-  sh %{ansible-playbook --inventory-file #{d.ansible_hosts_file} --limit #{d.env_name} tests/playbook.yml}
+  sh %{ansible-playbook --inventory-file #{d.ansible_hosts_file} --limit #{d.env_name} --diff tests/playbook.yml}
   d.ansible_hosts_del
 end
 
