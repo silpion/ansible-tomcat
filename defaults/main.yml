@@ -1,6 +1,6 @@
 ---
 # Tomcat version number
-tomcat_version: 7.0.62
+tomcat_version: 7.0.65
 
 # Mirror where to dowload Tomcat redistributable package from
 tomcat_mirror: http://archive.apache.org/dist/tomcat

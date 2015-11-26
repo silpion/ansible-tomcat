@@ -502,6 +502,7 @@ Ruby with rake and bundler available.
 * [trumant](https://github.com/trumant)
 * [kakawait](https://github.com/kakawait)
 * [deepan](https://github.com/deepan)
+* [PhysicsUnplugged](https://github.com/PhysicsUnplugged)
 
 
 <!-- vim: set ts=4 sw=4 et nofen: -->
