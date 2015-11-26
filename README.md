@@ -51,7 +51,8 @@ Be sure to install required roles with
 * ``tomcat_default_user_name``: Default user account to run Tomcat as when not configured per instance (string, default: ``tomcat``)
 * ``tomcat_default_user_home``: Default home directory for the user account to run Tomcat as when not configured per instance (string, default: ``/srv/{{ tomcat_default_user_name }}``)
 * ``tomcat_instances``: Configure Catalina instances (list, default: ``{ - name: tomcat }``)
-* ``tomcat_default_server_xml_template``: Default server.xml template to use for configuring Tomcat instances (string, default: ``server.xml.j2``
+* ``tomcat_default_server_xml_template``: Default server.xml template to use for configuring Tomcat instances (string, default: ``server.xml.j2``)
+* ``tomcat_default_web_xml_template``: Default web.xml template to use for configuring Tomcat instances (string, default: ``web.xml.j2``)
 * ``tomcat_default_port_ajp``: Default AJP port when not configured per instance (int, default: ``8009``)
 * ``tomcat_default_port_connector``: Default connector port when not configured per instance (int, default: ``8080``)
 * ``tomcat_default_port_redirect``: Default redirect port when not configured per instance (int, default: ``8443``)
@@ -76,6 +77,7 @@ instance. The following variables are legit to configure per instance.
 * ``path``: Directory of the tomcat instance as (string, default: ``{{ tomcat_default_instance_path }}``)
 * ``service_template``: Configure service template to use for a specific instance (string, default: ``{{ tomcat_default_service_template }}`` (see ``vars/service/*.yml``))
 * ``server_xml_template``: server.xml template to use for configuring Tomcat instance (string, default: ``{{ tomcat_default_server_xml_template }}``)
+* ``web_xml_template``: web.xml template to use for configuring Tomcat instance (string, default: ``{{ tomcat_default_web_xml_template }}``)
 * ``port_ajp``: Instance AJP port (int, default: ``{{ tomcat_default_port_ajp }}``)
 * ``port_connector``: Instance connector port (int, default: ``{{ tomcat_default_port_connector }}``)
 * ``port_redirect``: Instance redirect port (int, default: ``{{ tomcat_default_port_redirect }}``)
@@ -98,6 +100,18 @@ that is not predefined (so far), the following variables must also be
 defined in the playbook/inventory:
 
 * ``tomcat_redis_sha256sum``: SHA256 sum for the downloaded Tomcat redistributable package (string, default: ``a787ea12e163e78ccebbb9662d7da78e707aef051d15af9ab5be20489adf1f6d``)
+* ``tomcat_web_xml_schema_version``: Configures Tomcat web.xml schema version when used with the default template ``web.xml.j2``.
+
+### tomcat_web_xml_schema_version
+
+How to get the schema version for a specific tomcat version?
+e.g. 8.0.21:
+
+    svn cat http://svn.apache.org/repos/asf/tomcat/tc8.0.x/tags/TOMCAT_8_0_21/conf/web.xml 2>&1|grep -v encoding|grep -e web-app_ -e version=
+
+e.g. 7.0.56:
+
+    svn cat http://svn.apache.org/repos/asf/tomcat/tc7.0.x/tags/TOMCAT_7_0_56/conf/web.xml 2>&1|grep -v encoding|grep -e web-app_ -e version=
 
 ## Systemd configuration
 

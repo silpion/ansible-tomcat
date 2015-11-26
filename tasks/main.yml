@@ -85,13 +85,17 @@
     group: "{{ item.0.group|default(tomcat_default_user_group) }}"
     mode: 0755
 
-- name: Register conf files
+- name: Register static/unmanaged conf files
   tags: tomcat
   register: tomcat_registered_conf_files
   changed_when: false
-  command: ls -1 --ignore=server.xml {{ tomcat_env_catalina_home }}/conf
+  command: ls
+      -1
+      --ignore=web.xml
+      --ignore=server.xml
+      {{ tomcat_env_catalina_home }}/conf
 
-- name: Install conf files
+- name: Install static/unmanaged conf files
   tags: tomcat
   become: true
   with_nested:
@@ -107,14 +111,26 @@
     creates: "{{ item.0.path|default(tomcat_default_instance_path) }}/catalina/{{ item.0.name }}/conf/{{ item.1 }}"
 
 
-- name: Install instance configurations
+- name: Install instance server.xml
   tags: tomcat
   become: true
   with_items: tomcat_instances
-  register: tomcat_registered_install_instance_configurations
+  register: tomcat_registered_install_server_xml
   template:
     src: "{{ item.server_xml_template|default(tomcat_default_server_xml_template) }}"
     dest: "{{ item.path|default(tomcat_default_instance_path) }}/catalina/{{ item.name }}/conf/server.xml"
+    owner: "{{ item.user|default(tomcat_default_user_name) }}"
+    group: "{{ item.group|default(tomcat_default_user_group) }}"
+    mode: 0640
+
+- name: Install instance web.xml
+  tags: tomcat
+  become: true
+  with_items: tomcat_instances
+  register: tomcat_registered_install_web_xml
+  template:
+    src: "{{ item.web_xml_template|default(tomcat_default_web_xml_template) }}"
+    dest: "{{ item.path|default(tomcat_default_instance_path) }}/catalina/{{ item.name }}/conf/web.xml"
     owner: "{{ item.user|default(tomcat_default_user_name) }}"
     group: "{{ item.group|default(tomcat_default_user_group) }}"
     mode: 0640
@@ -188,7 +204,8 @@
   tags: tomcat
   register: tomcat_registered_instances_requiring_restart
   with_items:
-    - "{{ tomcat_registered_install_instance_configurations.results }}"
+    - "{{ tomcat_registered_install_server_xml.results }}"
+    - "{{ tomcat_registered_install_web_xml.results }}"
     - "{{ tomcat_registered_install_instance_environment_files.results }}"
     - "{{ tomcat_registered_install_tomcat_service.results }}"
   set_fact:
