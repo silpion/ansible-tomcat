@@ -43,7 +43,7 @@ Be sure to install required roles with
 
 ## Role variables
 
-* ``tomcat_version``: Configure Tomcat version (string, default: ``7.0.62``)
+* ``tomcat_version``: Configure Tomcat version (string, default: ``7.0.65``)
 * ``tomcat_mirror``: Configure Tomcat mirror site (string, default: ``http://archive.apache.org/dist/tomcat``)
 * ``tomcat_download_url``: Configure complete URL to download Tomcat from (string, default: ``{{ tomcat_mirror }}/tomcat-{{ tomcat_version_major }}/v{{ tomcat_version }}/bin/{{ tomcat_redis_filename }}``)
 * ``tomcat_install_base``: Configure base/installation directory for Tomcat (string, default: ``/opt/tomcat``)
@@ -502,6 +502,7 @@ Ruby with rake and bundler available.
 * [trumant](https://github.com/trumant)
 * [kakawait](https://github.com/kakawait)
 * [deepan](https://github.com/deepan)
+* [PhysicsUnplugged](https://github.com/PhysicsUnplugged)
 
 
 <!-- vim: set ts=4 sw=4 et nofen: -->
