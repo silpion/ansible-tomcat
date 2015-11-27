@@ -25,4 +25,4 @@
           {{ tomcat_env_catalina_home }}/webapps/ROOT.war
           {{ item.home|default(tomcat_default_user_home) }}/catalina/{{ item.name }}/webapps/ROOT.war
       args:
-        creates: "{{ item.user|default(tomcat_default_user_home) }}/catalina/{{ item.name }}/webapps/ROOT.war"
+        creates: "{{ item.home|default(tomcat_default_user_home) }}/catalina/{{ item.name }}/webapps/ROOT.war"
