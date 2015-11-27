@@ -14,6 +14,7 @@ Vagrant.configure(VAGRANT_API_VERSION) do |config|
   config.vm.define :ansibletomcattest do |d|
 
     d.vm.hostname = 'ansibletomcattest'
+    d.vm.network 'forwarded_port', :host => 8080, :guest => 8080
     d.vm.synced_folder '.', '/vagrant', id: 'vagrant-root', disabled: true
 
     d.vm.provision :ansible do |ansible|
