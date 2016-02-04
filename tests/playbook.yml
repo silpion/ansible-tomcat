@@ -7,6 +7,7 @@
     - name: Package ROOT webapp from Tomcat installation
       tags: ansibletomcattest
       become: true
+      when: tomcat_fact_is_not_initial_check_mode
       command: ./jar
           cf {{ tomcat_env_catalina_home }}/webapps/ROOT.war
           -C {{ tomcat_env_catalina_home }}/webapps/ROOT .
@@ -17,6 +18,7 @@
     - name: Install ROOT webapp to Tomcat instance
       tags: ansibletomcattest
       become: true
+      when: tomcat_fact_is_not_initial_check_mode
       with_items: tomcat_instances
       command: install
           --owner {{ item.user|default(tomcat_default_user_name) }}
