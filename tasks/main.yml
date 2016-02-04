@@ -21,10 +21,6 @@
   set_fact:
     tomcat_fact_is_not_initial_check_mode: "{{ ((ansible_local|default({})).tomcat|default(false))|bool or not lib_fact_check_mode }}"
 
-- name: Debug
-  tags: tomcat
-  debug:
-    var: tomcat_fact_is_not_initial_check_mode
 
 - name: Include version specific configuration
   tags: tomcat
