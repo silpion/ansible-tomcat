@@ -7,7 +7,7 @@ galaxy_info:
   description: Manage tomcat installation
   company: http://silpion.de
   license: Apache 2
-  min_ansible_version: 1.9
+  min_ansible_version: 2.0.0.2
 
   platforms:
   - name: EL
