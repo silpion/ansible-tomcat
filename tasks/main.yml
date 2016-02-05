@@ -36,11 +36,14 @@
 
 
 - name: Include assets persistency tasks
+  tags: tomcat
   include: ../../silpion.lib/tasks/datapersistency.yml
   vars:
     include_tags: tomcat
 
 - name: Include lib get_url
+  tags: tomcat
+  when: tomcat_fact_is_not_initial_check_mode
   include: ../../silpion.lib/tasks/get_url.yml
   vars:
     url: "{{ tomcat_download_url }}"
@@ -48,6 +51,8 @@
     sha256sum: "{{ tomcat_redis_sha256sum }}"
 
 - name: Include lib copy
+  tags: tomcat
+  when: tomcat_fact_is_not_initial_check_mode
   include: ../../silpion.lib/tasks/copy.yml
   vars:
     filename: "{{ tomcat_redis_filename }}"
