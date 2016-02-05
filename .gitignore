@@ -1,6 +1,6 @@
 ### Files to be ignored by Git ###
 
-# Ansible
+# Ruby
 Gemfile.lock
 
 # Vagrant
@@ -23,3 +23,5 @@ Gemfile.lock
 # Custom
 /temp/
 /tmp/
+envvars-vagrant
+\.*\.swp

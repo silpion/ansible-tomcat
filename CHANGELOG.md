@@ -1,3 +1,27 @@
+# 2.0.0
+
+Alvaro Aleman (2):
+
+* Make util include v2 compatible
+* Re-run generator
+
+Marc Rohlfs (5):
+
+* Install ROOT webapp in test Tomcat instances.
+* Changed assignments to complex args style.
+* Vagrant VM should always forward the Tomcat default port.
+* Applied style guide to boolean literals.
+* Fixed wrong variable usage.
+
+Mark Kusch (6):
+
+* Use lib role for managing assets
+* Min Ansible version is now 2.N
+* Add support for initial and succeeding check mode applications
+* "Debug command in PR? :)))"
+* Ensure check mode functions properly on initial application
+* Fix initial check mode detection
+
 # 1.3.0
 
 Mark Kusch (9):
