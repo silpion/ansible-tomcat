@@ -19,7 +19,7 @@
 - name: Detect --check mode on initial run
   tags: tomcat
   set_fact:
-    tomcat_fact_is_not_initial_check_mode: "{{ ((ansible_local|default({})).tomcat|default(false))|bool or not lib_fact_check_mode }}"
+    tomcat_fact_is_not_initial_check_mode: "{{ true if ((ansible_local|default({})).tomcat is defined or not lib_fact_check_mode) else false }}"
 
 
 - name: Include version specific configuration
@@ -251,7 +251,6 @@
   when: tomcat_fact_is_not_initial_check_mode
   set_fact:
     tomcat_fact_requires_restart_item: "{{ item.item.service_name|default(tomcat_default_service_name) if item.item is defined and item.changed else 'None' }}"
-#    tomcat_fact_requires_restart_item: "{% if item.item is defined and item.changed %}{{ item.item.service_name|default(tomcat_default_service_name) }}{% else %}'None'{% endif %}"
 
 #     This one maps all services in question from previous task into an iterable list
 #       while stripping services named 'None'
