@@ -1,6 +1,7 @@
 ---
 dependencies:
-  - { role: silpion.util }
+  - src: https://github.com/silpion/ansible-util
+    name: silpion.util
 
 galaxy_info:
   author: Mark Kusch
