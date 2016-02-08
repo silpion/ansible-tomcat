@@ -1,3 +1,9 @@
+# 2.0.1
+
+Mark Kusch (1):
+
+* Fix dependency management
+
 # 2.0.0
 
 Alvaro Aleman (2):
