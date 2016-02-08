@@ -1,2 +1,3 @@
-- src: groover.util
+---
+- src: https://github.com/silpion/ansible-util
   name: silpion.util
