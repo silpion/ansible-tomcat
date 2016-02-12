@@ -13,8 +13,6 @@
 - name: Include --check mode detection
   tags: tomcat
   include: ../../silpion.lib/tasks/checkmodedetection.yml
-  vars:
-    include_tags: tomcat
 
 - name: Detect --check mode on initial run
   tags: tomcat
