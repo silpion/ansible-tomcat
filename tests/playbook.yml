@@ -2,7 +2,25 @@
 - hosts: all
   roles:
     - { role: silpion.java }
-    - { role: ansible-tomcat }
+    - role: ansible-tomcat
+      tomcat_version: 7.0.62
+- hosts: all
+  roles:
+    - silpion.java
+    - ansible-tomcat
+  tasks:
+    - name: Fail when tomcat was implicitly upgraded
+      tags: ansibletomcattest
+      # This should be the version defined in the first play
+      when: "{{ ansible_local['tomcat']['general']['version']|string != '7.0.62'|string }}"
+      fail:
+        msg: "Test failed! | Tomcat was implicitly upgraded to a newer version"
+
+- hosts: all
+  roles:
+    - { role: silpion.java }
+    - role: ansible-tomcat
+      tomcat_version: "{{ tomcat_default_version }}"
   tasks:
     - name: Package ROOT webapp from Tomcat installation
       tags: ansibletomcattest
