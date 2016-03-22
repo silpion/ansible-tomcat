@@ -37,7 +37,7 @@
       tags: ansibletomcattest
       become: true
       when: tomcat_fact_is_not_initial_check_mode
-      with_items: tomcat_instances
+      with_items: "{{ tomcat_instances }}"
       command: install
           --owner {{ item.user|default(tomcat_default_user_name) }}
           --group {{ item.group|default(tomcat_default_user_group) }}
