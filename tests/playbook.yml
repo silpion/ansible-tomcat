@@ -1,12 +1,15 @@
 ---
 - hosts: all
   roles:
-    - { role: silpion.java }
-    - role: ansible-tomcat
-      tomcat_version: 7.0.62
+    - silpion.java
+
 - hosts: all
   roles:
-    - silpion.java
+    - role: ansible-tomcat
+      tomcat_version: 7.0.62
+
+- hosts: all
+  roles:
     - ansible-tomcat
   tasks:
     - name: Fail when tomcat was implicitly upgraded
@@ -18,7 +21,6 @@
 
 - hosts: all
   roles:
-    - { role: silpion.java }
     - role: ansible-tomcat
       tomcat_version: "{{ tomcat_default_version }}"
   tasks:
