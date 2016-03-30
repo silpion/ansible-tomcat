@@ -1,12 +1,15 @@
 ---
 - hosts: all
   roles:
-    - { role: silpion.java }
-    - role: ansible-tomcat
-      tomcat_version: 7.0.62
+    - silpion.java
+
 - hosts: all
   roles:
-    - silpion.java
+    - role: ansible-tomcat
+      tomcat_version: 7.0.62
+
+- hosts: all
+  roles:
     - ansible-tomcat
   tasks:
     - name: Fail when tomcat was implicitly upgraded
@@ -18,7 +21,6 @@
 
 - hosts: all
   roles:
-    - { role: silpion.java }
     - role: ansible-tomcat
       tomcat_version: "{{ tomcat_default_version }}"
   tasks:
@@ -37,7 +39,7 @@
       tags: ansibletomcattest
       become: true
       when: tomcat_fact_is_not_initial_check_mode
-      with_items: tomcat_instances
+      with_items: "{{ tomcat_instances }}"
       command: install
           --owner {{ item.user|default(tomcat_default_user_name) }}
           --group {{ item.group|default(tomcat_default_user_group) }}

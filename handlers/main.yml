@@ -2,7 +2,7 @@
 - name: service restart tomcat
   become: yes
   when: tomcat_service_allow_restart
-  with_items: tomcat_facts_requires_restart
+  with_items: "{{ tomcat_facts_requires_restart }}"
   service:
-    state=restarted
-    name={{ item }}
+    state: restarted
+    name: "{{ item }}"
