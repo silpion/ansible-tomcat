@@ -26,6 +26,7 @@ ExecStart={{ ansible_local.java.general.java_home }}/bin/java \
   -Djava.util.logging.config.file={{ item.path|default(tomcat_default_instance_path) }}/catalina/{{ item.name }}/conf/logging.properties \
 {% endif %}
   -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager \
+  -Djava.security.egd=file:/dev/./urandom \
   -Djava.endorsed.dirs={{ tomcat_env_catalina_home }}/endorsed \
   -Dcatalina.home={{ tomcat_env_catalina_home }} \
 {% if item.service_name|default(tomcat_default_service_name)|search('@') %}
@@ -51,6 +52,7 @@ ExecStop={{ ansible_local.java.general.java_home }}/bin/java \
   -Djava.util.logging.config.file={{ item.path|default(tomcat_default_instance_path) }}/catalina/{{ item.name }}/conf/logging.properties \
 {% endif %}
   -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager \
+  -Djava.security.egd=file:/dev/./urandom \
   -Djava.endorsed.dirs={{ tomcat_env_catalina_home }}/endorsed \
   -Dcatalina.home={{ tomcat_env_catalina_home }} \
 {% if item.service_name|default(tomcat_default_service_name)|search('@') %}
