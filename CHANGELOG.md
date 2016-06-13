@@ -1,3 +1,23 @@
+# 2.1.0
+
+
+* Stop tomcat at the latest point possible for upgrade installations
+* Do not run java role in all test plays
+* Remove leftovers from testing with parameterised includes
+* Update test depndencies
+
+Mark Kusch (4):
+
+* implement update installation tasks; fix warnings
+
+Anja Siek (1):
+
+* Add documentation about catalina_home and _base
+* Rerun generator
+* Avoid implicit upgrades when an older version of Tomcat is already installed
+* Add a test to ensure Tomcat doesnt get implicitly upgraded
+
+Alvaro Aleman (4):
 # 2.0.1
 
 Mark Kusch (1):
