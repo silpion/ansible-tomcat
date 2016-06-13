@@ -5,6 +5,7 @@ Gemfile.lock
 
 # Vagrant
 /\.vagrant/
+/tests/roles/
 
 # IntelliJ IDEA
 /*\.ipr
@@ -17,6 +18,12 @@ Gemfile.lock
 /\.project
 /\.settings/
 
+# Emacs
+.*~
+
+# Python
+**/*.pyc
+
 # Mac
 **/\.DS_Store
 
@@ -25,3 +32,5 @@ Gemfile.lock
 /tmp/
 envvars-vagrant
 \.*\.swp
+\.*\.swo
+\.environ

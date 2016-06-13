@@ -1,5 +1,5 @@
 export RAKE_ANSIBLE_USE_VAGRANT=1
-export ANSIBLE_TOMCAT_VAGRANT_BOXNAME=ubuntu/trusty64 # name of the vagrant box to use for testing
+export ANSIBLE_TOMCAT_VAGRANT_BOXNAME=centos/7        # name of the vagrant box to use for testing
 export ANSIBLE_TOMCAT_VAGRANT_PROVIDER=virtualbox     # name of the vagrant provider to use for testing
 #export ANSIBLE_TOMCAT_VAGRANT_ANSIBLE_TAGS=          # Multiple tags can be specified comma seperated
 unset ANSIBLE_TOMCAT_VAGRANT_ANSIBLE_TAGS             # An empty tags variable leads to an error
@@ -7,3 +7,4 @@ unset ANSIBLE_TOMCAT_VAGRANT_ANSIBLE_TAGS             # An empty tags variable l
 unset ANSIBLE_TOMCAT_VAGRANT_ANSIBLE_SKIP_TAGS        # An empty skip_tags variable leads to an error
 export ANSIBLE_TOMCAT_VAGRANT_ANSIBLE_VERBOSE=        # May contain one to four 'v's
 export ANSIBLE_TOMCAT_VAGRANT_ANSIBLE_CHECKMODE=      # 1 to enable, any other value to disable
+export ANSIBLE_TOMCAT_VAGRANT_ANSIBLE_DIFFMODE=       # 1 to enable, any other value to disable
