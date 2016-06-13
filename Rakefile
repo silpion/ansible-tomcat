@@ -6,11 +6,7 @@ require 'rspec/core/rake_task'
 #   directory.
 # Add the rake/ directory to the ruby $LOAD_PATH.
 $:.unshift File.dirname(__FILE__) + '/rake'
-if ENV['RAKE_ANSIBLE_USE_VAGRANT']
-  require 'vagrant'
-else
-  require 'docker'
-end
+require 'vagrant'
 
 
 desc "Run integration tests with serverspec"
@@ -21,12 +17,12 @@ end
 
 desc "Test ansible playbook syntax"
 task :lint do
-  sh %{ansible-playbook --inventory-file tests/hosts --syntax-check tests/playbook.yml}
+  sh %{ansible-playbook --inventory-file tests/hosts --syntax-check tests/test.yml}
 end
 task :default => :lint
 
 
-desc "Run test suite with Docker or Vagrant"
+desc "Run test suite with Vagrant"
 task :suite => [
   :lint,
   :up,
