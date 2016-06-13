@@ -46,6 +46,13 @@ Be sure to install required roles with
 
     ansible-galaxy install --role-file requirements.yml
 
+## ``catalina_base`` vs ``catalina_home`` or "Where to put my webapp and config?"
+
+Tomcat uses two main paths: ``CATALINA_BASE`` which contains all common files and
+``CATALINA_HOME`` which contains instance-specific files.
+Consequently, any webapp and configuration must be deployed to ``CATALINA_HOME`` which
+defaults to ``/srv/tomcat/catalina/tomcat``.
+
 ## Role variables
 
 * ``tomcat_version``: Configure Tomcat version (string, default: ``8.0.29``)
