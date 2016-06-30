@@ -11,7 +11,11 @@ setgid {{ item.group|default(tomcat_default_user_group) }}
 env JAVA_HOME={{ ansible_local.java.general.java_home }}
 env CATALINA_HOME={{ tomcat_env_catalina_home }}
 env CATALINA_BASE={{ item.path|default(tomcat_default_instance_path) }}/catalina/{{ item.name }}
+{% if tomcat_prefer_ipv4 %}
 env CATALINA_OPTS="{{ item.catalina_opts|default(tomcat_default_catalina_opts) }}"
+{% else %}
+env CATALINA_OPTS="{{ item.catalina_opts|default(tomcat_default_catalina_opts) }} -Djava.net.preferIPv4Stack=true"
+{% endif %}
 
 script
 {% if item.umask is defined %}
