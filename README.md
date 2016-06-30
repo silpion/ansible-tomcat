@@ -77,6 +77,7 @@ defaults to ``/srv/tomcat/catalina/tomcat``.
 * ``tomcat_service_allow_restart``: Whether to allow or deny restarting Tomcat instances automatically (boolean, default: ``true``)
 * ``tomcat_facts_template``: Default template to use when configuring Tomcat facts.d (string, default: ``facts.j2``)
 * ``tomcat_default_override_uri_encoding``: Default URI encoding for Tomcat (string, default: ``""``)
+* ``tomcat_prefer_ipv4``: Whether to prefer IPv4 over IPv6 (boolean, default: ``true``)
 
 ### tomcat_instances
 
