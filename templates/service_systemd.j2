@@ -63,7 +63,7 @@ ExecStop={{ ansible_local.java.general.java_home }}/bin/java \
 {% else %}
   -Djava.io.tmpdir={{ item.path|default(tomcat_default_instance_path) }}/catalina/{{ item.name }}/temp \
 {% endif %}
-{% if tomcat_prefer_ipv4 %}
+{% if item.prefer_ipv4|default(tomcat_default_prefer_ipv4) %}
   -Djava.net.preferIPv4Stack=true \
 {% endif %}
   -classpath "{{ tomcat_env_catalina_home }}/bin/bootstrap.jar:{{ tomcat_env_catalina_home }}/bin/tomcat-juli.jar" \

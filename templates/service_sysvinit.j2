@@ -16,7 +16,7 @@ export CATALINA_HOME={{ tomcat_env_catalina_home }}
 export CATALINA_BASE={{ item.path|default(tomcat_default_instance_path) }}/catalina/{{ item.name }}
 export CATALINA_PID={{ item.path|default(tomcat_default_instance_path) }}/catalina/{{ item.name }}/{{ item.name }}.pid
 export CATALINA_OPTS="{{ item.catalina_opts|default(tomcat_default_catalina_opts) }}"
-{% if tomcat_prefer_ipv4 %}
+{% if item.prefer_ipv4|default(tomcat_default_prefer_ipv4) %}
 export CATALINA_OPTS="${CATALINA_OPTS} -Djava.net.preferIPv4Stack=true"
 {% endif %}
 
