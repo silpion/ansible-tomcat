@@ -41,6 +41,8 @@ tomcat_default_catalina_opts: ''
 tomcat_default_instance_path: /srv/{{ tomcat_default_user_name }}
 #   Default per instance URI encoding
 tomcat_default_override_uri_encoding: ""
+# Whether to prefer IPv4 over IPv6
+tomcat_default_prefer_ipv4: true
 
 # tomcat instance(s)
 tomcat_instances:
