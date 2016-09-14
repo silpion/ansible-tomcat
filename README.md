@@ -113,7 +113,7 @@ found in the *vars/versions* directory. When configuring a version,
 that is not predefined (so far), the following variables must also be
 defined in the playbook/inventory:
 
-* ``tomcat_redis_sha256sum``: SHA256 sum for the downloaded Tomcat redistributable package (string, default: ``a787ea12e163e78ccebbb9662d7da78e707aef051d15af9ab5be20489adf1f6d``)
+* ``tomcat_redis_checksum``: SHA256 sum for the downloaded Tomcat redistributable package (string, default: ``a787ea12e163e78ccebbb9662d7da78e707aef051d15af9ab5be20489adf1f6d``)
 * ``tomcat_web_xml_schema_version``: Configures Tomcat web.xml schema version when used with the default template ``web.xml.j2``.
 
 ### tomcat_web_xml_schema_version
