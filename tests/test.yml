@@ -1,14 +1,20 @@
 ---
 - hosts: all
+  vars:
+    tomcat_path_to_lib_role: "{{ playbook_dir}}/roles"
   roles:
     - silpion.java
 
 - hosts: all
+  vars:
+    tomcat_path_to_lib_role: "{{ playbook_dir}}/roles"
   roles:
     - role: ansible-tomcat
       tomcat_version: 7.0.62
 
 - hosts: all
+  vars:
+    tomcat_path_to_lib_role: "{{ playbook_dir}}/roles"
   roles:
     - ansible-tomcat
   tasks:
@@ -20,6 +26,8 @@
         msg: "Test failed! | Tomcat was implicitly upgraded to a newer version"
 
 - hosts: all
+  vars:
+    tomcat_path_to_lib_role: "{{ playbook_dir}}/roles"
   roles:
     - role: ansible-tomcat
       tomcat_version: "{{ tomcat_default_version }}"
