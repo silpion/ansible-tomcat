@@ -59,3 +59,6 @@ tomcat_server_systemd_template: service_systemd.j2
 
 # Whether to allow or deny restarting Tomcat instances automatically
 tomcat_service_allow_restart: true
+
+# path to lib_role
+tomcat_path_to_lib_role: "{{ playbook_dir }}/roles"
