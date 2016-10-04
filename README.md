@@ -78,6 +78,7 @@ defaults to ``/srv/tomcat/catalina/tomcat``.
 * ``tomcat_facts_template``: Default template to use when configuring Tomcat facts.d (string, default: ``facts.j2``)
 * ``tomcat_default_override_uri_encoding``: Default URI encoding for Tomcat (string, default: ``""``)
 * ``tomcat_default_prefer_ipv4``: Whether to prefer IPv4 over IPv6 (boolean, default: ``true``)
+* ``tomcat_path_to_lib_role``: configure path to lib-role, which can get configured via silpion.lib role (string, default: ``{{ lib_roles_path }}``)
 
 ### tomcat_instances
 
@@ -113,7 +114,7 @@ found in the *vars/versions* directory. When configuring a version,
 that is not predefined (so far), the following variables must also be
 defined in the playbook/inventory:
 
-* ``tomcat_redis_sha256sum``: SHA256 sum for the downloaded Tomcat redistributable package (string, default: ``a787ea12e163e78ccebbb9662d7da78e707aef051d15af9ab5be20489adf1f6d``)
+* ``tomcat_redis_checksum``: SHA256 sum for the downloaded Tomcat redistributable package (string, default: ``a787ea12e163e78ccebbb9662d7da78e707aef051d15af9ab5be20489adf1f6d``)
 * ``tomcat_web_xml_schema_version``: Configures Tomcat web.xml schema version when used with the default template ``web.xml.j2``.
 
 ### tomcat_web_xml_schema_version

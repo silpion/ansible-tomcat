@@ -12,7 +12,7 @@
 
 - name: Include --check mode detection
   tags: tomcat
-  include: ../../silpion.lib/tasks/checkmodedetection.yml
+  include: "{{ tomcat_path_to_lib_role }}/silpion.lib/tasks/checkmodedetection.yml"
 
 - name: Detect --check mode on initial run
   tags: tomcat
@@ -22,7 +22,7 @@
 
 - name: Include version specific configuration
   tags: tomcat
-  include: ../../silpion.lib/tasks/version-specific-vars.yml
+  include: "{{ tomcat_path_to_lib_role }}/silpion.lib/tasks/version-specific-vars.yml"
   vars:
     version: "{{ tomcat_version }}"
 
@@ -30,7 +30,7 @@
   tags: tomcat
   assert:
     that:
-      - tomcat_redis_sha256sum not in (None, "")
+      - tomcat_redis_checksum not in (None, "")
 
 - name: Detect version upgrade
   tags: tomcat
@@ -56,23 +56,23 @@
 
 - name: Include assets persistency tasks
   tags: tomcat
-  include: ../../silpion.lib/tasks/datapersistency.yml
+  include: "{{ tomcat_path_to_lib_role }}/silpion.lib/tasks/datapersistency.yml"
   vars:
     include_tags: tomcat
 
 - name: Include lib get_url
   tags: tomcat
   when: tomcat_fact_is_not_initial_check_mode
-  include: ../../silpion.lib/tasks/get_url.yml
+  include: "{{ tomcat_path_to_lib_role }}/silpion.lib/tasks/get_url.yml"
   vars:
     url: "{{ tomcat_download_url }}"
     filename: "{{ tomcat_redis_filename }}"
-    sha256sum: "{{ tomcat_redis_sha256sum }}"
+    checksum: "{{ tomcat_redis_checksum }}"
 
 - name: Include lib copy
   tags: tomcat
   when: tomcat_fact_is_not_initial_check_mode
-  include: ../../silpion.lib/tasks/copy.yml
+  include: "{{ tomcat_path_to_lib_role }}/silpion.lib/tasks/copy.yml"
   vars:
     filename: "{{ tomcat_redis_filename }}"
 
@@ -292,6 +292,6 @@
 - name: Include local facts tasks
   tags: tomcat
   when: tomcat_fact_is_not_initial_check_mode
-  include: ../../silpion.lib/tasks/localfacts.yml
+  include: "{{ tomcat_path_to_lib_role }}/silpion.lib/tasks/localfacts.yml"
   vars:
     namespace: tomcat
