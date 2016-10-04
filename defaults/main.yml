@@ -1,6 +1,6 @@
 ---
 # Tomcat version number
-tomcat_default_version: '8.0.29' # This variable  must exist for role-testing purposes
+tomcat_default_version: '8.0.37'
 tomcat_version: "{{ ansible_local['tomcat']['general']['version'] if ansible_local['tomcat'] is defined else tomcat_default_version }}"
 
 # Mirror where to dowload Tomcat redistributable package from

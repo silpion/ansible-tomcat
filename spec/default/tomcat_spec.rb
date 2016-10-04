@@ -35,9 +35,9 @@ describe 'Testing ansible-tomcat local facts' do
     it { should be_mode '644' }
     it { should be_owned_by 'root' }
     it { should be_grouped_into 'root' }
-    its(:content) { should match /vendor = "Silpion"/ }
-    its(:content) { should match /vendor_url = "http:\/\/silpion.de"/ }
-    its(:content) { should match /vendor_github = "https:\/\/github.com\/silpion"/ }
-    its(:content) { should match /role_version = "0.1.0"/ }
+    its(:content) { should match /"vendor": "Silpion"/ }
+    its(:content) { should match /"vendor_url": "http:\/\/silpion.de"/ }
+    its(:content) { should match /"vendor_github": "https:\/\/github.com\/silpion"/ }
+    its(:content) { should match /"role_version": "2.1.0"/ }
   end
 end
