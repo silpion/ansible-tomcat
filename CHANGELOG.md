@@ -1,23 +1,56 @@
+# 2.2.0
+
+Anja Siek (10):
+
+* reuse generator
+* fix includes
+* fix geturl deprication
+* use variable for path\_to\_lib\_role
+* update documentation
+* update default-lib path and fix tests
+* add default-var from lib-role
+* fix documentaqtion
+* update documentation
+* set default of default
+
+Georg Hopp (8):
+
+* Add variable to control IPv4 behavior
+* Document new variable
+* Use new variable in systemd startup
+* Use new variable in sysvinit startup
+* Use new variable in upstart startup
+* Per instance IPv4 preference setting
+* fix previously forgotten variable rename in template
+* fix if else oder for service upstart
+
+Mark Kusch (4):
+
+* Update default tomcat version to 8.0.37
+* Fix trailing whitespace in facts template
+* Add vendor data to facts and updates tests
+* Remove vagrant hack for ssh insecure key replacement
+
 # 2.1.0
 
+Mark Kusch (4):
 
 * Stop tomcat at the latest point possible for upgrade installations
 * Do not run java role in all test plays
 * Remove leftovers from testing with parameterised includes
 * Update test depndencies
 
-Mark Kusch (4):
+Anja Siek (1):
 
 * implement update installation tasks; fix warnings
 
-Anja Siek (1):
+Alvaro Aleman (4):
 
-* Add documentation about catalina_home and _base
 * Rerun generator
+* Add documentation about catalina\_home \_base
 * Avoid implicit upgrades when an older version of Tomcat is already installed
 * Add a test to ensure Tomcat doesnt get implicitly upgraded
 
-Alvaro Aleman (4):
 # 2.0.1
 
 Mark Kusch (1):

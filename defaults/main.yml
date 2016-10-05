@@ -1,6 +1,6 @@
 ---
 # Tomcat version number
-tomcat_default_version: '8.0.29' # This variable  must exist for role-testing purposes
+tomcat_default_version: '8.0.37'
 tomcat_version: "{{ ansible_local['tomcat']['general']['version'] if ansible_local['tomcat'] is defined else tomcat_default_version }}"
 
 # Mirror where to dowload Tomcat redistributable package from
@@ -41,6 +41,8 @@ tomcat_default_catalina_opts: ''
 tomcat_default_instance_path: /srv/{{ tomcat_default_user_name }}
 #   Default per instance URI encoding
 tomcat_default_override_uri_encoding: ""
+# Whether to prefer IPv4 over IPv6
+tomcat_default_prefer_ipv4: true
 
 # tomcat instance(s)
 tomcat_instances:
@@ -57,3 +59,6 @@ tomcat_server_systemd_template: service_systemd.j2
 
 # Whether to allow or deny restarting Tomcat instances automatically
 tomcat_service_allow_restart: true
+
+# path to lib_role
+tomcat_path_to_lib_role: "{{ lib_roles_path|default(playbook_dir + '/roles') }}"

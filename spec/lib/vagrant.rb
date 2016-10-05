@@ -11,13 +11,13 @@ class Vagrant
     c = `vagrant ssh-config`
     if c != ''
       c.each_line do |l|
-        if m = /Hostname (.*)/.match(l)
+        if m = /hostname (.*)/i.match(l)
           @ssh_host = m[1]
-        elsif m = /User (.*)/.match(l)
+        elsif m = /user (.*)/i.match(l)
           @ssh_user = m[1]
-        elsif m = /IdentityFile (.*)/.match(l)
+        elsif m = /identityfile (.*)/i.match(l)
           @ssh_keys = [m[1].gsub(/"/, '')]
-        elsif m = /Port (.*)/.match(l)
+        elsif m = /port (.*)/i.match(l)
           @ssh_port = m[1]
         end
       end

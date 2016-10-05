@@ -77,6 +77,8 @@ defaults to ``/srv/tomcat/catalina/tomcat``.
 * ``tomcat_service_allow_restart``: Whether to allow or deny restarting Tomcat instances automatically (boolean, default: ``true``)
 * ``tomcat_facts_template``: Default template to use when configuring Tomcat facts.d (string, default: ``facts.j2``)
 * ``tomcat_default_override_uri_encoding``: Default URI encoding for Tomcat (string, default: ``""``)
+* ``tomcat_default_prefer_ipv4``: Whether to prefer IPv4 over IPv6 (boolean, default: ``true``)
+* ``tomcat_path_to_lib_role``: configure path to lib-role, which can get configured via silpion.lib role (string, default: ``{{ lib_roles_path }}``)
 
 ### tomcat_instances
 
@@ -95,6 +97,7 @@ instance. The following variables are legit to configure per instance.
 * ``port_redirect``: Instance redirect port (int, default: ``{{ tomcat_default_port_redirect }}``)
 * ``port_shutdown``: Instance shutdown port (int, default: ``{{ tomcat_default_port_shutdown }}``)
 * ``catalina_opts``: Instance CATALINA\_OPTS environment variable configuration (string, default: ``{{ tomcat_default_catalina_opts }}``)
+* ``prefer_ipv4``: Instance prefer IPv4 over IPv6 (boolean, default: ``{{ tomcat_default_prefer_ipv4 }}``)
 * ``service_file``: Init system configuration file per instance, e.g. tomcat.conf for Upstart (string, default: ``{{ tomcat_default_service_file }}`` (see ``vars/service/*.yml``))
 * ``service_name``: Init system service name per instance, e.g. tomcat@foo.service for Systemd (string, default: ``{{ tomcat_default_service_name }}`` (see ``vars/service/*.yml``))
 * ``umask``: Allow to configure umask for Tomcat instance (oct, default: ``|default('')``)
@@ -111,7 +114,7 @@ found in the *vars/versions* directory. When configuring a version,
 that is not predefined (so far), the following variables must also be
 defined in the playbook/inventory:
 
-* ``tomcat_redis_sha256sum``: SHA256 sum for the downloaded Tomcat redistributable package (string, default: ``a787ea12e163e78ccebbb9662d7da78e707aef051d15af9ab5be20489adf1f6d``)
+* ``tomcat_redis_checksum``: SHA256 sum for the downloaded Tomcat redistributable package (string, default: ``a787ea12e163e78ccebbb9662d7da78e707aef051d15af9ab5be20489adf1f6d``)
 * ``tomcat_web_xml_schema_version``: Configures Tomcat web.xml schema version when used with the default template ``web.xml.j2``.
 
 ### tomcat_web_xml_schema_version
