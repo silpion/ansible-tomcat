@@ -62,6 +62,7 @@ defaults to ``/srv/tomcat/catalina/tomcat``.
 * ``tomcat_default_user_group``: Default group for the user account to run Tomcat as when not configured per instance (string, default: ``tomcat``)
 * ``tomcat_default_user_name``: Default user account to run Tomcat as when not configured per instance (string, default: ``tomcat``)
 * ``tomcat_default_user_home``: Default home directory for the user account to run Tomcat as when not configured per instance (string, default: ``/srv/{{ tomcat_default_user_name }}``)
+* ``tomcat_default_user_system``: Default system status for the user account to run Tomcat as when not configured per instance (boolean, default: ``false``)
 * ``tomcat_instances``: Configure Catalina instances (list, default: ``{ - name: tomcat }``)
 * ``tomcat_default_server_xml_template``: Default server.xml template to use for configuring Tomcat instances (string, default: ``server.xml.j2``)
 * ``tomcat_default_web_xml_template``: Default web.xml template to use for configuring Tomcat instances (string, default: ``web.xml.j2``)
@@ -78,6 +79,7 @@ defaults to ``/srv/tomcat/catalina/tomcat``.
 * ``tomcat_facts_template``: Default template to use when configuring Tomcat facts.d (string, default: ``facts.j2``)
 * ``tomcat_default_override_uri_encoding``: Default URI encoding for Tomcat (string, default: ``""``)
 * ``tomcat_default_prefer_ipv4``: Whether to prefer IPv4 over IPv6 (boolean, default: ``true``)
+* ``tomcat_default_prefer_urandom``: Whether to prefer /dev/urandom over /dev/random (`-Djava.security.egd`) (boolean, default: ``true``)
 * ``tomcat_path_to_lib_role``: configure path to lib-role, which can get configured via silpion.lib role (string, default: ``{{ lib_roles_path }}``)
 
 ### tomcat_instances
@@ -98,6 +100,7 @@ instance. The following variables are legit to configure per instance.
 * ``port_shutdown``: Instance shutdown port (int, default: ``{{ tomcat_default_port_shutdown }}``)
 * ``catalina_opts``: Instance CATALINA\_OPTS environment variable configuration (string, default: ``{{ tomcat_default_catalina_opts }}``)
 * ``prefer_ipv4``: Instance prefer IPv4 over IPv6 (boolean, default: ``{{ tomcat_default_prefer_ipv4 }}``)
+* ``prefer_urandom``: Instance prefer /dev/urandom over /dev/random (`-Djava.security.egd`) (boolean, default: ``{{ tomcat_default_prefer_urandom }}``)
 * ``service_file``: Init system configuration file per instance, e.g. tomcat.conf for Upstart (string, default: ``{{ tomcat_default_service_file }}`` (see ``vars/service/*.yml``))
 * ``service_name``: Init system service name per instance, e.g. tomcat@foo.service for Systemd (string, default: ``{{ tomcat_default_service_name }}`` (see ``vars/service/*.yml``))
 * ``umask``: Allow to configure umask for Tomcat instance (oct, default: ``|default('')``)
@@ -410,6 +413,7 @@ all the defaults!
         tomcat_default_user_name: xyz
         tomcat_default_user_group: zyx
         tomcat_default_user_home: /var/home/xyz
+        tomcat_default_user_system: true
         tomcat_default_instance_path: /srv/xyz
         tomcat_default_server_xml_template: myveryownserverxmltemplate.j2
         tomcat_default_port_ajp: 12345
@@ -448,6 +452,7 @@ override all the configuration but focus on instance configuration.
             user: xyz
             group: zyx
             home: /var/home/xyz
+            system: true
             path: /srv/xyz
             service_template: myveryownsystemdtemplate.j2
             server_xml_template: myveryownserverxmltemplate.j2
@@ -458,6 +463,8 @@ override all the configuration but focus on instance configuration.
             service_name: motcat
             service_file: motcat.service
             catalina_opts: '-Dwhatever'
+            prefer_ipv4: false
+            prefer_urandom: false
             umask: 0002
             override_uri_encoding: UTF-8
       roles:
@@ -518,6 +525,7 @@ Ruby with rake and bundler available.
 * [kakawait](https://github.com/kakawait)
 * [deepan](https://github.com/deepan)
 * [PhysicsUnplugged](https://github.com/PhysicsUnplugged)
+* [AMeng](https://github.com/AMeng)
 
 
 <!-- vim: set ts=4 sw=4 et nofen: -->

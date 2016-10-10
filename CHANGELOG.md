@@ -1,3 +1,15 @@
+# 2.3.0
+
+AMeng (2):
+
+* Add option to create a tomcat system user
+* Document tomcat\_default\_user\_system and change to true/false insteaed of yes/no
+
+Mark Kusch (2):
+
+* Use non-blocking random source for Java with Systemd deployments
+* Add variable to control whether to use /dev/urandom for -Djava.security.egd in favor of /dev/random
+
 # 2.2.0
 
 Anja Siek (10):
