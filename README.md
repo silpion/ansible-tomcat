@@ -525,6 +525,7 @@ Ruby with rake and bundler available.
 * [kakawait](https://github.com/kakawait)
 * [deepan](https://github.com/deepan)
 * [PhysicsUnplugged](https://github.com/PhysicsUnplugged)
+* [AMeng](https://github.com/AMeng)
 
 
 <!-- vim: set ts=4 sw=4 et nofen: -->
