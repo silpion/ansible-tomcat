@@ -9,6 +9,7 @@ tomcat_supported_distributions:
   - Ubuntu
   - CentOS
   - RedHat
+  - OracleLinux
 
 # filename of Tomcat redistributable package
 tomcat_redis_filename: apache-tomcat-{{ tomcat_version }}.tar.gz
