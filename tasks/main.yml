@@ -135,6 +135,7 @@
 
 - name: Register static/unmanaged conf files
   tags: tomcat
+  become: true
   register: tomcat_registered_conf_files
   always_run: true
   changed_when: false
