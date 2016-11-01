@@ -1,5 +1,5 @@
 ---
-- name: Register files in Tomcat installation
+- name: Register libraries in Tomcat installation
   tags: tomcat
   become: true
   register: tomcat_registered_files
@@ -16,7 +16,7 @@
     dest: '{{ acl_dir }}'
     mode: 'o=rx'
 
-- name: Update installation files access controls
+- name: Update installation libraries access controls
   tags: tomcat
   become: true
   with_items: '{{ (tomcat_registered_files|default({})).stdout_lines|default([]) }}'
@@ -24,3 +24,15 @@
     state: file
     mode: 'o=r'
     dest: '{{ item }}'
+
+- name: Update installation executables access controls
+  tags: tomcat
+  become: true
+  when: '{{ ansible_local.util.init.system != "systemd" }}'
+  with_items:
+    - catalina.sh
+    - setclasspath.sh
+  file:
+    state: file
+    mode: 'o=rx'
+    dest: '{{ tomcat_env_catalina_home }}/bin/{{ item }}'
