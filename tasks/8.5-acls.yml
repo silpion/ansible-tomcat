@@ -1,0 +1,26 @@
+---
+- name: Register files in Tomcat installation
+  tags: tomcat
+  become: true
+  register: tomcat_registered_files
+  always_run: true
+  changed_when: false
+  when: tomcat_fact_is_not_initial_check_mode
+  shell: ls -1 {{ acl_dir }}/*.jar
+
+- name: Update installation folder access controls
+  tags: tomcat
+  become: true
+  file:
+    state: directory
+    dest: '{{ acl_dir }}'
+    mode: 'o=rx'
+
+- name: Update installation files access controls
+  tags: tomcat
+  become: true
+  with_items: '{{ (tomcat_registered_files|default({})).stdout_lines|default([]) }}'
+  file:
+    state: file
+    mode: 'o=r'
+    dest: '{{ item }}'
