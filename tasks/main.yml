@@ -121,7 +121,7 @@
 
 # Tomcat 8.5 is packaged with umask 027 which breaks current paradigm
 #   to keep CATALINA_HOME and CATALINA_BASE files separated.
-#   Identify all jars in bin/ and lib/ directory and make them accessable
+#   Identify all jars in bin/ and lib/ directory and make them accessible
 #   to the tomcat service user(s).
 - name: Include file system access controls for tomcat >= 8.5
   tags: tomcat
