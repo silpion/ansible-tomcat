@@ -119,6 +119,22 @@
   args:
     creates: "{{ tomcat_env_catalina_home }}/lib"
 
+# Tomcat 8.5 is packaged with umask 027 which breaks current paradigm
+#   to keep CATALINA_HOME and CATALINA_BASE files separated.
+#   Identify all jars in bin/ and lib/ directory and make them accessible
+#   to the tomcat service user(s).
+- name: Include file system access controls for tomcat >= 8.5
+  tags: tomcat
+  when:
+    - '{{ tomcat_version|version_compare("8.5", ">=") }}'
+    - '{{ tomcat_fact_is_not_initial_check_mode }}'
+  with_items:
+    - '{{ tomcat_env_catalina_home }}/bin'
+    - '{{ tomcat_env_catalina_home }}/lib'
+  loop_control:
+    loop_var: acl_dir
+  include: 8.5-acls.yml
+
 
 - name: Install instance directories
   tags: tomcat
@@ -135,6 +151,7 @@
 
 - name: Register static/unmanaged conf files
   tags: tomcat
+  become: true
   register: tomcat_registered_conf_files
   always_run: true
   changed_when: false

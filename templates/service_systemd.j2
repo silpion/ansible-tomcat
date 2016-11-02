@@ -44,6 +44,9 @@ ExecStart={{ ansible_local.java.general.java_home }}/bin/java \
 {% if item.prefer_ipv4|default(tomcat_default_prefer_ipv4) %}
   -Djava.net.preferIPv4Stack=true \
 {% endif %}
+{% if tomcat_version|version_compare('8.5', '>=') %}
+  -Djava.protocol.handler.pkgs=org.apache.catalina.webresources \
+{% endif %}
   -classpath "{{ tomcat_env_catalina_home }}/bin/bootstrap.jar:{{ tomcat_env_catalina_home }}/bin/tomcat-juli.jar" \
   org.apache.catalina.startup.Bootstrap start
 
@@ -71,6 +74,9 @@ ExecStop={{ ansible_local.java.general.java_home }}/bin/java \
 {% endif %}
 {% if item.prefer_ipv4|default(tomcat_default_prefer_ipv4) %}
   -Djava.net.preferIPv4Stack=true \
+{% endif %}
+{% if tomcat_version|version_compare('8.5', '>=') %}
+  -Djava.protocol.handler.pkgs=org.apache.catalina.webresources \
 {% endif %}
   -classpath "{{ tomcat_env_catalina_home }}/bin/bootstrap.jar:{{ tomcat_env_catalina_home }}/bin/tomcat-juli.jar" \
   org.apache.catalina.startup.Bootstrap stop
