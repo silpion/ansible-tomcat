@@ -1,3 +1,14 @@
+# 2.4.0
+
+Mark Kusch (6):
+
+* Add tomcat version 8.5.6
+* Tomcat 8.5.N installs CATALINA\_HOME/conf with umask 077
+* Fixup minimum required library files access controls for tomcat >= 8.5 to function
+* Non-systemd services call catalina.sh
+* Fix typo in tasks documentation
+* With systemd on tomcat >= 8.5 we add custom protocol handlers based on the default when running tomcat with catalina.sh
+
 # 2.3.0
 
 AMeng (2):
