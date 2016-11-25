@@ -1,0 +1,5 @@
+Please do NOT open any pull requests as this role is considered a showcase project and not maintained publicly.
+
+All pull requests will be ignored!
+
+If you want to integrate your own changes into this role, feel free to fork it!
