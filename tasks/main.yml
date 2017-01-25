@@ -136,7 +136,7 @@
 - name: Register static/unmanaged conf files
   tags: tomcat
   register: tomcat_registered_conf_files
-  always_run: true
+  check_mode: no
   changed_when: false
   when: tomcat_fact_is_not_initial_check_mode
 #  failed_when: "{{ false if lib_fact_check_mode else omit }}"
