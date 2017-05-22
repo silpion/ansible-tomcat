@@ -28,7 +28,7 @@
 - name: Update installation executables access controls
   tags: tomcat
   become: true
-  when: '{{ ansible_local.util.init.system != "systemd" }}'
+  when: ((((ansible_local|default([])).util|default([])).init|default([])).system|default('')) != "systemd" }}'
   with_items:
     - catalina.sh
     - setclasspath.sh
