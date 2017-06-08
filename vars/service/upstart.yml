@@ -3,4 +3,4 @@ tomcat_default_service_template: "{{ tomcat_server_upstart_template }}"
 tomcat_default_service_file: tomcat.conf
 tomcat_default_service_name: tomcat
 tomcat_service_dir: /etc/init
-tomcat_service_file_mode: 644
+tomcat_service_file_mode: 0644
