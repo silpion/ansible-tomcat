@@ -1,3 +1,17 @@
+# 241
+
+Alvaro Aleman (1):
+
+* Add pull request template
+
+Anja Siek (1):
+
+* fix ansible 2.3 deprications
+
+Michael Palmer (1):
+
+* Added support for OracleLinux
+
 # 2.4.0
 
 Mark Kusch (6):

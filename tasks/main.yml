@@ -35,8 +35,8 @@
 - name: Detect version upgrade
   tags: tomcat
   when:
-    - ansible_local.tomcat.general.version is defined
-    - ansible_local.tomcat.general.version != tomcat_version
+    - (((ansible_local|default([])).tomcat|default([])).general|default([])).version is defined
+    - (((ansible_local|default([])).tomcat|default([])).general|default([])).version != tomcat_version
   set_fact:
     tomcat_fact_upgrade_installation: true
 
@@ -51,7 +51,7 @@
 # Manage system services
 - name: Configure service management
   tags: tomcat
-  when: ansible_local.util.init.system is defined
+  when: (((ansible_local|default([])).util|default([])).init|default([])).system is defined
   include_vars: "service/{{ ansible_local.util.init.system }}.yml"
 
 - name: Include assets persistency tasks
@@ -126,8 +126,8 @@
 - name: Include file system access controls for tomcat >= 8.5
   tags: tomcat
   when:
-    - '{{ tomcat_version|version_compare("8.5", ">=") }}'
-    - '{{ tomcat_fact_is_not_initial_check_mode }}'
+    - tomcat_version|version_compare("8.5", ">=")
+    - tomcat_fact_is_not_initial_check_mode
   with_items:
     - '{{ tomcat_env_catalina_home }}/bin'
     - '{{ tomcat_env_catalina_home }}/lib'
@@ -153,7 +153,7 @@
   tags: tomcat
   become: true
   register: tomcat_registered_conf_files
-  always_run: true
+  check_mode: false
   changed_when: false
   when: tomcat_fact_is_not_initial_check_mode
 #  failed_when: "{{ false if lib_fact_check_mode else omit }}"
@@ -209,8 +209,8 @@
   tags: tomcat
   become: true
   when:
-    - ansible_local.util.init.system is defined
-    - ansible_local.util.init.system == 'systemd'
+    - (((ansible_local|default([])).util|default([])).init|default([])).system is defined
+    - (((ansible_local|default([])).util|default([])).init|default([])).system == 'systemd'
   with_items: "{{ tomcat_instances }}"
   register: tomcat_registered_install_instance_environment_files
   template:
@@ -250,8 +250,8 @@
   tags: tomcat
   when:
     - tomcat_registered_install_tomcat_service.changed
-    - ansible_local.util.init.system is defined
-    - ansible_local.util.init.system == 'systemd'
+    - (((ansible_local|default([])).util|default([])).init|default([])).system is defined
+    - (((ansible_local|default([])).util|default([])).init|default([])).system == 'systemd'
   become: true
   failed_when: false
   changed_when: false
