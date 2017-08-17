@@ -1,2 +1,2 @@
-CATALINA_BASE={{ item.path|default(tomcat_default_instance_path) }}/catalina/{{ item.name }}
+CATALINA_BASE={{ item.path|default(tomcat_default_instance_path) }}
 CATALINA_OPTS={{ item.catalina_opts|default(tomcat_default_catalina_opts) }}
