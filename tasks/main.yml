@@ -180,6 +180,17 @@
   args:
     creates: "{{ item.0.path|default(tomcat_default_instance_path) }}/conf/{{ item.1 }}"
 
+- name: Install instance tomcat-users.xml
+  tags: tomcat
+  become: true
+  with_items: "{{ tomcat_instances }}"
+  register: tomcat_registered_install_tomcatusers_xml
+  template:
+    src: "{{ item.tomcatusers_xml_template|default(tomcat_default_tomcatusers_xml_template) }}"
+    dest: "{{ item.path|default(tomcat_default_instance_path) }}/conf/tomcat-users.xml"
+    owner: "{{ item.user|default(tomcat_default_user_name) }}"
+    group: "{{ item.group|default(tomcat_default_user_group) }}"
+    mode: 0640
 
 - name: Install instance server.xml
   tags: tomcat

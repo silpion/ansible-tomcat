@@ -104,7 +104,17 @@ instance. The following variables are legit to configure per instance.
 * ``service_file``: Init system configuration file per instance, e.g. tomcat.conf for Upstart (string, default: ``{{ tomcat_default_service_file }}`` (see ``vars/service/*.yml``))
 * ``service_name``: Init system service name per instance, e.g. tomcat@foo.service for Systemd (string, default: ``{{ tomcat_default_service_name }}`` (see ``vars/service/*.yml``))
 * ``umask``: Allow to configure umask for Tomcat instance (oct, default: ``|default('')``)
-* ``systemd_default_instance``: Allow to configure default instance for Systemd templated service (string, default: ``None`` }}
+* ``systemd_default_instance``: Allow to configure default instance for Systemd templated service (string, default: ``None`` 
+* ``auth_roles``: which roles should be created in tomcat-users.xml (list of strings, default: [])
+* ``auth_users``: which users should be created in tomcat-users.xml (list of auth_users, see below. default: [])
+
+### auth_users
+
+Users to be configured in tomcat_users.xml
+
+* ``name``: username
+* ``password``: password in plaintext
+* ``roles``: which roles should be configured
 
 Configuring more than one instance requires to configure some of the
 variables documented above per instance. Please see example playbooks
