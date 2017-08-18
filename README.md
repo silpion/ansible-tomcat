@@ -105,6 +105,11 @@ instance. The following variables are legit to configure per instance.
 * ``service_name``: Init system service name per instance, e.g. tomcat@foo.service for Systemd (string, default: ``{{ tomcat_default_service_name }}`` (see ``vars/service/*.yml``))
 * ``umask``: Allow to configure umask for Tomcat instance (oct, default: ``|default('')``)
 * ``systemd_default_instance``: Allow to configure default instance for Systemd templated service (string, default: ``None`` 
+* ``proxy_header``: header from proxy to determine real-ip (string, default ``x-forwared-for``)
+* ``proxy_ip_internal_regex``: java-regexp which proxies are internal to evaluate real-ip (string. default ``10\.\d{1,3}\.\d{1,3}\.\d{1,3}|192\.168\.\d{1,3}\.\d{1,3}|169\.254\.\d{1,3}\.\d{1,3}|127\.\d{1,3}\.\d{1,3}\.\d{1,3}|172\.1[6-9]{1}\.\d{1,3}\.\d{1,3}|172\.2[0-9]{1}\.\d{1,3}\.\d{1,3}|172\.3[0-1]{1}\.\d{1,3}\.\d{1,3}`` )
+* ``proxy_protocol_header``: header from proxy to determine HTTP/HTTPS connction (string, default ``x-forwarded-proto``)
+* ``proxy_protocol_https_value``: value for the header if conection is secure (string, default: ``https``)
+* ``server_xml_add1``: additional text to put in server.xml, e.g. Valves configs (string, default empty)
 * ``auth_roles``: which roles should be created in tomcat-users.xml (list of strings, default: [])
 * ``auth_users``: which users should be created in tomcat-users.xml (list of auth_users, see below. default: [])
 
