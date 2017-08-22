@@ -3,6 +3,12 @@
 tomcat_default_version: '8.0.37'
 tomcat_version: "{{ ansible_local['tomcat']['general']['version'] if ansible_local['tomcat'] is defined else tomcat_default_version }}"
 
+# abstract Tomcat major version
+tomcat_version_major: "{{ tomcat_version|truncate(1, True, '') }}"
+
+# filename of Tomcat redistributable package
+tomcat_redis_filename: apache-tomcat-{{ tomcat_version }}.tar.gz
+
 # Mirror where to dowload Tomcat redistributable package from
 tomcat_mirror: http://archive.apache.org/dist/tomcat
 # Allow to override where to download Tomcat from
@@ -61,7 +67,6 @@ tomcat_server_upstart_template: service_upstart.j2
 tomcat_server_sysvinit_template: service_sysvinit.j2
 #   template for systemd
 tomcat_server_systemd_template: service_systemd.j2
-
 
 # Whether to allow or deny restarting Tomcat instances automatically
 tomcat_service_allow_restart: true
