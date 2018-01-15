@@ -1,3 +1,10 @@
+# 242
+
+Anja Siek (2):
+
+* fix syntax-typo
+* fix major version
+
 # 241
 
 Alvaro Aleman (1):

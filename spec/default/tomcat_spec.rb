@@ -38,6 +38,6 @@ describe 'Testing ansible-tomcat local facts' do
     its(:content) { should match /"vendor": "Silpion"/ }
     its(:content) { should match /"vendor_url": "http:\/\/silpion.de"/ }
     its(:content) { should match /"vendor_github": "https:\/\/github.com\/silpion"/ }
-    its(:content) { should match /"role_version": "2.3.0"/ }
+    its(:content) { should match /"role_version": "242"/ }
   end
 end
