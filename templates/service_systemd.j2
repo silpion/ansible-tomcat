@@ -8,6 +8,7 @@ Group={{ item.group|default(tomcat_default_user_group) }}
 {% if item.umask is defined %}
 UMask={{ item.umask }}
 {% endif %}
+LimitNOFILE={{ item.LimitNOFILE|default(1040000) }}
 {% if item.systemd_default_instance is defined %}
 DefaultInstance={{ item.systemd_default_instance }}
 {% endif %}
