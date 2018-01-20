@@ -60,7 +60,7 @@
 
       <Host name="localhost"  appBase="webapps"
             unpackWARs="true" autoDeploy="true">
-        <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs"
+        <Valve className="org.apache.catalina.valves.AccessLogValve" directory="{{ item.log_dir|default('logs') }}"
                requestAttributesEnabled="true"
                prefix="access_log" suffix=".log"
                pattern="%h %l %u %t &quot;%r&quot; %s %B %T %D %F %X %I" />

@@ -112,6 +112,7 @@ instance. The following variables are legit to configure per instance.
 * ``server_xml_add1``: additional text to put in server.xml, e.g. Valves configs (string, default empty)
 * ``auth_roles``: which roles should be created in tomcat-users.xml (list of strings, default: [])
 * ``auth_users``: which users should be created in tomcat-users.xml (list of auth_users, see below. default: [])
+* ``log_dir``: directory to put acces logs to
 
 ### auth_users
 
