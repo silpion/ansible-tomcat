@@ -62,7 +62,7 @@
             unpackWARs="true" autoDeploy="true">
         <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs"
                requestAttributesEnabled="true"
-               prefix="access_log." suffix=".log"
+               prefix="access_log" suffix=".log"
                pattern="%h %l %u %t &quot;%r&quot; %s %B %T %D %F %X %I" />
         <Valve className="org.apache.catalina.valves.RemoteIpValve" 
                remoteIpHeader="{{ item.proxy_header|default('x-forwarded-for') }}"
