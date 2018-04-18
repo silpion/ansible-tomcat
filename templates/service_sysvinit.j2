@@ -62,7 +62,7 @@ case "$1" in
     start
   ;;
   status)
-    status -p $CATALINA_GROUP $PROC
+    status -p $CATALINA_PID $PROC
   ;;
   *)
     echo $"Usage: $PROC {start|stop|restart|status}"
