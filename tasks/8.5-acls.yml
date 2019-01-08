@@ -3,7 +3,7 @@
   tags: tomcat
   become: true
   register: tomcat_registered_files
-  always_run: true
+  check_mode: no
   changed_when: false
   when: tomcat_fact_is_not_initial_check_mode
   shell: ls -1 {{ acl_dir }}/*.jar
