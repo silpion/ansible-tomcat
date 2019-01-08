@@ -309,7 +309,7 @@
   tags: tomcat
   when: tomcat_fact_is_not_initial_check_mode
   set_fact:
-    tomcat_facts_requires_restart: "{{ tomcat_registered_instances_requiring_restart.results|map(attribute='ansible_facts.tomcat_fact_requires_restart_item')|list|unique|difference(['None']) }}"
+    tomcat_facts_requires_restart: "{{ tomcat_registered_instances_requiring_restart.results|map(attribute='ansible_facts.tomcat_fact_requires_restart_item')|list|unique|difference(['None'])|list }}"
 
 #     We can now safely notify the service restart handler which in turn just loops
 #       over all items in the resulting list 'tomcat_facts_requires_restart'.

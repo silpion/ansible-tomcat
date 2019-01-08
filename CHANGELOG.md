@@ -1,3 +1,16 @@
+# 243
+
+Anja Siek (1):
+
+* fix set() error
+
+# 242
+
+Anja Siek (2):
+
+* fix syntax-typo
+* fix major version
+
 # 241
 
 Alvaro Aleman (1):
