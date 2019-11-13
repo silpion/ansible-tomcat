@@ -11,7 +11,7 @@
     "instances": {
 {% for instance in tomcat_instances %}
         "{{ instance.name }}": {
-            "catalina_base": "{{ instance.path|default(tomcat_default_instance_path) }}/catalina/{{ instance.name }}",
+            "catalina_base": "{{ instance.path|default(tomcat_default_instance_path) }}",
             "port": {
                 "shutdown": {{ instance.port_shutdown|default(tomcat_default_port_shutdown) }},
                 "connector": {{ instance.port_connector|default(tomcat_default_port_connector) }},

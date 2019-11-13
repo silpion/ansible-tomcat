@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<tomcat-users>
+{% for role in item.auth_roles|default([]) %}
+  <role rolename="{{role}}"/>
+{% endfor %}
+{% for user in item.auth_users|default([]) %}
+  <user username="{{ user.name }}" password="{{ user.password }}" roles="{{ user.roles }}"/>
+{% endfor %}
+</tomcat-users>
